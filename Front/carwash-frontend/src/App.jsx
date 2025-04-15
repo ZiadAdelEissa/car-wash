@@ -12,6 +12,9 @@ import Packages from "./Components/Customer/Packages";
 // import RegisterAdmin from "./Components/pages/Admin/RegisterAdmin";
 // import RegisterSuberAdmin from "./Components/pages/Admin/superadmin";
 import Booking from "./Components/Customer/Booking";
+import BranchesCRUD from "./Components/Admin/BranchesCRUD";
+import ServicesCRUD from "./Components/Admin/ServicesCRUD";
+import PackagesCRUD from "./Components/Admin/PackagesCRUD";
 
 export default function App() {
   return (
@@ -29,6 +32,9 @@ export default function App() {
           {/* <Route path="/Registeradmin" element={<RegisterAdmin />} /> */}
           {/* <Route path="/Registersuperadmin" element={<RegisterSuberAdmin />} /> */}
           <Route path="/AdminDashboard" element={<AdminDashboard />} />
+          <Route path="/BranchCrud" element={<BranchesCRUD />} />
+          <Route path="/ServicesCrud" element={<ServicesCRUD />} />
+          <Route path="/PackagesCRUD" element={<PackagesCRUD />} />
         </Routes>
     </>
   );

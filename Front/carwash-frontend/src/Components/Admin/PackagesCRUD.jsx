@@ -1,111 +1,132 @@
-import { useState, useEffect } from 'react'
-import { getPackages, createPackage, updatePackage, deletePackage, getServices } from '../services/api.js'
-import { useAnimation } from '../hooks/useAnimation.js'
+import { useState, useEffect } from "react";
+import {
+  getPackages,
+  createPackage,
+  updatePackage,
+  deletePackage,
+  getServices,
+} from "../services/api.js";
+import { useAnimation } from "../hooks/useAnimation.js";
 
 export default function PackagesCRUD() {
-  const [packages, setPackages] = useState([])
-  const [services, setServices] = useState([])
+  const [packages, setPackages] = useState([]);
+  const [services, setServices] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     price: 0,
-    services: []
-  })
-  const [editingId, setEditingId] = useState(null)
-  const [loading, setLoading] = useState(true)
-  useAnimation('crud')
+    services: [],
+    washCount: 0,
+    validityDays: 0
+  });
+  const [editingId, setEditingId] = useState(null);
+  const [loading, setLoading] = useState(true);
+  useAnimation("crud");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [packagesRes, servicesRes] = await Promise.all([
           getPackages(),
-          getServices()
-        ])
-        setPackages(packagesRes.data)
-        setServices(servicesRes.data)
+          getServices(),
+        ]);
+        setPackages(packagesRes.data);
+        setServices(servicesRes.data);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    fetchData()
-  }, [])
+    };
+    fetchData();
+  }, []);
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
     try {
       if (editingId) {
-        await updatePackage(editingId, formData)
+        await updatePackage(editingId, formData);
       } else {
-        await createPackage(formData)
+        await createPackage(formData);
       }
-      const response = await getPackages()
-      setPackages(response.data)
-      resetForm()
+      const response = await getPackages();
+      setPackages(response.data);
+      resetForm();
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleEdit = (pkg) => {
     setFormData({
       name: pkg.name,
       description: pkg.description,
       price: pkg.price,
-      services: pkg.services.map(s => s._id)
-    })
-    setEditingId(pkg._id)
-  }
+      services: pkg.services.map((s) => s._id),
+    });
+    setEditingId(pkg._id);
+  };
 
-  const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this package?')) {
-      setLoading(true)
+  const handleDelete = async (_id) => {
+    if (window.confirm("Are you sure you want to delete this package?")) {
       try {
-        await deletePackage(id)
-        const response = await getPackages()
-        setPackages(response.data)
-      } finally {
-        setLoading(false)
+        const response = await deletePackage(_id);
+        console.log("Delete response:", response); // Log successful response
+        
+        const packagesResponse = await getPackages();
+        setPackages(packagesResponse.data);
+        alert("Package deleted successfully");
+      } catch (error) {
+        console.error("Full error:", {
+          message: error.message,
+          response: error.response,
+          config: error.config
+        });
+        alert(`Delete failed: ${error.response?.data?.message || error.message}`);
       }
     }
-  }
-
-  const toggleService = (serviceId) => {
-    setFormData(prev => ({
+    };  
+    const toggleService = (serviceId) => {
+    setFormData((prev) => ({
       ...prev,
       services: prev.services.includes(serviceId)
-        ? prev.services.filter(id => id !== serviceId)
-        : [...prev.services, serviceId]
-    }))
-  }
+        ? prev.services.filter((id) => id !== serviceId)
+        : [...prev.services, serviceId],
+    }));
+  };
 
   const resetForm = () => {
     setFormData({
-      name: '',
-      description: '',
+      name: "",
+      description: "",
       price: 0,
-      services: []
-    })
-    setEditingId(null)
-  }
+      services: [],
+      washCount: 0,
+      validityDays: 0
+    });
+    setEditingId(null);
+  };
 
-  if (loading && packages.length === 0) return <div className="p-6 text-center">Loading packages...</div>
+  if (loading && packages.length === 0)
+    return <div className="p-6 text-center">Loading packages...</div>;
 
   return (
     <div className="p-6">
       <h1 className="text-3xl font-bold mb-6">Manage Packages</h1>
-      
+
       <form onSubmit={handleSubmit} className="mb-8 p-4 bg-gray-50 rounded-lg">
-        <h2 className="text-xl font-semibold mb-4">{editingId ? 'Edit Package' : 'Add New Package'}</h2>
-        
+        <h2 className="text-xl font-semibold mb-4">
+          {editingId ? "Edit Package" : "Add New Package"}
+        </h2>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
             <label className="block text-gray-700 mb-1">Name</label>
             <input
               type="text"
               value={formData.name}
-              onChange={(e) => setFormData({...formData, name: e.target.value})}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
               className="w-full p-2 border rounded"
               required
             />
@@ -115,28 +136,56 @@ export default function PackagesCRUD() {
             <input
               type="number"
               value={formData.price}
-              onChange={(e) => setFormData({...formData, price: e.target.value})}
+              onChange={(e) =>
+                setFormData({ ...formData, price: e.target.value })
+              }
+              className="w-full p-2 border rounded"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 mb-1">Wash Count</label>
+            <input
+              type="number"
+              value={formData.washCount}
+              onChange={(e) =>
+                setFormData({ ...formData, washCount: e.target.value })
+              }
+              className="w-full p-2 border rounded"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 mb-1"> validityDays</label>
+            <input
+              type="number"
+              value={formData.validityDays}
+              onChange={(e) =>
+                setFormData({ ...formData, validityDays: e.target.value })
+              }
               className="w-full p-2 border rounded"
               required
             />
           </div>
         </div>
-        
+
         <div className="mb-4">
           <label className="block text-gray-700 mb-1">Description</label>
           <textarea
             value={formData.description}
-            onChange={(e) => setFormData({...formData, description: e.target.value})}
+            onChange={(e) =>
+              setFormData({ ...formData, description: e.target.value })
+            }
             className="w-full p-2 border rounded"
             rows="3"
             required
           />
         </div>
-        
+
         <div className="mb-4">
           <label className="block text-gray-700 mb-1">Services</label>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-            {services.map(service => (
+            {services.map((service) => (
               <div key={service._id} className="flex items-center">
                 <input
                   type="checkbox"
@@ -150,18 +199,18 @@ export default function PackagesCRUD() {
             ))}
           </div>
         </div>
-        
+
         <div className="flex gap-2">
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             disabled={loading}
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-blue-300"
           >
-            {loading ? 'Processing...' : editingId ? 'Update' : 'Add'} Package
+            {loading ? "Processing..." : editingId ? "Update" : "Add"} Package
           </button>
           {editingId && (
-            <button 
-              type="button" 
+            <button
+              type="button"
               onClick={resetForm}
               className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
             >
@@ -183,19 +232,19 @@ export default function PackagesCRUD() {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {packages.map(pkg => (
+            {packages.map((pkg) => (
               <tr key={pkg._id}>
                 <td className="py-3 px-4">{pkg.name}</td>
                 <td className="py-3 px-4">{pkg.description}</td>
                 <td className="py-3 px-4">${pkg.price}</td>
                 <td className="py-3 px-4">
-                  <div className="flex flex-wrap gap-1">
+                  {/* <div className="flex flex-wrap gap-1">
                     {pkg.services.map(service => (
                       <span key={service._id} className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
                         {service.name}
                       </span>
                     ))}
-                  </div>
+                  </div> */}
                 </td>
                 <td className="py-3 px-4 flex gap-2">
                   <button
@@ -217,5 +266,5 @@ export default function PackagesCRUD() {
         </table>
       </div>
     </div>
-  )
+  );
 }

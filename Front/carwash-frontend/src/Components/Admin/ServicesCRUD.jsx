@@ -4,15 +4,15 @@ import { useAnimation } from '../../Components/hooks/useAnimation.js'
 
 export default function ServicesCRUD() {
   const [services, setServices] = useState([])
-  const [formData, setFormData] = useState({ name: '', description: '', price: 0 })
+  const [formData, setFormData] = useState({ name: '', description: '', price: 0 , duration: 0})
   const [editingId, setEditingId] = useState(null)
-  useAnimation('crud')
+  useAnimation('form')
 
   useEffect(() => {
     fetchServices()
   }, [])
 
-  const fetchServices = async () => {
+  const   fetchServices = async () => {
     const response = await getServices()
     setServices(response.data)
   }
@@ -32,7 +32,8 @@ export default function ServicesCRUD() {
     setFormData({
       name: service.name,
       description: service.description,
-      price: service.price
+      price: service.price,
+      duration: service.duration
     })
     setEditingId(service._id)
   }
@@ -43,12 +44,12 @@ export default function ServicesCRUD() {
   }
 
   const resetForm = () => {
-    setFormData({ name: '', description: '', price: 0 })
+    setFormData({ name: '', description: '', price: 0 , duration: 0 })
     setEditingId(null)
   }
 
   return (
-    <div className="p-6">
+    <div id='Dashboard' className="p-6 mt-[50px] bg-[#435565] flex flex-col items-center justify-center text-center">
       <h1 className="text-3xl font-bold mb-6">Manage Services</h1>
       
       <form onSubmit={handleSubmit} className="mb-8 p-4 bg-gray-50 rounded-lg">
@@ -70,6 +71,16 @@ export default function ServicesCRUD() {
               type="number"
               value={formData.price}
               onChange={(e) => setFormData({...formData, price: e.target.value})}
+              className="w-full p-2 border rounded"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 mb-1">Duration</label>
+            <input
+              type="number"
+              value={formData.duration}
+              onChange={(e) => setFormData({...formData, duration: e.target.value})}
               className="w-full p-2 border rounded"
               required
             />
@@ -104,6 +115,7 @@ export default function ServicesCRUD() {
               <th className="py-3 px-4 text-left">Name</th>
               <th className="py-3 px-4 text-left">Description</th>
               <th className="py-3 px-4 text-left">Price</th>
+              <th className="py-3 px-4 text-left">Duration</th>
               <th className="py-3 px-4 text-left">Actions</th>
             </tr>
           </thead>
@@ -113,6 +125,7 @@ export default function ServicesCRUD() {
                 <td className="py-3 px-4">{service.name}</td>
                 <td className="py-3 px-4">{service.description}</td>
                 <td className="py-3 px-4">${service.price}</td>
+                <td className="py-3 px-4">{service.duration} Min</td>
                 <td className="py-3 px-4 flex gap-2">
                   <button
                     onClick={() => handleEdit(service)}
