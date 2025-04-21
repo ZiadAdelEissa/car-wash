@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const API = axios.create({
-  baseURL: '/api', // Let Vite proxy handle the base URL
+  baseURL: 'http://localhost:5000/api', // Let Vite proxy handle the base URL
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json'
@@ -38,6 +38,7 @@ export const getAllBranches = () => API.get('/admin/branches')
 export const createBranch = (data) => API.post('/admin/branches', data)
 export const updateBranch = (id, data) => API.put(`/admin/branches/${id}`, data)
 export const getBranchStats = (id) => API.get(`/admin/branches/${id}/stats`)
+export const completeBooking = (id) => API.patch(`/bookings/${id}/complete`);
 // Admin Services
 export const createService = (data) => API.post('/services', data)
 export const updateService = (id, data) => API.put(`/services/${id}`, data)

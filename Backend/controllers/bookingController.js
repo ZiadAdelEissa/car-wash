@@ -25,8 +25,8 @@ export const createBooking = async (req, res) => {
 
 export const completeBooking = async (req, res) => {
   try {
-    const { bookingId } = req.params;
-    const booking = await Booking.findById(bookingId).populate('userPackageId');
+    const { id } = req.params;
+    const booking = await Booking.findById(id).populate('userPackageId');
 
     if (!booking) {
       return res.status(404).json({ message: 'Booking not found' });
@@ -72,3 +72,19 @@ export const getCustomerBookings = async (req, res) => {
     res.status(500).json({ message: 'Error fetching bookings', error: error.message });
   }
 };
+export const getBranches = async (req, res) => {
+  try {
+    const branches = await Branch.find();
+    res.json(branches);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching branches', error: error.message });
+  }
+}
+export const getServices = async (req, res) => {
+  try {
+    const services = await Service.find();
+    res.json(services);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching services', error: error.message });
+  }
+}

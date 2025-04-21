@@ -9,12 +9,11 @@ export function useAnimation(component) {
         gsap.to('form', { duration: 0.5, y: 0, opacity: 1, ease: 'power2.out' })
         break
       case 'dashboard':
-        gsap.from('.dashboard-stats', { 
-          duration: 0.6, 
-          y: 30, 
-          opacity: 0, 
-          stagger: 0.2,
-          ease: 'back.out'
+        gsap.from('.Dashboard', { 
+          duration: 0.5, y: 50, opacity: 0, ease: 'power2.out'
+        })
+        gsap.to('.Dashboard', { 
+         duration: 0.5, y: 0, opacity: 1, ease: 'power2.out'
         })
         break
       case 'crud':
