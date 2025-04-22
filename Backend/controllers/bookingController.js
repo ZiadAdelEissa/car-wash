@@ -1,6 +1,8 @@
 import Booking from '../models/Booking.js';
 import UserPackage from '../models/UserPackage.js';
 import User from '../models/User.js';
+import Branch from '../models/Branch.js';
+import Service from '../models/Service.js';
 
 export const createBooking = async (req, res) => {
   try {

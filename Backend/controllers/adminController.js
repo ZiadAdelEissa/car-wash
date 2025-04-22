@@ -1,7 +1,7 @@
 import Booking from "../models/Booking.js";
 import Branch from "../models/Branch.js";
-import UserPackage from '../models/UserPackage.js';
-import User from '../models/User.js';
+import UserPackage from "../models/UserPackage.js";
+import User from "../models/User.js";
 
 export const getAllBookings = async (req, res) => {
   try {
@@ -36,6 +36,24 @@ export const updateBookingStatus = async (req, res) => {
 
     booking.status = status;
     booking.completedAt = new Date();
+
+    if (booking.status === "completed") {
+      // If package was used, decrement remaining washes
+      if (booking.userPackageId) {
+        const userPackage = await UserPackage.findById(booking.userPackageId);
+        if (userPackage.remainingWashes > 0) {
+          userPackage.remainingWashes -= 1;
+          userPackage.remainingWashes = userPackage.remainingWashes; // Decrement remaining washes by 1;
+          await userPackage.save();
+        }
+      }
+      if (status === "completed" && booking.userPackageId) {
+        const updatedPackage = await UserPackage.findById(
+          booking.userPackageId
+        );
+        updatedPackage.remainingWashes = updatedPackage.remainingWashes;
+      }
+    }
 
     if (adminNotes) booking.adminNotes = adminNotes;
     await booking.save();
