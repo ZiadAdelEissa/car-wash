@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { getServices } from '../services/api.js'
 import { useAnimation } from '../hooks/useAnimation.js'
+import { Link } from "react-router-dom";
+import Loader from '../loaders/Loader.jsx';
 
 export default function Services() {
   const [services, setServices] = useState([])
@@ -19,28 +21,44 @@ export default function Services() {
     fetchServices()
   }, [])
 
-  if (loading) return <div className="p-6 text-center">Loading services...</div>
+  if (loading) return <Loader/>
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6">Our Services</h1>
+    <div className="min-h-[100vh] p-6 bg-[#171717] text-[#b4b4b4] ">
+    <div className="flex flex-col items-center justify-center text-center mb-6 mt-[80px]">
+      <h1 className="text-6xl bg-gradient-to-r from-orange-400 to-pink-600  inline-block text-transparent bg-clip-text m-5">Our Services</h1>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full ">
         {services.map(service => (
-          <div key={service._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-            <div className="p-6">
-              <h3 className="text-xl font-bold mb-2">{service.name}</h3>
-              <p className="text-gray-600 mb-4">{service.description}</p>
-              <div className="flex justify-between items-center">
-                <span className="text-lg font-semibold">${service.price}</span>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                  Book Now
-                </button>
-              </div>
+          <div key={service._id} className="w-full p-4 flex flex-col items-center bg-[#a9a8a8] text-[#1d1d1d] border  rounded-lg shadow-sm ">
+            <h5 className="mb-4 text-xl font-medium ">{service.name}</h5>
+            <div className="flex items-center ">
+              <span className="text-3xl font-semibold">$</span>
+              <span className="text-5xl font-extrabold tracking-tight">{service.price}</span>
             </div>
+            <p className="mt-4 ">{service.description}</p>
+            
+            <ul role="list" className="space-y-3 my-5">
+              {service.features?.map((feature, index) => (
+                <li key={index} className="flex items-center">
+                  <svg className="shrink-0 w-4 h-4 text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                  </svg>
+                  <span className="text-base font-normal leading-tight text-gray-400 ms-3">{feature}</span>
+                </li>
+              ))}
+            </ul>
+
+            <Link 
+              to={`/booking`}
+              className="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
+            >
+              Book Now
+            </Link>
           </div>
         ))}
       </div>
     </div>
+  </div>
   )
 }

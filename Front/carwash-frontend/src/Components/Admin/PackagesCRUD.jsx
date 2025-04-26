@@ -61,7 +61,9 @@ export default function PackagesCRUD() {
       name: pkg.name,
       description: pkg.description,
       price: pkg.price,
-      services: pkg.services.map((s) => s._id),
+      washCount: pkg.washCount,
+      validityDays: pkg.validityDays,
+      // services: pkg.name,
     });
     setEditingId(pkg._id);
   };
@@ -85,14 +87,14 @@ export default function PackagesCRUD() {
       }
     }
     };  
-    const toggleService = (serviceId) => {
-    setFormData((prev) => ({
-      ...prev,
-      services: prev.services.includes(serviceId)
-        ? prev.services.filter((id) => id !== serviceId)
-        : [...prev.services, serviceId],
-    }));
-  };
+    const toggleService = (serviceId ,name) => {
+      setFormData(prev => ({
+        ...prev,
+        services: prev.services.includes(serviceId,name)
+          ? prev.services.filter(id => id !== serviceId)
+          : [...prev.services, serviceId]
+      }))
+    }  
 
   const resetForm = () => {
     setFormData({
@@ -110,124 +112,105 @@ export default function PackagesCRUD() {
     return <div className="p-6 text-center">Loading packages...</div>;
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6">Manage Packages</h1>
+    <div className="p-6 flex flex-col items-center justify-center   min-h-screen">
+      <div className="mt-[80px]">
 
-      <form onSubmit={handleSubmit} className="mb-8 p-4 bg-gray-50 rounded-lg">
-        <h2 className="text-xl font-semibold mb-4">
-          {editingId ? "Edit Package" : "Add New Package"}
-        </h2>
+      <h1 className="text-4xl m-5 text-center bg-gradient-to-r from-orange-400 to-pink-600   text-transparent bg-clip-text">Manage Packages</h1>
+      <form onSubmit={handleSubmit} className="mb-8 p-6 bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 rounded-xl shadow-lg w-full max-w-4xl">
+  <h2 className="text-2xl font-bold mb-6 text-white">
+    {editingId ? "Edit Package" : "Add New Package"}
+  </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          <div>
-            <label className="block text-gray-700 mb-1">Name</label>
-            <input
-              type="text"
-              value={formData.name}
-              onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
-              }
-              className="w-full p-2 border rounded"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-gray-700 mb-1">Price</label>
-            <input
-              type="number"
-              value={formData.price}
-              onChange={(e) =>
-                setFormData({ ...formData, price: e.target.value })
-              }
-              className="w-full p-2 border rounded"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-gray-700 mb-1">Wash Count</label>
-            <input
-              type="number"
-              value={formData.washCount}
-              onChange={(e) =>
-                setFormData({ ...formData, washCount: e.target.value })
-              }
-              className="w-full p-2 border rounded"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-gray-700 mb-1"> validityDays</label>
-            <input
-              type="number"
-              value={formData.validityDays}
-              onChange={(e) =>
-                setFormData({ ...formData, validityDays: e.target.value })
-              }
-              className="w-full p-2 border rounded"
-              required
-            />
-          </div>
-        </div>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+    <div className="space-y-2">
+      <label className="block text-gray-300 font-medium">Name</label>
+      <input
+        type="text"
+        value={formData.name}
+        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+        className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+        required
+      />
+    </div>
+    <div className="space-y-2">
+      <label className="block text-gray-300 font-medium">Price</label>
+      <input
+        type="number"
+        value={formData.price}
+        onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+        className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+        required
+      />
+    </div>
+    <div className="space-y-2">
+      <label className="block text-gray-300 font-medium">Wash Count</label>
+      <input
+        type="number"
+        value={formData.washCount}
+        onChange={(e) => setFormData({ ...formData, washCount: e.target.value })}
+        className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+        required
+      />
+    </div>
+    <div className="space-y-2">
+      <label className="block text-gray-300 font-medium">Validity Days</label>
+      <input
+        type="number"
+        value={formData.validityDays}
+        onChange={(e) => setFormData({ ...formData, validityDays: e.target.value })}
+        className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+        required
+      />
+    </div>
+  </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700 mb-1">Description</label>
-          <textarea
-            value={formData.description}
-            onChange={(e) =>
-              setFormData({ ...formData, description: e.target.value })
-            }
-            className="w-full p-2 border rounded"
-            rows="3"
-            required
-          />
-        </div>
+  <div className="mb-6 space-y-2">
+    <label className="block text-gray-300 font-medium">Description</label>
+    <textarea
+      value={formData.description}
+      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+      className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+      rows="4"
+      required
+    />
+  </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700 mb-1">Services</label>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-            {services.map((service) => (
-              <div key={service._id} className="flex items-center">
-                <input
-                  type="checkbox"
-                  id={`service-${service._id}`}
-                  checked={formData.services.includes(service._id)}
-                  onChange={() => toggleService(service._id)}
-                  className="mr-2"
-                />
-                <label htmlFor={`service-${service._id}`}>{service.name}</label>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex gap-2">
-          <button
-            type="submit"
-            disabled={loading}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-blue-300"
-          >
-            {loading ? "Processing..." : editingId ? "Update" : "Add"} Package
-          </button>
-          {editingId && (
-            <button
-              type="button"
-              onClick={resetForm}
-              className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-            >
-              Cancel
-            </button>
-          )}
-        </div>
-      </form>
+  <div className="flex gap-3">
+    <button
+      type="submit"
+      disabled={loading}
+      className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2.5 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center min-w-[150px]"
+    >
+      {loading ? (
+        <>
+          <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Processing...
+        </>
+      ) : editingId ? "Update Package" : "Add Package"}
+    </button>
+    {editingId && (
+      <button
+        type="button"
+        onClick={resetForm}
+        className="bg-gray-600 hover:bg-gray-700 text-white font-medium px-5 py-2.5 rounded-lg transition-all"
+      >
+        Cancel
+      </button>
+    )}
+  </div>
+</form>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white rounded-lg overflow-hidden">
-          <thead className="bg-gray-800 text-white">
+        <table className="min-w-full bg-[#454545]  backdrop-blur-lg rounded-lg overflow-hidden">
+          <thead className="bg-[#f8f8f8] ">
             <tr>
               <th className="py-3 px-4 text-left">Name</th>
               <th className="py-3 px-4 text-left">Description</th>
               <th className="py-3 px-4 text-left">Price</th>
-              <th className="py-3 px-4 text-left">Services</th>
+              <th className="py-3 px-4 text-left">NO.washes and validity</th>
               <th className="py-3 px-4 text-left">Actions</th>
             </tr>
           </thead>
@@ -238,10 +221,11 @@ export default function PackagesCRUD() {
                 <td className="py-3 px-4">{pkg.description}</td>
                 <td className="py-3 px-4">${pkg.price}</td>
                 <td className="py-3 px-4">
+                  {pkg.washCount} washes, valid for {pkg.validityDays} days
                   {/* <div className="flex flex-wrap gap-1">
-                    {pkg.services.map(service => (
+                    {packages.map(service => (
                       <span key={service._id} className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
-                        {service.name}
+                        {service.services?.name}
                       </span>
                     ))}
                   </div> */}
@@ -265,6 +249,7 @@ export default function PackagesCRUD() {
           </tbody>
         </table>
       </div>
+              </div>
     </div>
   );
 }

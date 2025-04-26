@@ -9,33 +9,37 @@ import Dashboard from "./Components/Customer/Dashboard";
 import AdminDashboard from "./Components/Admin/Dashboard";
 import Servicess from "./Components/Customer/Services";
 import Packages from "./Components/Customer/Packages";
-// import RegisterAdmin from "./Components/pages/Admin/RegisterAdmin";
-// import RegisterSuberAdmin from "./Components/pages/Admin/superadmin";
+import RegisterAdmin from "./Components/pages/RegisterAdmin";
+// import RegisterSuberAdmin from "./Components/pages/RegisterAdmin";
 import Booking from "./Components/Customer/Booking";
 import BranchesCRUD from "./Components/Admin/BranchesCRUD";
 import ServicesCRUD from "./Components/Admin/ServicesCRUD";
 import PackagesCRUD from "./Components/Admin/PackagesCRUD";
+import BookingsManagement from "./Components/Admin/BookingsManagement";
+import Profile from "./Components/Customer/Profile";
 
 export default function App() {
   return (
-    <>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/Services" element={<Servicess />} />
-          <Route path="/packages" element={<Packages />} />
-          <Route path="/booking" element={<Booking/>} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<CustomerLogin />} />
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/customer/dashboard" element={<Dashboard />} />
-          {/* <Route path="/Registeradmin" element={<RegisterAdmin />} /> */}
-          {/* <Route path="/Registersuperadmin" element={<RegisterSuberAdmin />} /> */}
-          <Route path="/AdminDashboard" element={<AdminDashboard />} />
-          <Route path="/BranchCrud" element={<BranchesCRUD />} />
-          <Route path="/ServicesCrud" element={<ServicesCRUD />} />
-          <Route path="/PackagesCRUD" element={<PackagesCRUD />} />
-        </Routes>
-    </>
+    <div className="bg-[#171717] min-h-screen flex flex-col">
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/Services" element={<Servicess />} />
+        <Route path="/packages" element={<Packages />} />
+        <Route path="/booking" element={<Booking />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<CustomerLogin />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/customer/dashboard" element={<Dashboard />} />
+        {/* <Route path="/Registers" element={<Register />} /> */}
+        <Route path="/Registeradmin" element={<RegisterAdmin />} />
+        <Route path="/AdminDashboard" element={<AdminDashboard />} />
+        <Route path="/BranchCrud" element={<BranchesCRUD />} />
+        <Route path="/ServicesCrud" element={<ServicesCRUD />} />
+        <Route path="/PackagesCRUD" element={<PackagesCRUD />} />
+        <Route path="/AdminDashboard/Bookings" element={<BookingsManagement />} />
+      </Routes>
+    </div>
   );
 }

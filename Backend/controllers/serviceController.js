@@ -35,10 +35,11 @@ export const createService = async (req, res) => {
 
 export const updateService = async (req, res) => {
   try {
-    const { serviceId } = req.params._id;
+    console.log("Updating service with ID:", req.params);
+    const { id } = req.params;
     const updates = req.body;
 
-    const updatedService = await Service.findByIdAndUpdate(serviceId, updates, {
+    const updatedService = await Service.findByIdAndUpdate(id, updates, {
       new: true,
     });
 
@@ -59,11 +60,11 @@ export const updateService = async (req, res) => {
 
 export const deleteService = async (req, res) => {
   try {
-    const { serviceId } = req.params._id;
+    const { id } = req.params;
 
     // Soft delete - set isActive to false
     const deletedService = await Service.findByIdAndUpdate(
-      serviceId,
+      id,
       { isActive: false },
       { new: true }
     );

@@ -6,6 +6,7 @@ import {
   createPackage,
   updatePackage,
   deletePackage,
+  getServices
 } from "../controllers/packageController.js";
 import { isAuthenticated, isSuperAdmin } from "../middleware/authMiddleware.js";
 
@@ -13,6 +14,7 @@ const router = express.Router();
 
 // Public routes
 router.get("/", getAllPackages);
+router.get("/services",isAuthenticated, getServices);
 
 // Authenticated user routes
 router.post("/purchase", isAuthenticated, purchasePackage);

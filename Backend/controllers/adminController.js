@@ -45,6 +45,7 @@ export const updateBookingStatus = async (req, res) => {
           userPackage.remainingWashes -= 1;
           userPackage.remainingWashes = userPackage.remainingWashes; // Decrement remaining washes by 1;
           await userPackage.save();
+          
         }
       }
       if (status === "completed" && booking.userPackageId) {
@@ -52,6 +53,7 @@ export const updateBookingStatus = async (req, res) => {
           booking.userPackageId
         );
         updatedPackage.remainingWashes = updatedPackage.remainingWashes;
+        await updatedPackage.save();
       }
     }
 

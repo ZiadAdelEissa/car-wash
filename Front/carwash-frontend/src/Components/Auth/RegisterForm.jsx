@@ -29,7 +29,7 @@ export default function RegisterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 bg-[#a3b18a] rounded-lg shadow-md animate-fade-in mt-[90px]">
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 bg-[#fff]  rounded-lg shadow-md shadow-fuchsia-900 hover:shadow-gray-900  animate-fade-in mt-[90px]">
       <h2 className="text-2xl font-bold mb-6 text-center">Customer Registration</h2>
       {error && <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">{error}</div>}
       
@@ -84,7 +84,7 @@ export default function RegisterForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 disabled:bg-blue-300"
+        className="w-full text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
       >
         {loading ? 'Registering...' : 'Register'}
       </button>
