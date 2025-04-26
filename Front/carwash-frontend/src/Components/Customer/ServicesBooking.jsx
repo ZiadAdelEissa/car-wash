@@ -4,13 +4,12 @@ import {
   getServicesUser,
   createBooking,
   getBranchesUser,
-  getUserPackages,
 } from "../services/api.js";
 import { useAnimation } from "../hooks/useAnimation.js";
 import Loader from "../loaders/Loader.jsx";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function Booking() {
+export default function ServicesBooking() {
   const [services, setServices] = useState([]);
   const [formData, setFormData] = useState({
     serviceId: "",
@@ -18,25 +17,21 @@ export default function Booking() {
     bookingTime: "",
     notes: "",
     branchId: "",
-    userPackageId: "",
   });
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [branches, setBranches] = useState([]);
-  const [userPackages, setUserPackages] = useState([]);
   useAnimation("booking");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [servicesRes, branchesRes, packagesRes] = await Promise.all([
+        const [servicesRes, branchesRes] = await Promise.all([
           getServicesUser(),
           getBranchesUser(),
-          getUserPackages(),
         ]);
         setServices(servicesRes.data);
         setBranches(branchesRes.data);
-        setUserPackages(packagesRes.data);
       } catch (error) {
         console.error("Error fetching data:", error);
         toast.error("Failed to load data");
@@ -59,7 +54,6 @@ export default function Booking() {
         bookingTime: "",
         notes: "",
         branchId: "",
-        userPackageId: "",
       });
     } catch (error) {
       console.error("Error creating booking:", error);
@@ -75,7 +69,7 @@ export default function Booking() {
     <div className="flex flex-col items-center min-h-screen p-6 ">
       <div className="w-full mt-[80px] max-w-4xl">
         <h1 className="text-4xl md:text-6xl font-bold mb-8 text-center bg-gradient-to-r from-orange-400 to-pink-600 text-transparent bg-clip-text">
-          Book Your Wash 
+          Book a Service
         </h1>
 
         <form onSubmit={handleSubmit} className="bg-white p-6 md:p-8 rounded-xl shadow-lg">
@@ -93,23 +87,6 @@ export default function Booking() {
                   {branches.map((branch) => (
                     <option key={branch._id} value={branch._id}>
                       {branch.name} - {branch.location}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-gray-700 mb-2 font-medium">Package</label>
-                <select
-                  value={formData.userPackageId}
-                  onChange={(e) => setFormData({ ...formData, userPackageId: e.target.value })}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  required
-                >
-                  <option value="">Select a package</option>
-                  {userPackages.map((pkg) => (
-                    <option key={pkg._id} value={pkg._id}>
-                      {pkg.packageId?.name} - {pkg.packageId?.description}
                     </option>
                   ))}
                 </select>
@@ -155,18 +132,18 @@ export default function Booking() {
                   required
                 />
               </div>
-
-              <div>
-                <label className="block text-gray-700 mb-2 font-medium">Additional Notes</label>
-                <textarea
-                  value={formData.notes}
-                  onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  rows="4"
-                  placeholder="Any special requests or notes..."
-                />
-              </div>
             </div>
+          </div>
+
+          <div className="mb-6">
+            <label className="block text-gray-700 mb-2 font-medium">Additional Notes</label>
+            <textarea
+              value={formData.notes}
+              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              rows="4"
+              placeholder="Any special requests or notes..."
+            />
           </div>
 
           <div className="flex justify-center">

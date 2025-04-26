@@ -17,6 +17,7 @@ import ServicesCRUD from "./Components/Admin/ServicesCRUD";
 import PackagesCRUD from "./Components/Admin/PackagesCRUD";
 import BookingsManagement from "./Components/Admin/BookingsManagement";
 import Profile from "./Components/Customer/Profile";
+import ServicesBooking from "./Components/Customer/ServicesBooking";
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/Services" element={<Servicess />} />
         <Route path="/packages" element={<Packages />} />
         <Route path="/booking" element={<Booking />} />
+        <Route path="/serviceBooking" element={<ServicesBooking />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<CustomerLogin />} />
         <Route path="/admin/login" element={<AdminLogin />} />

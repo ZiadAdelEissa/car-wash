@@ -73,7 +73,7 @@ export default function Packages() {
   if (loading) return <Loader />;
 
   return (
-    <div className="min-h-screen p-6 bg-gray-900 text-gray-100">
+    <div className="min-h-screen p-6  text-gray-100">
       <ToastContainer 
         position="top-center"
         autoClose={5000}
@@ -104,7 +104,7 @@ export default function Packages() {
               <div>
                 <h5 className="mb-4 text-2xl font-bold text-white">{pkg.name}</h5>
                 <div className="flex items-center justify-center mb-4">
-                  <span className="text-5xl font-extrabold tracking-tight text-white">${pkg.price}</span>
+                  <span className="text-5xl font-extrabold tracking-tight text-white">{pkg.price}$</span>
                 </div>
                 <p className="text-gray-300 mb-6">{pkg.description}</p>
                 

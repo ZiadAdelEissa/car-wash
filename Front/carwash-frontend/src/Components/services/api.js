@@ -29,6 +29,8 @@ export const getUserProfile = () => API.get("/users/profile");
 export const updateUserProfile = (data) => API.put("/users/profile", data);
 export const addFamilyMember = (data) => API.post("/users/family", data);
 export const getUserPackages = () => API.get("/users/packages");
+export const sharePackage = (data) =>
+  API.post("/users/packages/share", data);
 export const getUserBookings = () => API.get("/users/bookings");
 export const getBranchesUser = () => API.get("/bookings/branches");
 export const getServicesUser = () => API.get("/bookings/services");

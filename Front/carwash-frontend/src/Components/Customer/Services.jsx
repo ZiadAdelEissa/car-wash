@@ -24,17 +24,17 @@ export default function Services() {
   if (loading) return <Loader/>
 
   return (
-    <div className="min-h-[100vh] p-6 bg-[#171717] text-[#b4b4b4] ">
+    <div className="min-h-[100vh] p-6 bg-[#171717] text-white ">
     <div className="flex flex-col items-center justify-center text-center mb-6 mt-[80px]">
       <h1 className="text-6xl bg-gradient-to-r from-orange-400 to-pink-600  inline-block text-transparent bg-clip-text m-5">Our Services</h1>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full ">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl px-4 ">
         {services.map(service => (
-          <div key={service._id} className="w-full p-4 flex flex-col items-center bg-[#a9a8a8] text-[#1d1d1d] border  rounded-lg shadow-sm ">
+          <div key={service._id} className="w-full p-6 flex flex-col justify-between items-center bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 ">
             <h5 className="mb-4 text-xl font-medium ">{service.name}</h5>
             <div className="flex items-center ">
-              <span className="text-3xl font-semibold">$</span>
               <span className="text-5xl font-extrabold tracking-tight">{service.price}</span>
+              <span className="text-3xl font-semibold">$</span>
             </div>
             <p className="mt-4 ">{service.description}</p>
             
@@ -50,7 +50,7 @@ export default function Services() {
             </ul>
 
             <Link 
-              to={`/booking`}
+              to={`/serviceBooking`}
               className="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
             >
               Book Now
