@@ -6,20 +6,24 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 import { useLayoutEffect } from "react";
 import Loader from "../loaders/Loader.jsx";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { FiCalendar, FiPackage, FiAlertCircle, FiCheckCircle, FiClock } from "react-icons/fi";
+
 export default function Dashboard() {
   const [stats, setStats] = useState({ bookings: 0, packages: 0 });
   const [bookings, setBookings] = useState([]);
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(true);
   const comp = useRef(null);
-  const statsRef = useRef(null); // For the stats section
-  const bookingsTableRef = useRef(null); // For bookings table
-  const packagesTableRef = useRef(null); // For packages table
+  const statsRef = useRef(null);
+  const bookingsTableRef = useRef(null);
+  const packagesTableRef = useRef(null);
+
   useLayoutEffect(() => {
-    if (loading) return; // Don't animate while loading
+    if (loading) return;
 
     let ctx = gsap.context(() => {
-      // Only animate if elements exist
       if (comp.current) {
         gsap.fromTo(
           comp.current,
@@ -75,7 +79,7 @@ export default function Dashboard() {
       if (packagesTableRef.current) {
         gsap.fromTo(
           packagesTableRef.current,
-          { x: 150, opacity: 0, rotateY: -15 }, // Different direction for variety
+          { x: 150, opacity: 0, rotateY: -15 },
           {
             x: 0,
             opacity: 1,
@@ -97,123 +101,179 @@ export default function Dashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const [bookingsRes, packagesRes] = await Promise.all([
-        getUserBookings(),
-        getUserPackages(),
-      ]);
-      setStats({
-        bookings: bookingsRes.data.length,
-        packages: packagesRes.data.length,
-      });
+      try {
+        const [bookingsRes, packagesRes] = await Promise.all([
+          getUserBookings(),
+          getUserPackages(),
+        ]);
+        setStats({
+          bookings: bookingsRes.data.length,
+          packages: packagesRes.data.length,
+        });
+        toast.success("Dashboard data loaded successfully!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      } catch (error) {
+        toast.error("Failed to load dashboard data. Please try again.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
     };
     fetchData();
   }, []);
+
   useEffect(() => {
     const fetchBookings = async () => {
       try {
         const response = await getUserBookings();
         setBookings(response.data);
+      } catch (error) {
+        toast.error("Failed to load bookings. Please try again.", {
+          position: "top-right",
+          autoClose: 5000,
+        });
       } finally {
         setLoading(false);
       }
     };
+    
     const fetchPackages = async () => {
       try {
         const response = await getUserPackages();
         setPackages(response.data);
+      } catch (error) {
+        toast.error("Failed to load packages. Please try again.", {
+          position: "top-right",
+          autoClose: 5000,
+        });
       } finally {
         setLoading(false);
       }
     };
+    
     fetchBookings();
     fetchPackages();
   }, []);
+
   if (loading) {
     return <Loader />;
   }
+
+  const getStatusBadge = (status) => {
+    switch (status.toLowerCase()) {
+      case "completed":
+        return (
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+            <FiCheckCircle className="mr-1" /> Completed
+          </span>
+        );
+      case "pending":
+        return (
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+            <FiClock className="mr-1" /> Pending
+          </span>
+        );
+      case "cancelled":
+        return (
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
+            <FiAlertCircle className="mr-1" /> Cancelled
+          </span>
+        );
+      default:
+        return (
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+            {status}
+          </span>
+        );
+    }
+  };
+
   return (
     <div
       ref={comp}
       className="p-4 md:p-6 flex flex-col justify-around items-center gap-6 mt-[80px] w-full"
     >
-      <h1 className="text-4xl md:text-6xl bg-gradient-to-r from-orange-400 to-pink-600 inline-block text-transparent bg-clip-text">
+      <h1 className="text-4xl md:text-6xl bg-gradient-to-r from-orange-400 to-pink-600 inline-block text-transparent bg-clip-text font-bold tracking-tight">
         MY Dashboard
       </h1>
 
       <div
         ref={statsRef}
-        className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full"
+        className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full max-w-6xl"
       >
-        <div className="bg-[#a9a8a8] p-4 md:p-6 rounded-lg shadow-md shadow-gray-900 text-center">
-          <h2 className="text-lg md:text-xl font-semibold mb-2">
+        <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl shadow-lg border border-blue-200 text-center transition-all hover:shadow-xl hover:scale-[1.02]">
+          <div className="flex justify-center mb-3">
+            <div className="p-3 bg-blue-100 rounded-full">
+              <FiCalendar className="text-blue-600 text-2xl" />
+            </div>
+          </div>
+          <h2 className="text-xl font-semibold mb-2 text-gray-700">
             Your Bookings
           </h2>
-          <p className="text-3xl md:text-4xl font-bold text-blue-600">
+          <p className="text-4xl font-bold text-blue-600">
             {stats.bookings}
           </p>
         </div>
-        <div className="bg-[#a9a8a8] p-4 md:p-6 rounded-lg shadow-md shadow-gray-900 text-center">
-          <h2 className="text-lg md:text-xl font-semibold mb-2">
+        <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl shadow-lg border border-green-200 text-center transition-all hover:shadow-xl hover:scale-[1.02]">
+          <div className="flex justify-center mb-3">
+            <div className="p-3 bg-green-100 rounded-full">
+              <FiPackage className="text-green-600 text-2xl" />
+            </div>
+          </div>
+          <h2 className="text-xl font-semibold mb-2 text-gray-700">
             Your Packages
           </h2>
-          <p className="text-3xl md:text-4xl font-bold text-green-600">
+          <p className="text-4xl font-bold text-green-600">
             {stats.packages}
           </p>
         </div>
       </div>
 
-      {/* Responsive Bookings Table */}
-      <div ref={bookingsTableRef} className="w-full overflow-x-auto">
-        <h2 className="text-2xl font-bold mb-4 text-gray-400">
-          Recent Bookings
-        </h2>
+      {/* Bookings Table */}
+      <div ref={bookingsTableRef} className="w-full max-w-6xl overflow-x-auto">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-2xl font-bold text-gray-700 flex items-center">
+            <FiCalendar className="mr-2" /> Recent Bookings
+          </h2>
+          {bookings.length === 0 && (
+            <p className="text-gray-500">No bookings found</p>
+          )}
+        </div>
         <div className="min-w-[600px]">
-          {" "}
-          {/* Minimum width for small screens */}
-          <table className="w-full bg-white rounded-lg overflow-hidden">
-            <thead className="bg-gray-800 text-white">
+          <table className="w-full bg-white rounded-xl overflow-hidden shadow-md">
+            <thead className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
               <tr>
-                <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm md:text-base">
-                  Branch
-                </th>
-                <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm md:text-base">
-                  Branch Number
-                </th>
-                <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm md:text-base">
-                  Service
-                </th>
-                <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm md:text-base">
-                  Date
-                </th>
-                <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm md:text-base">
-                  Time
-                </th>
-                <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm md:text-base">
-                  Status
-                </th>
+                <th className="py-3 px-4 text-left">Branch</th>
+                <th className="py-3 px-4 text-left">Branch Number</th>
+                <th className="py-3 px-4 text-left">Service</th>
+                <th className="py-3 px-4 text-left">Date</th>
+                <th className="py-3 px-4 text-left">Time</th>
+                <th className="py-3 px-4 text-left">Status</th>
               </tr>
             </thead>
-            <tbody className="text-gray-700">
+            <tbody className="divide-y divide-gray-200">
               {bookings.map((booking) => (
-                <tr key={booking.id || booking._id}>
-                  <td className="py-2 px-3 md:py-3 md:px-4 border-b text-sm md:text-base">
-                    {booking.branchId?.name}
-                  </td>
-                  <td className="py-2 px-3 md:py-3 md:px-4 border-b text-sm md:text-base">
-                    {booking.branchId?.phone}
-                  </td>
-                  <td className="py-2 px-3 md:py-3 md:px-4 border-b text-sm md:text-base">
-                    {booking.serviceId?.name}
-                  </td>
-                  <td className="py-2 px-3 md:py-3 md:px-4 border-b text-sm md:text-base">
-                    {booking.bookingDate}
-                  </td>
-                  <td className="py-2 px-3 md:py-3 md:px-4 border-b text-sm md:text-base">
-                    {booking.bookingTime}
-                  </td>
-                  <td className="py-2 px-3 md:py-3 md:px-4 border-b text-sm md:text-base">
-                    {booking.status}
-                  </td>
+                <tr key={booking.id || booking._id} className="hover:bg-blue-50 transition-colors">
+                  <td className="py-3 px-4">{booking.branchId?.name}</td>
+                  <td className="py-3 px-4">{booking.branchId?.phone}</td>
+                  <td className="py-3 px-4">{booking.serviceId?.name}</td>
+                  <td className="py-3 px-4">{booking.bookingDate}</td>
+                  <td className="py-3 px-4">{booking.bookingTime}</td>
+                  <td className="py-3 px-4">{getStatusBadge(booking.status)}</td>
                 </tr>
               ))}
             </tbody>
@@ -221,54 +281,53 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Responsive Packages Table */}
+      {/* Packages Table */}
       <div
         ref={packagesTableRef}
-        className="w-full overflow-x-auto mt-6 md:mt-10"
+        className="w-full max-w-6xl overflow-x-auto mt-8"
       >
-        <h2 className="text-2xl font-bold mb-4 text-gray-400">
-          Recent Package
-        </h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-2xl font-bold text-gray-700 flex items-center">
+            <FiPackage className="mr-2" /> Recent Packages
+          </h2>
+          {packages.length === 0 && (
+            <p className="text-gray-500">No packages found</p>
+          )}
+        </div>
         <div className="min-w-[500px]">
-          {" "}
-          {/* Minimum width for small screens */}
-          <table className="w-full bg-white rounded-lg overflow-hidden">
-            <thead className="bg-gray-800 text-white">
+          <table className="w-full bg-white rounded-xl overflow-hidden shadow-md">
+            <thead className="bg-gradient-to-r from-green-500 to-green-600 text-white">
               <tr>
-                <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm md:text-base">
-                  Packages
-                </th>
-                <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm md:text-base">
-                  Price
-                </th>
-                <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm md:text-base">
-                  Expire Date
-                </th>
-                <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm md:text-base">
-                  Remaining Washes
-                </th>
-                <th className="py-2 px-3 md:py-3 md:px-4 text-left text-sm md:text-base">
-                  Next Wash from here
-                </th>
+                <th className="py-3 px-4 text-left">Package</th>
+                <th className="py-3 px-4 text-left">Price</th>
+                <th className="py-3 px-4 text-left">Expire Date</th>
+                <th className="py-3 px-4 text-left">Remaining Washes</th>
+                <th className="py-3 px-4 text-left">Actions</th>
               </tr>
             </thead>
-            <tbody className="text-gray-700">
+            <tbody className="divide-y divide-gray-200">
               {packages.map((packageItem) => (
-                <tr key={packageItem.id || packageItem._id}>
-                  <td className="py-2 px-3 md:py-3 md:px-4 border-b text-sm md:text-base">
-                    {packageItem.packageId?.name}
+                <tr key={packageItem.id || packageItem._id} className="hover:bg-green-50 transition-colors">
+                  <td className="py-3 px-4 font-medium">{packageItem.packageId?.name}</td>
+                  <td className="py-3 px-4">{packageItem.packageId?.price} $</td>
+                  <td className="py-3 px-4">{packageItem.expiryDate}</td>
+                  <td className="py-3 px-4">
+                    <div className="flex items-center">
+                      <div className="w-fit bg-gray-200 rounded-full h-2.5">
+                        <div 
+                          className={`h-2.5 rounded-full ${
+                            packageItem.remainingWashes <= 2 ? 'bg-red-500' : 'bg-green-500'
+                          }`}
+                          style={{ width: `${(packageItem.remainingWashes / 10) * 100}%` }}
+                        ></div>
+                      </div>
+                      <span className="ml-2 text-sm font-medium">
+                        {packageItem.remainingWashes}
+                      </span>
+                    </div>
                   </td>
-                  <td className="py-2 px-3 md:py-3 md:px-4 border-b text-sm md:text-base">
-                    {packageItem.packageId?.price}
-                  </td>
-                  <td className="py-2 px-3 md:py-3 md:px-4 border-b text-sm md:text-base">
-                    {packageItem.expiryDate}
-                  </td>
-                  <td className="py-2 px-3 md:py-3 md:px-4 border-b text-sm md:text-base">
-                    {packageItem.remainingWashes}
-                  </td>
-                  <td className="py-2 px-3 md:py-3 md:px-4 border-b text-sm md:text-base">
-                    <button className="cursor-pointer group relative bg-emerald-700 hover:bg-emerald-300 text-black font-semibold text-sm px-6 py-3 rounded-full transition-all duration-200 ease-in-out shadow hover:shadow-lg w-45 h-12">
+                  <td className="py-3 px-4">
+                  <button  onClick={() => toast.info("Redirecting to booking page...")} className="cursor-pointer group relative bg-emerald-700 hover:bg-emerald-300 text-black font-semibold text-sm px-6 py-3 rounded-full transition-all duration-200 ease-in-out shadow hover:shadow-lg w-45 h-12">
                       <Link
                         to="/booking"
                         className="relative flex items-center justify-center gap-2"
