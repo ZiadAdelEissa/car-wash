@@ -31,7 +31,7 @@ export default function AdminDashboard() {
     <div className="Dashboard p-6 minh-[100vh] flex flex-col items-center justify-center text-center mt-[50px]">
       {/* <img src="https://i.ibb.co/mFSmqjCg/pexels-tima-miroshnichenko-6873123.jpg" alt="Logo" className=" mb-6 bg-cover bg-center absolute -z-10" /> */}
 
-      <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
+      <h1 className="text-4xl m-5 text-center bg-gradient-to-r from-orange-400 to-pink-600 text-transparent bg-clip-text">Admin Dashboard</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         
         <div className="bg-white p-6 rounded-lg shadow-md dashboard-stats">
