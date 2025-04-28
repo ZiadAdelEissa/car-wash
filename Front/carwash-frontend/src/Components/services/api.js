@@ -38,6 +38,8 @@ export const getPackagesUser = () => API.get("/bookings/packages");
 export const getBookingDetails = (id) => API.get(`/bookings/${id}`);
 // Admin
 export const getAllBookings = () => API.get("/admin/bookings");
+// Admin User Packages
+export const getAllUserPackages = () => API.get("/admin/user-packages");
 export const updateBranchBooking = (id) =>
   API.patch(`/branch-admin//branches/:id/bookings/:bookingId`, id);
 export const updateBookingStatus = (id,status) => API.patch(`/admin/bookings/${id}/${status}`, { status }); ;

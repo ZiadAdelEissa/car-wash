@@ -9,12 +9,12 @@ import {
   getBranchStats,
   deleteBooking,
   updateBranchBookingStatus,
+  getAllUserPackages,
 } from "../controllers/adminController.js";
 import {
   isAuthenticated,
   isBranchAdmin,
   isSuperAdmin,
-
 } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -38,7 +38,9 @@ router.put("/branches/:id", isAuthenticated, isSuperAdmin, updateBranch);
 // Stats
 router.get("/stats", isAuthenticated, isBranchAdmin, getSystemStats);
 router.get("/branches/:id/:stats", getBranchStats);
+// User Packages Management
+router.get("/user-packages", isAuthenticated, isSuperAdmin, getAllUserPackages);
 
 // Notifications
-// 
+//
 export default router;

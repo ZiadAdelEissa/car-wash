@@ -269,3 +269,18 @@ export const getBranchStats = async (req, res) => {
       .json({ message: "Error fetching stats", error: error.message });
   }
 };
+export const getAllUserPackages = async (req, res) => {
+  try {
+    const userPackages = await UserPackage.find()
+      .populate("userId", "name email")
+      .populate("packageId")
+      .populate("sharedWith", "name email");
+    
+    res.json(userPackages);
+  } catch (error) {
+    res.status(500).json({ 
+      message: "Error fetching user packages", 
+      error: error.message 
+    });
+  }
+};
