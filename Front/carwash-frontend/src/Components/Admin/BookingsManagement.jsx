@@ -5,7 +5,7 @@ import {
   getAllBookings,
   updateBookingStatus,
   deleteBooking,
-  getAllUserPackages
+  getAllUserPackages,
 } from "../services/api.js";
 import Loader from "../loaders/Loader.jsx";
 
@@ -36,13 +36,14 @@ export default function BookingsManagement() {
   }, [activeTab]);
 
   useLayoutEffect(() => {
-    tableRowsRef.current = tableRowsRef.current.slice(0, 
+    tableRowsRef.current = tableRowsRef.current.slice(
+      0,
       activeTab === "bookings" ? bookings.length : userPackages.length
     );
-    
+
     if (tableRowsRef.current.length > 0) {
       gsap.killTweensOf(tableRowsRef.current);
-      
+
       tableRowsRef.current.forEach((el, index) => {
         if (el && getComputedStyle(el).opacity !== "1") {
           gsap.from(el, {
@@ -50,7 +51,7 @@ export default function BookingsManagement() {
             y: 30,
             opacity: 0,
             delay: 0.1 + index * 0.05,
-            ease: "back.out"
+            ease: "back.out",
           });
         }
       });
@@ -61,28 +62,35 @@ export default function BookingsManagement() {
     try {
       setLoading(true);
       await updateBookingStatus(id, status);
-      
-      const updatedBooking = bookings.find(b => b._id === id);
-      
+
+      const updatedBooking = bookings.find((b) => b._id === id);
+
       const emailSubject = `Booking Update: #${id}`;
       const emailBody = `
-Hello ${updatedBooking.userId?.name || 'Customer'},
+Hello ${updatedBooking.userId?.name || "Customer"},
 
 Your booking (#${id}) status has been updated to ${status.toUpperCase()}.
 
 Booking Details:
-- Service: ${updatedBooking.serviceId?.name || 'N/A'}
-- Branch: ${updatedBooking.branchId?.name || 'N/A'}
+- Service: ${updatedBooking.serviceId?.name || "N/A"}
+- Branch: ${updatedBooking.branchId?.name || "N/A"}
 - Date: ${new Date(updatedBooking.bookingDate).toLocaleDateString()}
 - Time: ${updatedBooking.bookingTime}
-${updatedBooking.userPackageId?.remainingWashes ? 
-`- Remaining Washes: ${updatedBooking.userPackageId.remainingWashes}` : ''}
+${
+  updatedBooking.userPackageId?.remainingWashes
+    ? `- Remaining Washes: ${updatedBooking.userPackageId.remainingWashes}`
+    : ""
+}
 
 Thank you for choosing our service!
       `.trim();
 
       if (updatedBooking.userId?.email) {
-        window.location.href = `mailto:${updatedBooking.userId.email}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+        window.location.href = `mailto:${
+          updatedBooking.userId.email
+        }?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(
+          emailBody
+        )}`;
       }
 
       const response = await getAllBookings();
@@ -97,29 +105,37 @@ Thank you for choosing our service!
   const handlePaymentStatusChange = async (id, isPaid) => {
     try {
       setLoading(true);
-      
+
       // Update locally without API call
-      const updatedPackages = userPackages.map(pkg => 
+      const updatedPackages = userPackages.map((pkg) =>
         pkg._id === id ? { ...pkg, isPaid } : pkg
       );
       setUserPackages(updatedPackages);
-      
+
       // Find the updated package
-      const updatedPackage = updatedPackages.find(p => p._id === id);
-      
+      const updatedPackage = updatedPackages.find((p) => p._id === id);
+
       // If payment was just marked as paid, send confirmation email
       if (isPaid && updatedPackage?.userId?.email) {
-        const emailSubject = `Payment Confirmation for ${updatedPackage.packageId?.name || 'Package'}`;
+        const emailSubject = `Payment Confirmation for ${
+          updatedPackage.packageId?.name || "Package"
+        }`;
         const emailBody = `
-Hello ${updatedPackage.userId?.name || 'Customer'},
+Hello ${updatedPackage.userId?.name || "Customer"},
 
-We have received your payment for the ${updatedPackage.packageId?.name || 'package'}.
+We have received your payment for the ${
+          updatedPackage.packageId?.name || "package"
+        }.
 
 Package Details:
-- Package Name: ${updatedPackage.packageId?.name || 'N/A'}
-- Price: $${updatedPackage.packageId?.price || 'N/A'}
-- Total Washes: ${updatedPackage.packageId?.numberOfWashes || 'N/A'}
-- Expiry Date: ${updatedPackage.expiryDate ? new Date(updatedPackage.expiryDate).toLocaleDateString() : 'N/A'}
+- Package Name: ${updatedPackage.packageId?.name || "N/A"}
+- Price: $${updatedPackage.packageId?.price || "N/A"}
+- Total Washes: ${updatedPackage.packageId?.numberOfWashes || "N/A"}
+- Expiry Date: ${
+          updatedPackage.expiryDate
+            ? new Date(updatedPackage.expiryDate).toLocaleDateString()
+            : "N/A"
+        }
 
 Thank you for your payment! Your package is now active.
 
@@ -127,7 +143,11 @@ Best regards,
 Car Wash Team
         `.trim();
 
-        window.location.href = `mailto:${updatedPackage.userId.email}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+        window.location.href = `mailto:${
+          updatedPackage.userId.email
+        }?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(
+          emailBody
+        )}`;
       }
     } catch (error) {
       alert("Failed to update payment status");
@@ -164,13 +184,21 @@ Car Wash Team
       <div className="flex justify-center mb-6">
         <button
           onClick={() => setActiveTab("bookings")}
-          className={`px-4 py-2 mx-2 rounded-l-lg ${activeTab === "bookings" ? "bg-orange-500 text-white" : "bg-gray-200"}`}
+          className={`px-4 py-2 mx-2 rounded-l-lg ${
+            activeTab === "bookings"
+              ? "bg-orange-500 text-white"
+              : "bg-gray-200"
+          }`}
         >
           Bookings
         </button>
         <button
           onClick={() => setActiveTab("packages")}
-          className={`px-4 py-2 mx-2 rounded-r-lg ${activeTab === "packages" ? "bg-orange-500 text-white" : "bg-gray-200"}`}
+          className={`px-4 py-2 mx-2 rounded-r-lg ${
+            activeTab === "packages"
+              ? "bg-orange-500 text-white"
+              : "bg-gray-200"
+          }`}
         >
           User Packages
         </button>
@@ -195,29 +223,39 @@ Car Wash Team
             </thead>
             <tbody className="divide-y divide-gray-200">
               {bookings.map((booking, index) => (
-                <tr 
+                <tr
                   key={booking._id}
-                  ref={el => tableRowsRef.current[index] = el}
+                  ref={(el) => (tableRowsRef.current[index] = el)}
                   className="hover:bg-gray-700 transition-colors"
                 >
-                  <td className="py-3 px-4 text-white">{booking.userId?.name || "N/A"}</td>
+                  <td className="py-3 px-4 text-white">
+                    {booking.userId?.name || "N/A"}
+                  </td>
                   <td className="py-3 px-4 text-gray-300">
                     {booking.serviceId?.name || "N/A"}
                   </td>
                   <td className="py-3 px-4 text-white">
                     {booking.serviceId?.price || "N/A"} $
                   </td>
-                  <td className="py-3 px-4 text-gray-300">{booking.branchId?.name || "N/A"}</td>
-                  <td className="py-3 px-4 text-white">{booking.userPackageId?.remainingWashes || "N/A"}</td>
+                  <td className="py-3 px-4 text-gray-300">
+                    {booking.branchId?.name || "N/A"}
+                  </td>
                   <td className="py-3 px-4 text-white">
-                    {booking.userPackageId?.expiryDate ? 
-                      new Date(booking.userPackageId.expiryDate).toLocaleDateString() : 
-                      "N/A"}
+                    {booking.userPackageId?.remainingWashes || "N/A"}
+                  </td>
+                  <td className="py-3 px-4 text-white">
+                    {booking.userPackageId?.expiryDate
+                      ? new Date(
+                          booking.userPackageId.expiryDate
+                        ).toLocaleDateString()
+                      : "N/A"}
                   </td>
                   <td className="py-3 px-4 text-white">
                     {new Date(booking.bookingDate).toLocaleDateString()}
                   </td>
-                  <td className="py-3 px-4 text-white">{booking.bookingTime}</td>
+                  <td className="py-3 px-4 text-white">
+                    {booking.bookingTime}
+                  </td>
                   <td className="py-3 px-4">
                     <select
                       value={booking.status}
@@ -268,15 +306,17 @@ Car Wash Team
             </thead>
             <tbody className="divide-y divide-gray-200">
               {userPackages.map((userPackage, index) => (
-                <tr 
+                <tr
                   key={userPackage._id}
-                  ref={el => tableRowsRef.current[index] = el}
+                  ref={(el) => (tableRowsRef.current[index] = el)}
                   className="hover:bg-gray-700 transition-colors"
                 >
                   <td className="py-3 px-4 text-white">
                     {userPackage.userId?.name || "N/A"}
                     {userPackage.userId?.email && (
-                      <div className="text-xs text-gray-400">{userPackage.userId.email}</div>
+                      <div className="text-xs text-gray-400">
+                        {userPackage.userId.email}
+                      </div>
                     )}
                   </td>
                   <td className="py-3 px-4 text-gray-300">
@@ -292,15 +332,18 @@ Car Wash Team
                     {userPackage.remainingWashes || "0"}
                   </td>
                   <td className="py-3 px-4 text-white">
-                    {userPackage.expiryDate ? 
-                      new Date(userPackage.expiryDate).toLocaleDateString() : 
-                      "N/A"}
+                    {userPackage.expiryDate
+                      ? new Date(userPackage.expiryDate).toLocaleDateString()
+                      : "N/A"}
                   </td>
                   <td className="py-3 px-4">
                     <select
                       value={userPackage.isPaid ? "paid" : "unpaid"}
                       onChange={(e) =>
-                        handlePaymentStatusChange(userPackage._id, e.target.value === "paid")
+                        handlePaymentStatusChange(
+                          userPackage._id,
+                          e.target.value === "paid"
+                        )
                       }
                       className={`px-3 py-1 rounded text-sm font-medium transition-all ${
                         userPackage.isPaid
@@ -316,24 +359,36 @@ Car Wash Team
                     {userPackage.userId?.email && (
                       <button
                         onClick={() => {
-                          const emailSubject = `Package Details: ${userPackage.packageId?.name || 'Package'}`;
+                          const emailSubject = `Package Details: ${
+                            userPackage.packageId?.name || "Package"
+                          }`;
                           const emailBody = `
-Hello ${userPackage.userId?.name || 'Customer'},
+Hello ${userPackage.userId?.name || "Customer"},
 
 Here are your package details:
 
-Package Name: ${userPackage.packageId?.name || 'N/A'}
-Price: $${userPackage.packageId?.price || 'N/A'}
-Total Washes: ${userPackage.packageId?.numberOfWashes || 'N/A'}
-Remaining Washes: ${userPackage.remainingWashes || '0'}
-Expiry Date: ${userPackage.expiryDate ? new Date(userPackage.expiryDate).toLocaleDateString() : 'N/A'}
+Package Name: ${userPackage.packageId?.name || "N/A"}
+Price: $${userPackage.packageId?.price || "N/A"}
+Total Washes: ${userPackage.packageId?.numberOfWashes || "N/A"}
+Remaining Washes: ${userPackage.remainingWashes || "0"}
+Expiry Date: ${
+                            userPackage.expiryDate
+                              ? new Date(
+                                  userPackage.expiryDate
+                                ).toLocaleDateString()
+                              : "N/A"
+                          }
 
 Thank you for choosing our service!
 
 Best regards,
 Car Wash Team
                           `.trim();
-                          window.location.href = `mailto:${userPackage.userId.email}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+                          window.location.href = `mailto:${
+                            userPackage.userId.email
+                          }?subject=${encodeURIComponent(
+                            emailSubject
+                          )}&body=${encodeURIComponent(emailBody)}`;
                         }}
                         className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition-colors text-sm"
                       >
