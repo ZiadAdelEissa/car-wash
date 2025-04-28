@@ -45,7 +45,6 @@ export const updateBookingStatus = async (req, res) => {
           userPackage.remainingWashes -= 1;
           userPackage.remainingWashes = userPackage.remainingWashes; // Decrement remaining washes by 1;
           await userPackage.save();
-          
         }
       }
       if (status === "completed" && booking.userPackageId) {
@@ -275,12 +274,12 @@ export const getAllUserPackages = async (req, res) => {
       .populate("userId", "name email")
       .populate("packageId")
       .populate("sharedWith", "name email");
-    
+
     res.json(userPackages);
   } catch (error) {
-    res.status(500).json({ 
-      message: "Error fetching user packages", 
-      error: error.message 
+    res.status(500).json({
+      message: "Error fetching user packages",
+      error: error.message,
     });
   }
 };

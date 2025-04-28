@@ -29,8 +29,7 @@ export const getUserProfile = () => API.get("/users/profile");
 export const updateUserProfile = (data) => API.put("/users/profile", data);
 export const addFamilyMember = (data) => API.post("/users/family", data);
 export const getUserPackages = () => API.get("/users/packages");
-export const sharePackage = (data) =>
-  API.post("/users/packages/share", data);
+export const sharePackage = (data) => API.post("/users/packages/share", data);
 export const getUserBookings = () => API.get("/users/bookings");
 export const getBranchesUser = () => API.get("/bookings/branches");
 export const getServicesUser = () => API.get("/bookings/services");
@@ -42,9 +41,11 @@ export const getAllBookings = () => API.get("/admin/bookings");
 export const getAllUserPackages = () => API.get("/admin/user-packages");
 export const updateBranchBooking = (id) =>
   API.patch(`/branch-admin//branches/:id/bookings/:bookingId`, id);
-export const updateBookingStatus = (id,status) => API.patch(`/admin/bookings/${id}/${status}`, { status }); ;
-export const getNotifications = async () =>  API.get("/notifications");
-export const markNotificationsAsRead = async (id) => API.patch(`/notifications/${id}`);
+export const updateBookingStatus = (id, status) =>
+  API.patch(`/admin/bookings/${id}/${status}`, { status });
+export const getNotifications = async () => API.get("/notifications");
+export const markNotificationsAsRead = async (id) =>
+  API.patch(`/notifications/${id}`);
 export const deleteBooking = (id) => API.delete(`/admin/bookings/${id}`);
 export const getSystemStats = () => API.get("/admin/stats");
 export const getAllBranches = () => API.get("/admin/branches");
