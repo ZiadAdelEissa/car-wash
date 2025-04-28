@@ -1,14 +1,26 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect,useRef, useLayoutEffect } from 'react'
 import { getServices } from '../services/api.js'
-import { useAnimation } from '../hooks/useAnimation.js'
 import { Link } from "react-router-dom";
 import Loader from '../loaders/Loader.jsx';
+import { gsap } from 'gsap'
 
 export default function Services() {
   const [services, setServices] = useState([])
   const [loading, setLoading] = useState(true)
-  useAnimation('services')
-
+    const titleRef = useRef(null);
+    useLayoutEffect(() => {
+      // Only animate the title if it exists
+      if (titleRef.current) {
+        gsap.from(titleRef.current, {
+          opacity: 0,
+          y: 50,
+          duration: 1,
+          ease: "power3.out"
+        });
+      }
+    }, [loading]); // Run when loading completes
+  
+  
   useEffect(() => {
     const fetchServices = async () => {
       try {
@@ -25,7 +37,7 @@ export default function Services() {
 
   return (
     <div className="min-h-[100vh] p-6 bg-[#171717] text-white ">
-    <div className="flex flex-col items-center justify-center text-center mb-6 mt-[80px]">
+    <div  ref={titleRef} className="flex flex-col items-center justify-center text-center mb-6 mt-[80px]">
       <h1 className="text-6xl bg-gradient-to-r from-orange-400 to-pink-600  inline-block text-transparent bg-clip-text m-5">Our Services</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl px-4 ">

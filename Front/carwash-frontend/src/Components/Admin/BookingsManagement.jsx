@@ -27,14 +27,11 @@ export default function BookingsManagement() {
   }, []);
 
   useLayoutEffect(() => {
-    // Reset the refs array when bookings change
     tableRowsRef.current = tableRowsRef.current.slice(0, bookings.length);
     
     if (tableRowsRef.current.length > 0) {
-      // Kill any existing animations
       gsap.killTweensOf(tableRowsRef.current);
       
-      // Only animate if the element is not already visible
       tableRowsRef.current.forEach((el, index) => {
         if (el && getComputedStyle(el).opacity !== "1") {
           gsap.from(el, {
@@ -48,10 +45,39 @@ export default function BookingsManagement() {
       });
     }
   }, [bookings]);
+
   const handleStatusChange = async (id, status) => {
     try {
       setLoading(true);
       await updateBookingStatus(id, status);
+      
+      // Find the updated booking
+      const updatedBooking = bookings.find(b => b._id === id);
+      
+      // Prepare email content
+      const emailSubject = `Booking Update: #${id}`;
+      const emailBody = `
+Hello ${updatedBooking.userId?.name || 'Customer'},
+
+Your booking (#${id}) status has been updated to ${status.toUpperCase()}.
+
+Booking Details:
+- Service: ${updatedBooking.serviceId?.name || 'N/A'}
+- Branch: ${updatedBooking.branchId?.name || 'N/A'}
+- Date: ${new Date(updatedBooking.bookingDate).toLocaleDateString()}
+- Time: ${updatedBooking.bookingTime}
+${updatedBooking.userPackageId?.remainingWashes ? 
+`- Remaining Washes: ${updatedBooking.userPackageId.remainingWashes}` : ''}
+
+Thank you for choosing our service!
+      `.trim();
+
+      // Open user's email client
+      if (updatedBooking.userId?.email) {
+        window.location.href = `mailto:${updatedBooking.userId.email}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+      }
+
+      // Refresh bookings list
       const response = await getAllBookings();
       setBookings(response.data);
     } catch (error) {
