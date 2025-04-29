@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth.js";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { useAuth } from "../../context/AuthContext";
 export default function Navbar() {
   const { user, logout } = useAuth();
   const [open, setOpen] = useState(false);
@@ -123,10 +123,11 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <Link to="/login" className="group/button relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gray-800/30 backdrop-blur-lg px-3 py-2 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-gray-600/50 border border-white/20">
-                  <h1  className="text-lg">
-                    Login Now
-                  </h1>
+                <Link
+                  to="/login"
+                  className="group/button relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gray-800/30 backdrop-blur-lg px-3 py-2 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-gray-600/50 border border-white/20"
+                >
+                  <h1 className="text-lg">Login Now</h1>
                   <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-13deg)_translateX(-100%)] group-hover/button:duration-1000 group-hover/button:[transform:skew(-13deg)_translateX(100%)]">
                     <div className="relative h-full w-10 bg-white/20" />
                   </div>
@@ -159,10 +160,11 @@ export default function Navbar() {
                     </svg>
                   </div>
                 </button>
-                <Link  to="/admin/login" className="group/button relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gray-800/30 backdrop-blur-lg px-3 py-2 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-gray-600/50 border border-white/20">
-                  <h1 className="text-lg">
-                    Admin Login
-                  </h1>
+                <Link
+                  to="/admin/login"
+                  className="group/button relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gray-800/30 backdrop-blur-lg px-3 py-2 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-gray-600/50 border border-white/20"
+                >
+                  <h1 className="text-lg">Admin Login</h1>
                   <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-13deg)_translateX(-100%)] group-hover/button:duration-1000 group-hover/button:[transform:skew(-13deg)_translateX(100%)]">
                     <div className="relative h-full w-10 bg-white/20" />
                   </div>

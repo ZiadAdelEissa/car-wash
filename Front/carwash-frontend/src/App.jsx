@@ -18,30 +18,36 @@ import PackagesCRUD from "./Components/Admin/PackagesCRUD";
 import BookingsManagement from "./Components/Admin/BookingsManagement";
 import Profile from "./Components/Customer/Profile";
 import ServicesBooking from "./Components/Customer/ServicesBooking";
+import { AuthProvider } from "./context/AuthContext";
 
 export default function App() {
   return (
-    <div className="bg-[#171717] min-h-screen flex flex-col">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/Services" element={<Servicess />} />
-        <Route path="/packages" element={<Packages />} />
-        <Route path="/booking" element={<Booking />} />
-        <Route path="/serviceBooking" element={<ServicesBooking />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<CustomerLogin />} />
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/customer/dashboard" element={<Dashboard />} />
-        {/* <Route path="/Registers" element={<Register />} /> */}
-        <Route path="/Registeradmin" element={<RegisterAdmin />} />
-        <Route path="/AdminDashboard" element={<AdminDashboard />} />
-        <Route path="/BranchCrud" element={<BranchesCRUD />} />
-        <Route path="/ServicesCrud" element={<ServicesCRUD />} />
-        <Route path="/PackagesCRUD" element={<PackagesCRUD />} />
-        <Route path="/AdminDashboard/Bookings" element={<BookingsManagement />} />
-      </Routes>
-    </div>
+    <AuthProvider>
+      <div className="bg-[#171717] min-h-screen flex flex-col">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/Services" element={<Servicess />} />
+          <Route path="/packages" element={<Packages />} />
+          <Route path="/booking" element={<Booking />} />
+          <Route path="/serviceBooking" element={<ServicesBooking />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<CustomerLogin />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/customer/dashboard" element={<Dashboard />} />
+          {/* <Route path="/Registers" element={<Register />} /> */}
+          <Route path="/Registeradmin" element={<RegisterAdmin />} />
+          <Route path="/AdminDashboard" element={<AdminDashboard />} />
+          <Route path="/BranchCrud" element={<BranchesCRUD />} />
+          <Route path="/ServicesCrud" element={<ServicesCRUD />} />
+          <Route path="/PackagesCRUD" element={<PackagesCRUD />} />
+          <Route
+            path="/AdminDashboard/Bookings"
+            element={<BookingsManagement />}
+          />
+        </Routes>
+      </div>
+    </AuthProvider>
   );
 }
