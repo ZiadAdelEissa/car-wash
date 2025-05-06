@@ -6,14 +6,19 @@ import {
   updateBookingStatus,
   deleteBooking,
   getAllUserPackages,
+  getAllBranches,
 } from "../services/api.js";
 import Loader from "../loaders/Loader.jsx";
 
 export default function BookingsManagement() {
   const [bookings, setBookings] = useState([]);
+  const [filteredBookings, setFilteredBookings] = useState([]);
   const [userPackages, setUserPackages] = useState([]);
+  const [branches, setBranches] = useState([]);
   const [activeTab, setActiveTab] = useState("bookings");
   const [loading, setLoading] = useState(true);
+  const [selectedBranch, setSelectedBranch] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
   const tableRef = useRef();
   const tableRowsRef = useRef([]);
 
@@ -21,9 +26,13 @@ export default function BookingsManagement() {
     const fetchData = async () => {
       try {
         setLoading(true);
+        const branchesResponse = await getAllBranches();
+        setBranches(branchesResponse.data);
+
         if (activeTab === "bookings") {
           const bookingsResponse = await getAllBookings();
           setBookings(bookingsResponse.data);
+          setFilteredBookings(bookingsResponse.data);
         } else {
           const packagesResponse = await getAllUserPackages();
           setUserPackages(packagesResponse.data);
@@ -35,10 +44,32 @@ export default function BookingsManagement() {
     fetchData();
   }, [activeTab]);
 
+  useEffect(() => {
+    if (activeTab === "bookings") {
+      let result = [...bookings];
+      
+      // Apply branch filter
+      if (selectedBranch !== "all") {
+        result = result.filter(booking => 
+          booking.branchId?._id === selectedBranch
+        );
+      }
+      
+      // Apply status filter
+      if (statusFilter !== "all") {
+        result = result.filter(booking => 
+          booking.status === statusFilter
+        );
+      }
+      
+      setFilteredBookings(result);
+    }
+  }, [selectedBranch, statusFilter, bookings, activeTab]);
+
   useLayoutEffect(() => {
     tableRowsRef.current = tableRowsRef.current.slice(
       0,
-      activeTab === "bookings" ? bookings.length : userPackages.length
+      activeTab === "bookings" ? filteredBookings.length : userPackages.length
     );
 
     if (tableRowsRef.current.length > 0) {
@@ -56,40 +87,40 @@ export default function BookingsManagement() {
         }
       });
     }
-  }, [bookings, userPackages, activeTab]);
+  }, [filteredBookings, userPackages, activeTab]);
 
   const handleStatusChange = async (id, status) => {
     try {
       setLoading(true);
       await updateBookingStatus(id, status);
-  
+
       const updatedBooking = bookings.find((b) => b._id === id);
       
       // Calculate new remaining washes if status is being changed to completed
       const newRemainingWashes = status === "completed" && updatedBooking.userPackageId?.remainingWashes 
         ? updatedBooking.userPackageId.remainingWashes - 1 
         : updatedBooking.userPackageId?.remainingWashes;
-  
+
       const emailSubject = `Booking Update: #${id}`;
       const emailBody = `
-  Hello ${updatedBooking.userId?.name || "Customer"},
-  
-  Your booking (#${id}) status has been updated to ${status.toUpperCase()}.
-  
-  Booking Details:
-  - Service: ${updatedBooking.serviceId?.name || "N/A"}
-  - Branch: ${updatedBooking.branchId?.name || "N/A"}
-  - Date: ${new Date(updatedBooking.bookingDate).toLocaleDateString()}
-  - Time: ${updatedBooking.bookingTime}
-  ${
-    newRemainingWashes !== undefined 
-      ? `- Remaining Washes: ${newRemainingWashes}`
-      : ""
-  }
-  
-  Thank you for choosing our service!
+Hello ${updatedBooking.userId?.name || "Customer"},
+
+Your booking (#${id}) status has been updated to ${status.toUpperCase()}.
+
+Booking Details:
+- Service: ${updatedBooking.serviceId?.name || "N/A"}
+- Branch: ${updatedBooking.branchId?.name || "N/A"}
+- Date: ${new Date(updatedBooking.bookingDate).toLocaleDateString()}
+- Time: ${updatedBooking.bookingTime}
+${
+  newRemainingWashes !== undefined 
+    ? `- Remaining Washes: ${newRemainingWashes}`
+    : ""
+}
+
+Thank you for choosing our service!
       `.trim();
-  
+
       if (updatedBooking.userId?.email) {
         window.location.href = `mailto:${
           updatedBooking.userId.email
@@ -97,7 +128,7 @@ export default function BookingsManagement() {
           emailBody
         )}`;
       }
-  
+
       const response = await getAllBookings();
       setBookings(response.data);
     } catch (error) {
@@ -106,20 +137,17 @@ export default function BookingsManagement() {
       setLoading(false);
     }
   };
+
   const handlePaymentStatusChange = async (id, isPaid) => {
     try {
       setLoading(true);
-
-      // Update locally without API call
       const updatedPackages = userPackages.map((pkg) =>
         pkg._id === id ? { ...pkg, isPaid } : pkg
       );
       setUserPackages(updatedPackages);
 
-      // Find the updated package
       const updatedPackage = updatedPackages.find((p) => p._id === id);
 
-      // If payment was just marked as paid, send confirmation email
       if (isPaid && updatedPackage?.userId?.email) {
         const emailSubject = `Payment Confirmation for ${
           updatedPackage.packageId?.name || "Package"
@@ -208,6 +236,47 @@ Car Wash Team
         </button>
       </div>
 
+      {activeTab === "bookings" && (
+        <div className="flex flex-wrap gap-4 mb-6 justify-center">
+          <div className="flex items-center">
+            <label htmlFor="branch-filter" className="mr-2 text-white">
+              Branch:
+            </label>
+            <select
+              id="branch-filter"
+              value={selectedBranch}
+              onChange={(e) => setSelectedBranch(e.target.value)}
+              className="px-3 py-2 rounded bg-gray-700 text-white"
+            >
+              <option value="all">All Branches</option>
+              {branches.map((branch) => (
+                <option key={branch._id} value={branch._id}>
+                  {branch.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex items-center">
+            <label htmlFor="status-filter" className="mr-2 text-white">
+              Status:
+            </label>
+            <select
+              id="status-filter"
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="px-3 py-2 rounded bg-gray-700 text-white"
+            >
+              <option value="all">All Statuses</option>
+              <option value="pending">Pending</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+        </div>
+      )}
+
       <div className="overflow-x-auto" ref={tableRef}>
         {activeTab === "bookings" ? (
           <table className="min-w-full bg-[#454545] backdrop-blur-lg rounded-lg overflow-hidden">
@@ -218,7 +287,7 @@ Car Wash Team
                 <th className="py-3 px-4 text-left">Price</th>
                 <th className="py-3 px-4 text-left">Branch</th>
                 <th className="py-3 px-4 text-left">Remaining Washes</th>
-                <th className="py-3 px-4 text-left">Package Expiry</th>
+                <th className="py-3 px-4 text-left">Package Expire</th>
                 <th className="py-3 px-4 text-left">Date</th>
                 <th className="py-3 px-4 text-left">Time</th>
                 <th className="py-3 px-4 text-left">Status</th>
@@ -226,7 +295,7 @@ Car Wash Team
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {bookings.map((booking, index) => (
+              {filteredBookings.map((booking, index) => (
                 <tr
                   key={booking._id}
                   ref={(el) => (tableRowsRef.current[index] = el)}
