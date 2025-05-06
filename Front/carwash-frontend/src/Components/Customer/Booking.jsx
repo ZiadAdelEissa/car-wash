@@ -7,7 +7,6 @@ import {
   getBranchesUser,
   getUserPackages,
 } from "../services/api.js";
-import { useAnimation } from "../hooks/useAnimation.js";
 import Loader from "../loaders/Loader.jsx";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -26,11 +25,9 @@ export default function Booking() {
   const [branches, setBranches] = useState([]);
   const [userPackages, setUserPackages] = useState([]);
   
-  // Refs for animation
   const formRef = useRef();
   const titleRef = useRef();
   
-  // GSAP Animations
   useEffect(() => {
     if (!loading) {
       gsap.from(titleRef.current, {
@@ -72,7 +69,7 @@ export default function Booking() {
         setUserPackages(packagesRes.data);
       } catch (error) {
         console.error("Error fetching data:", error);
-        toast.error("❌ Failed to load data. Please try again later.", {
+        toast.error("Failed to load data. Please try again later.", {
           position: "top-center",
         });
       } finally {
@@ -87,7 +84,7 @@ export default function Booking() {
     setSubmitting(true);
     try {
       await createBooking(formData);
-      toast.success("🎉 Booking created successfully!", {
+      toast.success("Booking created successfully!", {
         position: "top-center",
         autoClose: 3000,
       });
@@ -102,12 +99,12 @@ export default function Booking() {
     } catch (error) {
       console.error("Error creating booking:", error);
       if (error.response?.status === 400) {
-        toast.warning(`⏰ ${error.response.data.message}`, {
+        toast.warning(error.response.data.message, {
           position: "top-center",
           autoClose: 6000,
         });
       } else {
-        toast.error("❌ Failed to create booking. Please try again.", {
+        toast.error("Failed to create booking. Please try again.", {
           position: "top-center",
         });
       }
@@ -171,7 +168,6 @@ export default function Booking() {
                   value={formData.userPackageId}
                   onChange={(e) => setFormData({ ...formData, userPackageId: e.target.value })}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  required
                 >
                   <option value="">Select a package</option>
                   {userPackages.map((pkg) => (

@@ -62,29 +62,34 @@ export default function BookingsManagement() {
     try {
       setLoading(true);
       await updateBookingStatus(id, status);
-
+  
       const updatedBooking = bookings.find((b) => b._id === id);
-
+      
+      // Calculate new remaining washes if status is being changed to completed
+      const newRemainingWashes = status === "completed" && updatedBooking.userPackageId?.remainingWashes 
+        ? updatedBooking.userPackageId.remainingWashes - 1 
+        : updatedBooking.userPackageId?.remainingWashes;
+  
       const emailSubject = `Booking Update: #${id}`;
       const emailBody = `
-Hello ${updatedBooking.userId?.name || "Customer"},
-
-Your booking (#${id}) status has been updated to ${status.toUpperCase()}.
-
-Booking Details:
-- Service: ${updatedBooking.serviceId?.name || "N/A"}
-- Branch: ${updatedBooking.branchId?.name || "N/A"}
-- Date: ${new Date(updatedBooking.bookingDate).toLocaleDateString()}
-- Time: ${updatedBooking.bookingTime}
-${
-  updatedBooking.userPackageId?.remainingWashes
-    ? `- Remaining Washes: ${updatedBooking.userPackageId.remainingWashes}`
-    : ""
-}
-
-Thank you for choosing our service!
+  Hello ${updatedBooking.userId?.name || "Customer"},
+  
+  Your booking (#${id}) status has been updated to ${status.toUpperCase()}.
+  
+  Booking Details:
+  - Service: ${updatedBooking.serviceId?.name || "N/A"}
+  - Branch: ${updatedBooking.branchId?.name || "N/A"}
+  - Date: ${new Date(updatedBooking.bookingDate).toLocaleDateString()}
+  - Time: ${updatedBooking.bookingTime}
+  ${
+    newRemainingWashes !== undefined 
+      ? `- Remaining Washes: ${newRemainingWashes}`
+      : ""
+  }
+  
+  Thank you for choosing our service!
       `.trim();
-
+  
       if (updatedBooking.userId?.email) {
         window.location.href = `mailto:${
           updatedBooking.userId.email
@@ -92,7 +97,7 @@ Thank you for choosing our service!
           emailBody
         )}`;
       }
-
+  
       const response = await getAllBookings();
       setBookings(response.data);
     } catch (error) {
@@ -101,7 +106,6 @@ Thank you for choosing our service!
       setLoading(false);
     }
   };
-
   const handlePaymentStatusChange = async (id, isPaid) => {
     try {
       setLoading(true);

@@ -18,6 +18,7 @@ import PackagesCRUD from "./Components/Admin/PackagesCRUD";
 import BookingsManagement from "./Components/Admin/BookingsManagement";
 import Profile from "./Components/Customer/Profile";
 import ServicesBooking from "./Components/Customer/ServicesBooking";
+import Footer from "./Components/Shared/Footer"
 import { AuthProvider } from "./context/AuthContext";
 
 export default function App() {
@@ -47,6 +48,7 @@ export default function App() {
             element={<BookingsManagement />}
           />
         </Routes>
+        <Footer/>
       </div>
     </AuthProvider>
   );
