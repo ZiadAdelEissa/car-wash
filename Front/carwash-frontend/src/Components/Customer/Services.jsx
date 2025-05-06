@@ -50,12 +50,12 @@ export default function Services() {
               key={service._id}
               className="w-full p-6 flex flex-col justify-between items-center bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 "
             >
-              <h5 className="mb-4 text-xl font-medium ">{service.name}</h5>
-              <div className="flex items-center ">
+              <h5 className="mb-4 text-2xl font-bold ">{service.name}</h5>
+              <div className="flex items-center gap-4 ">
                 <span className="text-5xl font-extrabold tracking-tight">
                   {service.price}
                 </span>
-                <span className="text-3xl font-semibold">$</span>
+                <span className="text-5xl font-semibold"> €</span>
               </div>
               <p className="mt-4 ">{service.description}</p>
 

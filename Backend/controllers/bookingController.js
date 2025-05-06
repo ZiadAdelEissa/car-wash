@@ -9,13 +9,55 @@ export const createBooking = async (req, res) => {
     const { branchId, serviceId, userPackageId, bookingDate, bookingTime } = req.body;
     const userId = req.session.user._id;
 
+    // Convert booking time to moment object for comparison
+    const bookingDateTime = moment(`${bookingDate} ${bookingTime}`, 'YYYY-MM-DD HH:mm');
+    const oneHourAfter = moment(bookingDateTime).add(1, 'hour');
+
+    // Check for any completed bookings in the past hour at this branch
+    const recentCompletedBookings = await Booking.find({
+      branchId,
+      status: 'completed',
+      completedAt: {
+        $gte: moment().subtract(1, 'hour').toDate(),
+        $lte: moment().toDate()
+      }
+    });
+
+    // Check if the desired time slot falls within 1 hour after any completed booking
+    const isSlotDisabled = recentCompletedBookings.some(booking => {
+      const completedTime = moment(booking.completedAt);
+      const disabledUntil = moment(completedTime).add(1, 'hour');
+      return bookingDateTime.isBetween(completedTime, disabledUntil, null, '[)');
+    });
+
+    if (isSlotDisabled) {
+      return res.status(400).json({ 
+        message: 'This time slot is temporarily unavailable. Please choose a time at least 1 hour after the last completed booking.' 
+      });
+    }
+
+    // Check booking limit (3 per time slot)
+    const existingBookings = await Booking.countDocuments({
+      branchId,
+      bookingDate,
+      bookingTime,
+      status: { $ne: 'completed' }
+    });
+
+    if (existingBookings >= 3) {
+      return res.status(400).json({ 
+        message: 'This time slot is fully booked. Please choose another time.' 
+      });
+    }
+
     const booking = new Booking({
       userId,
       branchId,
       serviceId,
       userPackageId,
       bookingDate,
-      bookingTime
+      bookingTime,
+      status: 'pending'
     });
 
     await booking.save();
@@ -46,7 +88,7 @@ export const completeBooking = async (req, res) => {
         userPackage.remainingWashes -= 1;
         await userPackage.save();
         
-        // Notify user (in a real app, you'd send email/SMS here)
+        // Notify user
         const user = await User.findById(booking.userId);
         user.notifications.push({
           message: `Your wash is complete. Remaining washes in package: ${userPackage.remainingWashes}`,
@@ -61,7 +103,6 @@ export const completeBooking = async (req, res) => {
     res.status(500).json({ message: 'Error completing booking', error: error.message });
   }
 };
-
 export const getCustomerBookings = async (req, res) => {
   try {
     const userId = req.session.user._id;

@@ -109,7 +109,7 @@ export default function Packages() {
                 </h5>
                 <div className="flex items-center justify-center mb-4">
                   <span className="text-5xl font-extrabold tracking-tight text-white">
-                    {pkg.price}$
+                    {pkg.price} €
                   </span>
                 </div>
                 <p className="text-gray-300 mb-6">{pkg.description}</p>

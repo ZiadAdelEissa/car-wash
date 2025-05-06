@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
+import { useState, useEffect, useRef } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import { gsap } from "gsap";
 import {
   getServicesUser,
   createBooking,
@@ -24,7 +25,39 @@ export default function Booking() {
   const [submitting, setSubmitting] = useState(false);
   const [branches, setBranches] = useState([]);
   const [userPackages, setUserPackages] = useState([]);
-  useAnimation("booking");
+  
+  // Refs for animation
+  const formRef = useRef();
+  const titleRef = useRef();
+  
+  // GSAP Animations
+  useEffect(() => {
+    if (!loading) {
+      gsap.from(titleRef.current, {
+        duration: 0.8,
+        y: -50,
+        opacity: 0,
+        ease: "power3.out",
+      });
+      
+      gsap.from(formRef.current, {
+        duration: 0.8,
+        y: 50,
+        opacity: 0,
+        ease: "power3.out",
+        delay: 0.3
+      });
+      
+      gsap.from(".form-element", {
+        duration: 0.6,
+        y: 20,
+        opacity: 0,
+        stagger: 0.1,
+        delay: 0.6,
+        ease: "back.out"
+      });
+    }
+  }, [loading]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,7 +72,9 @@ export default function Booking() {
         setUserPackages(packagesRes.data);
       } catch (error) {
         console.error("Error fetching data:", error);
-        toast.error("Failed to load data");
+        toast.error("❌ Failed to load data. Please try again later.", {
+          position: "top-center",
+        });
       } finally {
         setLoading(false);
       }
@@ -52,7 +87,10 @@ export default function Booking() {
     setSubmitting(true);
     try {
       await createBooking(formData);
-      toast.success("Booking created successfully!");
+      toast.success("🎉 Booking created successfully!", {
+        position: "top-center",
+        autoClose: 3000,
+      });
       setFormData({
         serviceId: "",
         bookingDate: "",
@@ -63,7 +101,16 @@ export default function Booking() {
       });
     } catch (error) {
       console.error("Error creating booking:", error);
-      toast.error("Failed to create booking");
+      if (error.response?.status === 400) {
+        toast.warning(`⏰ ${error.response.data.message}`, {
+          position: "top-center",
+          autoClose: 6000,
+        });
+      } else {
+        toast.error("❌ Failed to create booking. Please try again.", {
+          position: "top-center",
+        });
+      }
     } finally {
       setSubmitting(false);
     }
@@ -72,16 +119,36 @@ export default function Booking() {
   if (loading) return <Loader />;
 
   return (
-    <div className="flex flex-col items-center min-h-screen p-6 ">
+    <div className="flex flex-col items-center min-h-screen p-6">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+
       <div className="w-full mt-[80px] max-w-4xl">
-        <h1 className="text-4xl md:text-6xl font-bold mb-8 text-center bg-gradient-to-r from-orange-400 to-pink-600 text-transparent bg-clip-text">
-          Book Your Wash 
+        <h1 
+          ref={titleRef}
+          className="text-4xl md:text-6xl font-bold mb-8 text-center bg-gradient-to-r from-orange-400 to-pink-600 text-transparent bg-clip-text"
+        >
+          Book Your Wash
         </h1>
 
-        <form onSubmit={handleSubmit} className="bg-white p-6 md:p-8 rounded-xl shadow-lg">
+        <form 
+          ref={formRef}
+          onSubmit={handleSubmit} 
+          className="bg-white p-6 md:p-8 rounded-xl shadow-lg"
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div className="space-y-4">
-              <div>
+              <div className="form-element">
                 <label className="block text-gray-700 mb-2 font-medium">Branch</label>
                 <select
                   value={formData.branchId}
@@ -98,7 +165,7 @@ export default function Booking() {
                 </select>
               </div>
 
-              <div>
+              <div className="form-element">
                 <label className="block text-gray-700 mb-2 font-medium">Package</label>
                 <select
                   value={formData.userPackageId}
@@ -115,7 +182,7 @@ export default function Booking() {
                 </select>
               </div>
 
-              <div>
+              <div className="form-element">
                 <label className="block text-gray-700 mb-2 font-medium">Service</label>
                 <select
                   value={formData.serviceId}
@@ -134,7 +201,7 @@ export default function Booking() {
             </div>
 
             <div className="space-y-4">
-              <div>
+              <div className="form-element">
                 <label className="block text-gray-700 mb-2 font-medium">Date</label>
                 <input
                   type="date"
@@ -142,10 +209,11 @@ export default function Booking() {
                   onChange={(e) => setFormData({ ...formData, bookingDate: e.target.value })}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   required
+                  min={new Date().toISOString().split('T')[0]}
                 />
               </div>
               
-              <div>
+              <div className="form-element">
                 <label className="block text-gray-700 mb-2 font-medium">Time</label>
                 <input
                   type="time"
@@ -156,7 +224,7 @@ export default function Booking() {
                 />
               </div>
 
-              <div>
+              <div className="form-element">
                 <label className="block text-gray-700 mb-2 font-medium">Additional Notes</label>
                 <textarea
                   value={formData.notes}
@@ -169,7 +237,7 @@ export default function Booking() {
             </div>
           </div>
 
-          <div className="flex justify-center">
+          <div className="flex justify-center form-element">
             <button
               type="submit"
               disabled={submitting}

@@ -248,7 +248,7 @@ export default function ServicesCRUD() {
                 >
                   <td className="py-3 px-4 text-white">{service.name}</td>
                   <td className="py-3 px-4 text-gray-300">{service.description}</td>
-                  <td className="py-3 px-4 text-white">${service.price}</td>
+                  <td className="py-3 px-4 text-white">{service.price}€</td>
                   <td className="py-3 px-4 text-white">{service.duration} min</td>
                   <td className="py-3 px-4 flex gap-2">
                     <button

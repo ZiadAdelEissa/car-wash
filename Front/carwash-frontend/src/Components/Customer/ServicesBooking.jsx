@@ -1,26 +1,23 @@
 import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
-import {
-  getServicesUser,
-  createBooking,
-  getBranchesUser,
-} from "../services/api.js";
+import { toast, ToastContainer } from "react-toastify";
+import { getServicesUser, createBooking, getBranchesUser } from "../services/api.js";
 import { useAnimation } from "../hooks/useAnimation.js";
 import Loader from "../loaders/Loader.jsx";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function ServicesBooking() {
   const [services, setServices] = useState([]);
-  const [formData, setFormData] = useState({
-    serviceId: "",
-    bookingDate: "",
-    bookingTime: "",
-    notes: "",
-    branchId: "",
-  });
+  const [branches, setBranches] = useState([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [branches, setBranches] = useState([]);
+  const [formData, setFormData] = useState({
+    serviceId: "",
+    branchId: "",
+    bookingDate: "",
+    bookingTime: "",
+    notes: ""
+  });
+
   useAnimation("booking");
 
   useEffect(() => {
@@ -28,13 +25,15 @@ export default function ServicesBooking() {
       try {
         const [servicesRes, branchesRes] = await Promise.all([
           getServicesUser(),
-          getBranchesUser(),
+          getBranchesUser()
         ]);
         setServices(servicesRes.data);
         setBranches(branchesRes.data);
       } catch (error) {
-        console.error("Error fetching data:", error);
-        toast.error("Failed to load data");
+        toast.error("❌ Failed to load data. Please refresh the page.", {
+          position: "top-center",
+          autoClose: 5000
+        });
       } finally {
         setLoading(false);
       }
@@ -45,19 +44,32 @@ export default function ServicesBooking() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
+    
     try {
       await createBooking(formData);
-      toast.success("Booking created successfully!");
+      toast.success("🎉 Booking created successfully!", {
+        position: "top-center",
+        autoClose: 3000
+      });
+      // Reset form
       setFormData({
         serviceId: "",
+        branchId: "",
         bookingDate: "",
         bookingTime: "",
-        notes: "",
-        branchId: "",
+        notes: ""
       });
     } catch (error) {
-      console.error("Error creating booking:", error);
-      toast.error("Failed to create booking");
+      if (error.response?.status === 400) {
+        toast.warning(`⏰ ${error.response.data.message}`, {
+          position: "top-center",
+          autoClose: 6000
+        });
+      } else {
+        toast.error("❌ Failed to create booking. Please try again.", {
+          position: "top-center"
+        });
+      }
     } finally {
       setSubmitting(false);
     }
@@ -66,7 +78,20 @@ export default function ServicesBooking() {
   if (loading) return <Loader />;
 
   return (
-    <div className="flex flex-col items-center min-h-screen p-6 ">
+    <div className="flex flex-col items-center min-h-screen p-6">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+
       <div className="w-full mt-[80px] max-w-4xl">
         <h1 className="text-4xl md:text-6xl font-bold mb-8 text-center bg-gradient-to-r from-orange-400 to-pink-600 text-transparent bg-clip-text">
           Book a Service
@@ -79,7 +104,7 @@ export default function ServicesBooking() {
                 <label className="block text-gray-700 mb-2 font-medium">Branch</label>
                 <select
                   value={formData.branchId}
-                  onChange={(e) => setFormData({ ...formData, branchId: e.target.value })}
+                  onChange={(e) => setFormData({...formData, branchId: e.target.value})}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   required
                 >
@@ -96,7 +121,7 @@ export default function ServicesBooking() {
                 <label className="block text-gray-700 mb-2 font-medium">Service</label>
                 <select
                   value={formData.serviceId}
-                  onChange={(e) => setFormData({ ...formData, serviceId: e.target.value })}
+                  onChange={(e) => setFormData({...formData, serviceId: e.target.value})}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   required
                 >
@@ -115,8 +140,9 @@ export default function ServicesBooking() {
                 <label className="block text-gray-700 mb-2 font-medium">Date</label>
                 <input
                   type="date"
+                  min={new Date().toISOString().split('T')[0]}
                   value={formData.bookingDate}
-                  onChange={(e) => setFormData({ ...formData, bookingDate: e.target.value })}
+                  onChange={(e) => setFormData({...formData, bookingDate: e.target.value})}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   required
                 />
@@ -127,7 +153,7 @@ export default function ServicesBooking() {
                 <input
                   type="time"
                   value={formData.bookingTime}
-                  onChange={(e) => setFormData({ ...formData, bookingTime: e.target.value })}
+                  onChange={(e) => setFormData({...formData, bookingTime: e.target.value})}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   required
                 />
@@ -139,7 +165,7 @@ export default function ServicesBooking() {
             <label className="block text-gray-700 mb-2 font-medium">Additional Notes</label>
             <textarea
               value={formData.notes}
-              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+              onChange={(e) => setFormData({...formData, notes: e.target.value})}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               rows="4"
               placeholder="Any special requests or notes..."

@@ -214,12 +214,12 @@ export default function PackagesCRUD() {
               <th className="py-3 px-4 text-left">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-gray-200 text-white">
             {packages.map((pkg) => (
               <tr key={pkg._id}>
                 <td className="py-3 px-4">{pkg.name}</td>
                 <td className="py-3 px-4">{pkg.description}</td>
-                <td className="py-3 px-4">${pkg.price}</td>
+                <td className="py-3 px-4">{pkg.price}€</td>
                 <td className="py-3 px-4">
                   {pkg.washCount} washes, valid for {pkg.validityDays} days
                   {/* <div className="flex flex-wrap gap-1">
