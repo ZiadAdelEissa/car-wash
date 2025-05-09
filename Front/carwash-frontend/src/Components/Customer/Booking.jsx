@@ -99,7 +99,12 @@ export default function Booking() {
     } catch (error) {
       console.error("Error creating booking:", error);
       if (error.response?.status === 400) {
-        toast.warning(error.response.data.message, {
+        const { message, nextAvailable } = error.response.data;
+        let fullMessage = message;
+        if (nextAvailable) {
+          fullMessage += ` Next availability at ${nextAvailable}.`;
+        }
+        toast.warning(fullMessage, {
           position: "top-center",
           autoClose: 6000,
         });
@@ -212,13 +217,16 @@ export default function Booking() {
               <div className="form-element">
                 <label className="block text-gray-700 mb-2 font-medium">Time</label>
                 <input
-                  type="time"
-                  value={formData.bookingTime}
-                  onChange={(e) => setFormData({ ...formData, bookingTime: e.target.value })}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  required
-                />
-              </div>
+              type="time"
+              value={formData.bookingTime}
+              onChange={(e) => setFormData({ ...formData, bookingTime: e.target.value })}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              required
+              step="300" // 5-minute increments
+              min="08:00"
+              max="20:00"
+            />
+</div>
 
               <div className="form-element">
                 <label className="block text-gray-700 mb-2 font-medium">Additional Notes</label>

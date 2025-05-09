@@ -151,13 +151,15 @@ export default function ServicesBooking() {
               <div>
                 <label className="block text-gray-700 mb-2 font-medium">Time</label>
                 <input
-                  type="time"
-                  value={formData.bookingTime}
-                  onChange={(e) => setFormData({...formData, bookingTime: e.target.value})}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  required
-                />
-              </div>
+  type="time"
+  value={formData.bookingTime}
+  onChange={(e) => setFormData({ ...formData, bookingTime: e.target.value })}
+  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+  required
+  step="60" // Allow minute-by-minute selection
+  min="00:00"
+  max="23:59"
+/></div>
             </div>
           </div>
 

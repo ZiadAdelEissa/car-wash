@@ -4,70 +4,79 @@ import User from '../models/User.js';
 import Branch from '../models/Branch.js';
 import Service from '../models/Service.js';
 import moment from 'moment';
-
 export const createBooking = async (req, res) => {
   try {
-    const { branchId, serviceId, userPackageId, bookingDate, bookingTime } = req.body;
+    const { branchId, bookingDate, bookingTime } = req.body;
     const userId = req.session.user._id;
 
-    // Convert booking time to moment object for comparison
-    const bookingDateTime = moment(`${bookingDate} ${bookingTime}`, 'YYYY-MM-DD HH:mm');
-    const oneHourAfter = moment(bookingDateTime).add(1, 'hour');
+    // Convert to moment object
+    const bookingMoment = moment(`${bookingDate} ${bookingTime}`, 'YYYY-MM-DD HH:mm');
+    
+    // Get hour boundaries
+    const hourStart = bookingMoment.clone().startOf('hour');
+    const hourEnd = hourStart.clone().add(1, 'hour');
 
-    // Check for any completed bookings in the past hour at this branch
-    const recentCompletedBookings = await Booking.find({
-      branchId,
-      status: 'completed',
-      completedAt: {
-        $gte: moment().subtract(1, 'hour').toDate(),
-        $lte: moment().toDate()
-      }
-    });
-
-    // Check if the desired time slot falls within 1 hour after any completed booking
-    const isSlotDisabled = recentCompletedBookings.some(booking => {
-      const completedTime = moment(booking.completedAt);
-      const disabledUntil = moment(completedTime).add(1, 'hour');
-      return bookingDateTime.isBetween(completedTime, disabledUntil, null, '[)');
-    });
-
-    if (isSlotDisabled) {
-      return res.status(400).json({ 
-        message: 'This time slot is temporarily unavailable. Please choose a time at least 1 hour after the last completed booking.' 
-      });
-    }
-
-    // Check booking limit (3 per time slot)
-    const existingBookings = await Booking.countDocuments({
+    // 1. Check existing bookings in this hour
+    const bookingsInHour = await Booking.countDocuments({
       branchId,
       bookingDate,
-      bookingTime,
+      bookingTime: {
+        $gte: hourStart.format('HH:mm'),
+        $lt: hourEnd.format('HH:mm')
+      },
       status: { $ne: 'completed' }
     });
 
-    if (existingBookings >= 3) {
-      return res.status(400).json({ 
-        message: 'This time slot is fully booked. Please choose another time.' 
+    if (bookingsInHour >= 3) {
+      return res.status(400).json({
+        message: 'This hour has reached maximum capacity (3 bookings)'
       });
     }
 
+    // 2. Check blocked hours from previous bookings
+    const allBookings = await Booking.find({
+      branchId,
+      bookingDate,
+      status: { $ne: 'completed' }
+    });
+
+    // Find all hours with 3+ bookings
+    const hourCounts = {};
+    allBookings.forEach(booking => {
+      const hour = moment(booking.bookingTime, 'HH:mm').startOf('hour').format('H');
+      hourCounts[hour] = (hourCounts[hour] || 0) + 1;
+    });
+
+    // Check if current time falls in any blocked period
+    const currentHour = bookingMoment.hour();
+    const isBlocked = Object.entries(hourCounts).some(([hour, count]) => {
+      const blockedHour = parseInt(hour);
+      return count >= 3 && 
+        (currentHour === blockedHour || currentHour === blockedHour + 1);
+    });
+
+    if (isBlocked) {
+      return res.status(400).json({
+        message: 'This time slot is unavailable due to recent bookings'
+      });
+    }
+
+    // Create booking
     const booking = new Booking({
       userId,
       branchId,
-      serviceId,
-      userPackageId,
-      bookingDate,
-      bookingTime,
+      ...req.body,
+      bookingTime: bookingMoment.format('HH:mm'),
       status: 'pending'
     });
 
     await booking.save();
     res.status(201).json({ message: 'Booking created successfully', booking });
+
   } catch (error) {
     res.status(500).json({ message: 'Booking creation failed', error: error.message });
   }
 };
-
 export const completeBooking = async (req, res) => {
   try {
     const { id } = req.params;
