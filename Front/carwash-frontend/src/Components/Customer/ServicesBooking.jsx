@@ -4,7 +4,7 @@ import { getServicesUser, createBooking, getBranchesUser } from "../services/api
 import { useAnimation } from "../hooks/useAnimation.js";
 import Loader from "../loaders/Loader.jsx";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useTranslation } from "react-i18next";
 export default function ServicesBooking() {
   const [services, setServices] = useState([]);
   const [branches, setBranches] = useState([]);
@@ -17,7 +17,7 @@ export default function ServicesBooking() {
     bookingTime: "",
     notes: ""
   });
-
+  const { t } = useTranslation();
   useAnimation("booking");
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function ServicesBooking() {
     
     try {
       await createBooking(formData);
-      toast.success("🎉 Booking created successfully!", {
+      toast.success("🎉 Booking created successfully " , {
         position: "top-center",
         autoClose: 3000
       });
@@ -66,7 +66,7 @@ export default function ServicesBooking() {
           autoClose: 6000
         });
       } else {
-        toast.error("❌ Failed to create booking. Please try again.", {
+        toast.error("❌Failed to create booking. Please try again.", {
           position: "top-center"
         });
       }
@@ -94,21 +94,21 @@ export default function ServicesBooking() {
 
       <div className="w-full mt-[80px] max-w-4xl">
         <h1 className="text-4xl md:text-6xl font-bold mb-8 text-center bg-gradient-to-r from-orange-400 to-pink-600 text-transparent bg-clip-text">
-          Book a Service
+         {t("booking.bookSercive")}
         </h1>
 
         <form onSubmit={handleSubmit} className="bg-white p-6 md:p-8 rounded-xl shadow-lg">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div className="space-y-4">
               <div>
-                <label className="block text-gray-700 mb-2 font-medium">Branch</label>
+                <label className="block text-gray-700 mb-2 font-medium">{t("booking.branch")}</label>
                 <select
                   value={formData.branchId}
                   onChange={(e) => setFormData({...formData, branchId: e.target.value})}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   required
                 >
-                  <option value="">Select a branch</option>
+                  <option value="">{t("booking.selectBranch")}</option>
                   {branches.map((branch) => (
                     <option key={branch._id} value={branch._id}>
                       {branch.name} - {branch.location}
@@ -118,14 +118,14 @@ export default function ServicesBooking() {
               </div>
 
               <div>
-                <label className="block text-gray-700 mb-2 font-medium">Service</label>
+                <label className="block text-gray-700 mb-2 font-medium">{t("services.title")}</label>
                 <select
                   value={formData.serviceId}
                   onChange={(e) => setFormData({...formData, serviceId: e.target.value})}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   required
                 >
-                  <option value="">Select a service</option>
+                  <option value="">{t("booking.selectService")}</option>
                   {services.map((service) => (
                     <option key={service._id} value={service._id}>
                       {service.name}
@@ -137,7 +137,7 @@ export default function ServicesBooking() {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-gray-700 mb-2 font-medium">Date</label>
+                <label className="block text-gray-700 mb-2 font-medium">{t("booking.date")}</label>
                 <input
                   type="date"
                   min={new Date().toISOString().split('T')[0]}
@@ -149,7 +149,7 @@ export default function ServicesBooking() {
               </div>
               
               <div>
-                <label className="block text-gray-700 mb-2 font-medium">Time</label>
+                <label className="block text-gray-700 mb-2 font-medium">{t("booking.time")}</label>
                 <input
               type="time"
               value={formData.bookingTime}
@@ -165,7 +165,7 @@ export default function ServicesBooking() {
           </div>
 
           <div className="mb-6">
-            <label className="block text-gray-700 mb-2 font-medium">Additional Notes</label>
+            <label className="block text-gray-700 mb-2 font-medium">{t("booking.additionalNotes")}</label>
             <textarea
               value={formData.notes}
               onChange={(e) => setFormData({...formData, notes: e.target.value})}
@@ -187,9 +187,9 @@ export default function ServicesBooking() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  Processing...
+                  {t("booking.processing")}
                 </span>
-              ) : "Book Now"}
+              ) : t("booking.bookNow")}
             </button>
           </div>
         </form>

@@ -95,10 +95,19 @@
     "title": "Book Your Wash",
     "serviceTitle": "Book a Service",
     "branch": "Branch",
+    "selectBranch": "Select a branch",
+    "selectService": "Select a service",
+    "selectPackage": "Select a package",
     "date": "Date",
     "time": "Time",
     "notes": "Notes",
-    "specialRequests": "Any special requests or notes..."
+    "additionalNotes": "Additional Notes",
+    "specialRequests": "Any special requests or notes...",
+    "faildBook":"Failed to create booking. Please try again.",
+    "successBook":"Booking created successfully",
+    "bookSercive":"Book Service",
+    "processing":"Processing...",
+    "bookNow":"Book Now"
   },
   
   "dashboard": {

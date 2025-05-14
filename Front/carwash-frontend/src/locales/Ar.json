@@ -95,10 +95,19 @@
     "title": "احجز غسيل سيارتك",
     "serviceTitle": "حجز خدمة",
     "branch": "الفرع",
+   "selectBranch": "اختر فرعًا",
+    "selectService": "اختر خدمة",
+    "selectPackage": "اختر باقة",
     "date": "التاريخ",
     "time": "الوقت",
-    "notes": "ملاحظات",
-    "specialRequests": "أي طلبات خاصة أو ملاحظات..."
+    "notes": "الملاحظات",
+    "additionalNotes": "ملاحظات إضافية",
+    "specialRequests": "أي طلبات خاصة أو ملاحظات...",
+    "faildBook":"فشل الحجز",
+    "successBook":"تم الحجز بنجاح",
+    "bookSercive":"احجز الخدمة",
+    "processing":" معالجة...",
+    "bookNow":" احجز الآن"
   },
     "dashboard": {
     "title": "لوحة التحكم",

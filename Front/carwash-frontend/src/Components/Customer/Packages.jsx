@@ -133,7 +133,7 @@ export default function Packages() {
           {packages.map((pkg) => (
             <div
               key={pkg._id}
-              className="w-full p-6 flex flex-col justify-between bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+              className="w-full p-6 flex flex-col justify-between items-center bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
             >
               <div>
                 <h5 className="mb-4 text-2xl font-bold text-white">{pkg.name}</h5>
@@ -145,7 +145,7 @@ export default function Packages() {
                 <p className="text-gray-300 mb-6">{pkg.description}</p>
 
                 <ul className="space-y-3 mb-6">
-                  <li className="flex items-center">
+                  <li className="flex justify-center items-center ">
                     <svg className="shrink-0 w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
                     </svg>

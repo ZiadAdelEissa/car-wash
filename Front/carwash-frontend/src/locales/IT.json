@@ -94,11 +94,21 @@
   "booking": {
     "title": "Prenota il Tuo Lavaggio",
     "serviceTitle": "Prenota un Servizio",
-    "branch": "Filiale",
+    "branch": "Seleziona una Filiale",
+   "selectBranch": "Seleziona una filiale",
+    "selectService": "Seleziona un servizio",
+    "selectPackage": "Seleziona un pacchetto",
     "date": "Data",
     "time": "Ora",
     "notes": "Note",
-    "specialRequests": "Eventuali richieste speciali o note..."
+    "additionalNotes": "Note Aggiuntive",
+    "booked": "Prenotato",
+    "specialRequests": "Qualsiasi richiesta speciale o note...",
+    "faildBook":"Prenotazione non riuscita. Riprova.",
+    "successBook":"Prenotazione effettuata con successo",
+    "bookSercive":"Prenota Servizio",
+    "processing":" Elaborazione...",
+    "bookNow":" Prenota Ora"
   },
    "dashboard": {
     "title": "La Mia Dashboard",
