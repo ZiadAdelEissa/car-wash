@@ -6,6 +6,7 @@ import {
 } from "../services/api.js";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useTranslation } from 'react-i18next';
 
 export default function Profile() {
   const [profile, setProfile] = useState(null);
@@ -16,6 +17,7 @@ export default function Profile() {
   const [loading, setLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
   const [tempProfile, setTempProfile] = useState({});
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -92,7 +94,7 @@ export default function Profile() {
       <div className="max-w-6xl mx-auto mt-16 md:mt-24">
         {/* Profile Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-          <h1 className="text-2xl md:text-3xl font-bold text-white">My Profile</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-white">{t("profile.title")}</h1>
           {!editMode && (
             <button
               onClick={() => setEditMode(true)}
@@ -107,7 +109,7 @@ export default function Profile() {
                 <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
                 <path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
               </svg>
-              Edit Profile
+            {t("profile.editButton")}
             </button>
           )}
         </div>
@@ -120,7 +122,7 @@ export default function Profile() {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div className="space-y-2">
-                <label className="block text-sm font-medium text-[#b4b4b4]">Name</label>
+                <label className="block text-sm font-medium text-[#b4b4b4]">{t("profile.name")}</label>
                 <input
                   type="text"
                   value={tempProfile.name}
@@ -132,7 +134,7 @@ export default function Profile() {
                 />
               </div>
               <div className="space-y-2">
-                <label className="block text-sm font-medium text-[#b4b4b4]">Email</label>
+                <label className="block text-sm font-medium text-[#b4b4b4]">{t("profile.email")}</label>
                 <input
                   type="email"
                   value={tempProfile.email}
@@ -141,7 +143,7 @@ export default function Profile() {
                 />
               </div>
               <div className="space-y-2">
-                <label className="block text-sm font-medium text-[#b4b4b4]">Phone</label>
+                <label className="block text-sm font-medium text-[#b4b4b4]">\{t("profile.phone")}</label>
                 <input
                   type="tel"
                   value={tempProfile.phone || ""}
@@ -151,7 +153,7 @@ export default function Profile() {
                   className="w-full p-3 bg-[#1d1d1d] border border-[#3d3d3d] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#009b49]"
                 />
               </div>
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <label className="block text-sm font-medium text-[#b4b4b4]">Address</label>
                 <input
                   type="text"
@@ -161,7 +163,7 @@ export default function Profile() {
                   }
                   className="w-full p-3 bg-[#1d1d1d] border border-[#3d3d3d] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#009b49]"
                 />
-              </div>
+              </div> */}
             </div>
 
             <div className="flex gap-4">
@@ -169,7 +171,7 @@ export default function Profile() {
                 type="submit"
                 className="px-6 py-3 bg-[#009b49] hover:bg-[#007a3a] text-white font-medium rounded-full transition-all duration-300"
               >
-                Save Changes
+                {t("profile.saveChanges")}
               </button>
               <button
                 type="button"
@@ -180,7 +182,7 @@ export default function Profile() {
                 }}
                 className="px-6 py-3 bg-[#3d3d3d] hover:bg-[#4d4d4d] text-white font-medium rounded-full transition-all duration-300"
               >
-                Cancel
+               {t("profile.cancel")}
               </button>
             </div>
           </form>
@@ -188,25 +190,25 @@ export default function Profile() {
           <div className="bg-[#2d2d2d] p-6 rounded-xl shadow-lg mb-8 transition-all duration-300 hover:shadow-xl hover:shadow-[#009b49]/10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-1">
-                <h3 className="text-sm font-medium text-[#b4b4b4]">Name</h3>
+                <h3 className="text-sm font-medium text-[#b4b4b4]">{t("profile.name")}</h3>
                 <p className="text-lg text-white">{profile.name}</p>
               </div>
               <div className="space-y-1">
-                <h3 className="text-sm font-medium text-[#b4b4b4]">Email</h3>
+                <h3 className="text-sm font-medium text-[#b4b4b4]">{t("profile.email")}</h3>
                 <p className="text-lg text-white">{profile.email}</p>
               </div>
               <div className="space-y-1">
-                <h3 className="text-sm font-medium text-[#b4b4b4]">Phone</h3>
+                <h3 className="text-sm font-medium text-[#b4b4b4]">{t("profile.phone")}</h3>
                 <p className="text-lg text-white">
-                  {profile.phone || <span className="text-[#7d7d7d]">Not provided</span>}
+                  {profile.phone || <span className="text-[#7d7d7d]">{t("profile.notProvided")}</span>}
                 </p>
               </div>
-              <div className="space-y-1">
+              {/* <div className="space-y-1">
                 <h3 className="text-sm font-medium text-[#b4b4b4]">Address</h3>
                 <p className="text-lg text-white">
-                  {profile.address || <span className="text-[#7d7d7d]">Not provided</span>}
+                  {profile.address || <span className="text-[#7d7d7d]">{t("profile.notProvided")}</span>}
                 </p>
-              </div>
+              </div> */}
             </div>
           </div>
         )}

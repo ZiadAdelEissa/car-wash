@@ -126,6 +126,7 @@
     "address": "Address",
     "editButton": "Edit Profile",
     "saveChanges": "Save Changes",
+    "cancel": "Cancel",
     "familyMembers": "Family Members",
     "addFamilyMember": "Add Family Member",
     "relationship": "Relationship",
