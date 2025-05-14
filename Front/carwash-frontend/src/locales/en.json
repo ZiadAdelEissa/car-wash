@@ -116,7 +116,15 @@
   "packages": {
     "availablePackages": "Available Packages",
     "reserveNow": "Reserve Now",
-    "washes": "{{count}} Washes"
+    "washes": " Washes",
+    "redirecting toBooking": "Redirecting to booking...",
+    "packages":"Packages",
+    "remainingWashes":"Remaining Washes",
+    "expireDate":"Expire Date",
+    "actions":"Actions",
+    "useyourcurrentpackage":"Please use your current package first",
+    "noPackagesFound": "No packages found",
+    "checkConnection": "Check your connection and try again"
   },
   "profile": {
     "title": "My Profile",

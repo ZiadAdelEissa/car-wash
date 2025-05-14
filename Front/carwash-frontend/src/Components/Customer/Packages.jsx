@@ -4,6 +4,7 @@ import Loader from "../loaders/Loader.jsx";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useTranslation } from "react-i18next";
 import gsap from "gsap";
 
 export default function Packages() {
@@ -11,7 +12,7 @@ export default function Packages() {
   const [loading, setLoading] = useState(true);
   const titleRef = useRef(null);
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   useLayoutEffect(() => {
     if (titleRef.current) {
       gsap.from(titleRef.current, {
@@ -49,7 +50,7 @@ export default function Packages() {
             </svg>
             <div className="ml-3">
               <span className="font-semibold text-green-100">{response.data.message}</span>
-              <p className="mt-1 text-sm text-green-200">Redirecting to bookings...</p>
+              <p className="mt-1 text-sm text-green-200">{t("packages.redirecting toBooking")}</p>
             </div>
           </div>,
           { autoClose: 3000 }
@@ -65,9 +66,9 @@ export default function Packages() {
               <div className="ml-3">
                 <span className="font-semibold text-yellow-100">{response.data.message}</span>
                 <ul className="mt-2 text-sm text-yellow-200 space-y-1">
-                  <li>• Package: {response.data.packageName}</li>
-                  <li>• Remaining washes: {response.data.remainingWashes}</li>
-                  <li>• Expires: {new Date(response.data.expiryDate).toLocaleDateString()}</li>
+                  <li>• {t("packages.packages")}: {response.data.packageName}</li>
+                  <li>• {t("packages.remainingWashes")}: {response.data.remainingWashes}</li>
+                  <li>• {t("packages.expireDate")}: {new Date(response.data.expiryDate).toLocaleDateString()}</li>
                 </ul>
               </div>
             </div>,
@@ -81,7 +82,7 @@ export default function Packages() {
               </svg>
               <div className="ml-3">
                 <span className="font-semibold text-yellow-100">{response.data.message}</span>
-                <p className="mt-1 text-sm text-yellow-200">Please use your current package first</p>
+                <p className="mt-1 text-sm text-yellow-200">{t("packages.useyourcurrentpackage")}</p>
               </div>
             </div>,
             { autoClose: 5000 }
@@ -98,7 +99,7 @@ export default function Packages() {
             <span className="font-semibold text-red-100">
               {error.response?.data?.message || "An error occurred. Please try again."}
             </span>
-            <p className="mt-1 text-sm text-red-200">Check your connection and try again</p>
+            <p className="mt-1 text-sm text-red-200">{t("packages.checkConnection")}</p>
           </div>
         </div>,
         { autoClose: 5000 }
@@ -125,7 +126,7 @@ export default function Packages() {
 
       <div ref={titleRef} className="flex flex-col items-center justify-center text-center mb-6 pt-20">
         <h1 className="text-4xl md:text-6xl bg-gradient-to-r from-orange-400 to-pink-600 inline-block text-transparent bg-clip-text my-5">
-          Available Packages
+         {t("packages.availablePackages")}
         </h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl px-4">
@@ -148,7 +149,7 @@ export default function Packages() {
                     <svg className="shrink-0 w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
                     </svg>
-                    <span className="ml-3 text-gray-200">{pkg.washCount} Washes</span>
+                    <span className="ml-3 text-gray-200">{pkg.washCount} {t("packages.washes")}</span>
                   </li>
                   {pkg.services?.map((service, index) => (
                     <li key={index} className="flex items-center">
@@ -165,7 +166,7 @@ export default function Packages() {
                 onClick={() => handlePurchase(pkg._id)}
                 className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800"
               >
-                Reserve Now
+               {t("packages.reserveNow")}
               </button>
             </div>
           ))}

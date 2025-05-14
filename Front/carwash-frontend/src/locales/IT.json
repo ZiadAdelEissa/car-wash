@@ -114,7 +114,14 @@
    "packages": {
     "availablePackages": "Pacchetti Disponibili",
     "reserveNow": "Prenota Ora",
-    "washes": "{{count}} Lavaggi"
+    "washes": " Lavaggi",
+    "redirecting toBooking": "Reindirizzando alla prenotazione...",
+    "packages":"Pacchetti",
+    "remainingWashes":"Lavaggi Rimasti",
+    "expireDate":"Data di Scadenza",
+    "actions":"Azioni",
+    "useyourcurrentpackage":"Si prega di utilizzare prima il pacchetto attuale",
+    "noPackagesFound": "Nessun pacchetto trovato"
   },
   "profile": {
     "title": "Il Mio Profilo",

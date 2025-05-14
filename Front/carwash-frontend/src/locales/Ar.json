@@ -114,7 +114,14 @@
    "packages": {
     "availablePackages": "الباقات المتاحة",
     "reserveNow": "احجز الآن",
-    "washes": "{{count}} غسلة"
+    "washes": " غسلة",
+    "redirecting toBooking": "إعادة توجيهك إلى الحجز...",
+    "packages":"الباقات",
+    "remainingWashes":"عدد الغسلات المتبقية",
+    "expireDate":"تاريخ الانتهاء",
+    "actions":"الإجراءات",
+    "useyourcurrentpackage":"يرجى استخدام باقتك الحالية أولاً",
+    "noPackagesFound": "لا توجد باقات متاحة"
   },
     "profile": {
     "title": "ملفي الشخصي",
