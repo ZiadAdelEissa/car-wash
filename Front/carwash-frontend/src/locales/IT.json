@@ -1,0 +1,132 @@
+{
+  "appName": "Lavaggio Auto Pro",
+  "common": {
+    "loading": "Caricamento...",
+    "error": "Errore",
+    "success": "Successo",
+    "currency": "€",
+    "dateFormat": "GG/MM/AAAA",
+    "timeFormat": "HH:mm",
+    "explore": "Esplora",
+     "bookNow": "Prenota ",
+    "processing": "Elaborazione...",
+    "selectBranch": "Seleziona una filiale",
+    "selectPackage": "Seleziona un pacchetto",
+    "selectService": "Seleziona un servizio",
+    "additionalNotes": "Note Aggiuntive",
+    "noBookings": "Nessuna prenotazione trovata",
+    "noPackages": "Nessun pacchetto trovato",
+    "remainingWashes": "Lavaggi Rimasti",
+    "expireDate": "Data di Scadenza",
+    "actions": "Azioni",
+    "discardChanges": "Annulla Modifiche",
+    "price": "Prezzo"
+  },
+  "auth": {
+    "login": "Accedi",
+    "logout": "Esci",
+    "register": "Registrati",
+    "adminLogin": "Accesso Amministratore",
+    "registerNow": " ora"
+  },
+  "navigation": {
+    "dashboard": "Cruscotto",
+    "profile": "Profilo",
+    "services": "Servizi",
+    "packages": "Pacchetti",
+    "adminDashboard": "Pannello di Controllo"
+  },
+  "status": {
+    "status": "Stato",
+    "completed": "Completato",
+    "pending": "In attesa",
+    "cancelled": "Annullato",
+    "confirmed": "Confermato"
+  },
+  "home": {
+    "welcome": {
+      "title": "Benvenuti in Lavaggio Auto Pro",
+      "subtitle": "Scopri i nostri servizi premium e pacchetti per un'esperienza di lavaggio eccezionale"
+    },
+    "services": {
+      "services": {
+        "title": "Servizi",
+        "description": "Esplora la nostra vasta gamma di servizi su misura per le tue esigenze"
+      },
+      "packages": {
+        "title": "Pacchetti",
+        "description": "Pacchetti speciali che combinano più servizi a tariffe scontate"
+      },
+      "bookings": {
+        "title": "Prenotazioni",
+        "description": "Sistema di prenotazione online semplice e conveniente"
+      }
+    },
+    "about": {
+      "title": "Chi Siamo",
+      "imageAlt": "Il nostro impianto di lavaggio auto",
+      "paragraph1": "Siamo un team di professionisti dedicati a fornire la migliore esperienza di lavaggio auto. Le nostre strutture all'avanguardia e prodotti ecologici garantiscono alla tua auto le cure che merita.",
+      "paragraph2": "Unisciti a noi nella nostra missione di mantenere la tua auto al meglio rispettando l'ambiente.",
+      "paragraph3": "Prova la differenza con Lavaggio Auto Pro!"
+    },
+    "servicesSection": {
+      "title": "I Nostri Servizi",
+      "suv": {
+        "title": "SUV",
+        "description": "Pulizia e dettagli professionali per veicoli SUV",
+        "image": "https://i.ibb.co/CpYbC5YY/5d05aa0ec604de046ac8f600c67062d3.jpg",
+        "alt": "Lavaggio SUV"
+      },
+      "motorcycle": {
+        "title": "Moto",
+        "description": "Pulizia specializzata per motocicli",
+        "image": "https://i.ibb.co/MDq9KPbT/Instagram.jpg",
+        "alt": "Pulizia moto"
+      },
+      "exotic": {
+        "title": "Auto Esotiche",
+        "description": "Servizio premium per veicoli di lusso ed esotici",
+        "image": "https://i.ibb.co/V0K4Y9Xs/Alfa-Romeo-Giulia-restyling-in-arrivo-nel-2021-ecco-come-sar.jpg",
+        "alt": "Dettaglio auto esotiche"
+      }
+    }
+  },
+  "booking": {
+    "title": "Prenota il Tuo Lavaggio",
+    "serviceTitle": "Prenota un Servizio",
+    "branch": "Filiale",
+    "date": "Data",
+    "time": "Ora",
+    "notes": "Note",
+    "specialRequests": "Eventuali richieste speciali o note..."
+  },
+   "dashboard": {
+    "title": "La Mia Dashboard",
+    "bookings": "Le Tue Prenotazioni",
+    "packages": "I Tuoi Pacchetti",
+    "recentBookings": "Prenotazioni Recenti",
+    "recentPackages": "Pacchetti Recenti",
+    "branchNumber": "Numero Filiale",
+    "status": "Stato",
+    "rightNow": "Ora",
+    "noWashesLeft": "Nessun lavaggio rimasto"
+  },
+   "packages": {
+    "availablePackages": "Pacchetti Disponibili",
+    "reserveNow": "Prenota Ora",
+    "washes": "{{count}} Lavaggi"
+  },
+  "profile": {
+    "title": "Il Mio Profilo",
+    "name": "Nome",
+    "email": "Email",
+    "phone": "Telefono",
+    "address": "Indirizzo",
+    "editButton": "Modifica Profilo",
+    "saveChanges": "Salva Modifiche",
+    "familyMembers": "Membri della Famiglia",
+    "addFamilyMember": "Aggiungi Membro",
+    "relationship": "Relazione",
+    "notProvided": "Non fornito"
+  }
+}

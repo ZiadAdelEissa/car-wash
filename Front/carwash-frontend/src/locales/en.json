@@ -1,0 +1,134 @@
+{
+  "appName": "Car Wash Pro",
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "currency": "$",
+    "dateFormat": "MM/DD/YYYY",
+    "timeFormat": "hh:mm A",
+    "explore": "Explore",
+     "bookNow": "Book ",
+     "now": "Now",
+    "processing": "Processing...",
+    "selectBranch": "Select a branch",
+    "selectPackage": "Select a package",
+    "selectService": "Select a service",
+    "additionalNotes": "Additional Notes",
+    "noBookings": "No bookings found",
+    "noPackages": "No packages found",
+    "remainingWashes": "Remaining Washes",
+    "expireDate": "Expire Date",
+    "actions": "Actions",
+    "discardChanges": "Discard Changes",
+    "price": "Price"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "adminLogin": "Admin Login",
+    "registerNow": " Now"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "services": "Services",
+    "packages": "Packages",
+    "adminDashboard": "Admin Dashboard"
+  },
+  "status": {
+    "completed": "Completed",
+    "pending": "Pending",
+    "cancelled": "Cancelled",
+    "confirmed": "Confirmed"
+  },
+  "home": {
+    "welcome": {
+      "title": "Welcome to Car Wash Pro",
+      "subtitle": "Discover our premium services and packages for your ultimate wash experience"
+    },
+    "services": {
+      "services": {
+        "title": "Services",
+        "description": "Explore our wide range of spa services tailored for your needs"
+      },
+      "packages": {
+        "title": "Packages",
+        "description": "Special packages combining multiple services at discounted rates"
+      },
+      "bookings": {
+        "title": "Bookings",
+        "description": "Easy online booking system for your convenience"
+      }
+    },
+    "about": {
+      "title": "Who We Are",
+      "imageAlt": "Our car wash facility",
+      "paragraph1": "We are a dedicated team of professionals committed to providing the best car wash experience. Our state-of-the-art facilities and eco-friendly products ensure your vehicle gets the care it deserves.",
+      "paragraph2": "Join us in our mission to keep your car looking its best while being kind to the environment.",
+      "paragraph3": "Experience the difference with Car Wash Pro!"
+    },
+    "servicesSection": {
+      "title": "Our Services",
+      "suv": {
+        "title": "SUV Cars",
+        "description": "Professional cleaning and detailing for your SUV vehicles",
+        "image": "https://i.ibb.co/CpYbC5YY/5d05aa0ec604de046ac8f600c67062d3.jpg",
+        "alt": "SUV car washing"
+      },
+      "motorcycle": {
+        "title": "Motorcycle",
+        "description": "Specialized cleaning for motorcycles and bikes",
+        "image": "https://i.ibb.co/MDq9KPbT/Instagram.jpg",
+        "alt": "Motorcycle cleaning"
+      },
+      "exotic": {
+        "title": "Exotic Cars",
+        "description": "Premium service for luxury and exotic vehicles",
+        "image": "https://i.ibb.co/V0K4Y9Xs/Alfa-Romeo-Giulia-restyling-in-arrivo-nel-2021-ecco-come-sar.jpg",
+        "alt": "Exotic car detailing"
+      }
+    }
+  },
+    "booking": {
+    "title": "Book Your Wash",
+    "serviceTitle": "Book a Service",
+    "branch": "Branch",
+    "date": "Date",
+    "time": "Time",
+    "notes": "Notes",
+    "specialRequests": "Any special requests or notes..."
+  },
+  
+  "dashboard": {
+    "title": "My Dashboard",
+    "bookings": "Your Bookings",
+    "packages": "Your Packages",
+    "recentBookings": "Recent Bookings",
+    "recentPackages": "Recent Packages",
+    "branchNumber": "Branch Number",
+    "status": "Status",
+     "noWashesLeft": "No washes left",
+     "rightNow": " Now"
+
+  },
+  "packages": {
+    "availablePackages": "Available Packages",
+    "reserveNow": "Reserve Now",
+    "washes": "{{count}} Washes"
+  },
+  "profile": {
+    "title": "My Profile",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "editButton": "Edit Profile",
+    "saveChanges": "Save Changes",
+    "familyMembers": "Family Members",
+    "addFamilyMember": "Add Family Member",
+    "relationship": "Relationship",
+    "notProvided": "Not provided"
+  }
+}

@@ -10,6 +10,7 @@ import {
   deleteBooking,
   updateBranchBookingStatus,
   getAllUserPackages,
+  deleteUserPackage
 } from "../controllers/adminController.js";
 import {
   isAuthenticated,
@@ -40,6 +41,7 @@ router.get("/stats", isAuthenticated, isBranchAdmin, getSystemStats);
 router.get("/branches/:id/:stats", getBranchStats);
 // User Packages Management
 router.get("/user-packages", isAuthenticated, isSuperAdmin, getAllUserPackages);
+router.delete("/user-packages/:id", isAuthenticated, isSuperAdmin, deleteUserPackage);
 
 // Notifications
 //

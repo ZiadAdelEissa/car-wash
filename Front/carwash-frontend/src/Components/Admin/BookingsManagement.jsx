@@ -7,6 +7,7 @@ import {
   deleteBooking,
   getAllUserPackages,
   getAllBranches,
+  deleteUserPackage
 } from "../services/api.js";
 import Loader from "../loaders/Loader.jsx";
 
@@ -187,22 +188,49 @@ Car Wash Team
       setLoading(false);
     }
   };
-
+const DELETE_PASSWORD = "adminasyote@carwash12321";
   const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this booking?")) {
-      try {
-        setLoading(true);
-        await deleteBooking(id);
-        const response = await getAllBookings();
-        setBookings(response.data);
-      } catch (error) {
-        alert("Failed to delete booking");
-      } finally {
-        setLoading(false);
-      }
+    // First confirmation
+    if (!window.confirm("Are you sure you want to delete this booking?")) return;
+
+    // Password verification
+    const password = window.prompt("Please enter the deletion password:");
+    if (password !== DELETE_PASSWORD) {
+      alert("Incorrect deletion password!");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await deleteBooking(id);
+      const response = await getAllBookings();
+      setBookings(response.data);
+    } catch (error) {
+      alert("Failed to delete booking");
+    } finally {
+      setLoading(false);
     }
   };
+const handleDeleteUserPackage = async (id) => {
+  if (!window.confirm("Are you sure you want to delete this package?")) return;
+  
+  const password = window.prompt("Please enter the deletion password:");
+  if (password !== DELETE_PASSWORD) {
+    alert("Incorrect deletion password!");
+    return;
+  }
 
+  try {
+    setLoading(true);
+    await deleteUserPackage(id);
+    const response = await getAllUserPackages();
+    setUserPackages(response.data);
+  } catch (error) {
+    alert("Failed to delete package");
+  } finally {
+    setLoading(false);
+  }
+};
   if (loading && bookings.length === 0 && userPackages.length === 0) {
     return <Loader />;
   }
@@ -286,6 +314,7 @@ Car Wash Team
                 <th className="py-3 px-4 text-left">Service</th>
                 <th className="py-3 px-4 text-left">Price</th>
                 <th className="py-3 px-4 text-left">Branch</th>
+                <th className="py-3 px-4 text-left">Branch Id</th>
                 <th className="py-3 px-4 text-left">Remaining Washes</th>
                 <th className="py-3 px-4 text-left">Package Expire</th>
                 <th className="py-3 px-4 text-left">Date</th>
@@ -312,6 +341,9 @@ Car Wash Team
                   </td>
                   <td className="py-3 px-4 text-gray-300">
                     {booking.branchId?.name || "N/A"}
+                  </td>
+                  <td className="py-3 px-4 text-white">
+                    {booking.branchId?._id || "N/A"}
                   </td>
                   <td className="py-3 px-4 text-white">
                     {booking.userPackageId?.remainingWashes || "N/A"}
@@ -428,7 +460,7 @@ Car Wash Team
                       <option value="unpaid">Unpaid</option>
                     </select>
                   </td>
-                  <td className="py-3 px-4">
+                  <td className="py-3 px-4 flex justify-between items-center gap-3">
                     {userPackage.userId?.email && (
                       <button
                         onClick={() => {
@@ -468,7 +500,15 @@ Car Wash Team
                         Send Details
                       </button>
                     )}
+                    <button
+                      onClick={() => handleDeleteUserPackage(userPackage._id)}
+                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition-colors text-sm"
+                    >
+                      Delete
+                    </button>
                   </td>
+                  {/* <td className="py-3 px-4">
+                  </td> */}
                 </tr>
               ))}
             </tbody>

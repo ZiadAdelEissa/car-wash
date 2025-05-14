@@ -18,36 +18,23 @@ export const purchasePackage = async (req, res) => {
     const { packageId } = req.body;
     const userId = req.session.user._id;
 
-    // Check if user has any existing packages (active or inactive)
+    // Check for active packages only (not expired and has remaining washes)
     const existingPackages = await UserPackage.find({ userId });
+    const activePackage = existingPackages.find(
+      (pkg) =>
+        new Date(pkg.expiryDate) > new Date() && pkg.remainingWashes > 0
+    );
 
-    // If user has any packages at all (regardless of status)
-    if (existingPackages.length > 0) {
-      // Check for active packages (not expired and has remaining washes)
-      const activePackage = existingPackages.find(
-        (pkg) =>
-          new Date(pkg.expiryDate) > new Date() && pkg.remainingWashes > 0
-      );
-
-      if (activePackage) {
-        const packageInfo = await Package.findById(activePackage.packageId);
-        return res.status(400).json({
-          message: "You already have an active package",
-          currentPackage: {
-            remainingWashes: activePackage.remainingWashes,
-            expiryDate: activePackage.expiryDate,
-          },
-        });
-      }
-
-      // If no active package but has previous packages
+    if (activePackage) {
+      const packageInfo = await Package.findById(activePackage.packageId);
       return res.status(400).json({
-        message: "You can only have one package at a time",
-        details:
-          "Please wait until your current package is fully used or expired before purchasing a new one",
+        message: "You already have an active package",
+        currentPackage: {
+          remainingWashes: activePackage.remainingWashes,
+          expiryDate: activePackage.expiryDate,
+        },
       });
     }
-
     const packages = await Package.findById(packageId);
     if (!packages) {
       return res.status(404).json({ message: "Package not found" });

@@ -1,0 +1,132 @@
+{
+  "appName": "غسيل سيارات برو",
+  "common": {
+    "loading": "جار التحميل...",
+    "error": "حدث خطأ",
+    "success": "نجاح",
+    "currency": "ر.س",
+    "dateFormat": "يوم/شهر/سنة",
+    "timeFormat": "س:د ص/م",
+    "explore": "استكشف",
+     "bookNow": "احجز ",
+    "processing": "جاري التحميل...",
+    "selectBranch": "اختر الفرع",
+    "selectPackage": "اختر الباقة",
+    "selectService": "اختر الخدمة",
+    "additionalNotes": "ملاحظات إضافية",
+    "noBookings": "لا توجد حجوزات",
+    "noPackages": "لا توجد باقات",
+    "remainingWashes": "عدد الغسلات المتبقية",
+    "expireDate": "تاريخ الانتهاء",
+    "actions": "الإجراءات",
+    "discardChanges": "تجاهل التغييرات",
+    "price": "السعر"
+  },
+  "auth": {
+    "login": " الدخول",
+    "logout": " الخروج",
+    "register": "التسجيل",
+    "adminLogin": "دخول المدير",
+    "registerNow": " الآن"
+  },
+  "navigation": {
+    "dashboard": "لوحة التحكم",
+    "profile": "الملف الشخصي",
+    "services": "الخدمات",
+    "packages": "الباقات",
+    "adminDashboard": "لوحة إدارة المدير"
+  },
+  "status": {
+    "status": "الحالة",
+    "completed": "مكتمل",
+    "pending": "قيد الانتظار",
+    "cancelled": "ملغى",
+    "confirmed": "مؤكد"
+  },
+  "home": {
+    "welcome": {
+      "title": "مرحبا بكم في غسيل سيارات برو",
+      "subtitle": "اكتشف خدماتنا المميزة والباقات لتجربة غسيل استثنائية"
+    },
+    "services": {
+      "services": {
+        "title": "الخدمات",
+        "description": "اكتشف مجموعة واسعة من خدمات العناية المصممة لاحتياجاتك"
+      },
+      "packages": {
+        "title": "الباقات",
+        "description": "باقات خاصة تجمع بين عدة خدمات بأسعار مخفضة"
+      },
+      "bookings": {
+        "title": "الحجوزات",
+        "description": "نظام حجز إلكتروني سهل لراحتك"
+      }
+    },
+    "about": {
+      "title": "من نحن",
+      "imageAlt": "منشأة غسيل السيارات الخاصة بنا",
+      "paragraph1": "نحن فريق محترف ملتزم بتقديم أفضل تجربة لغسيل السيارات. منشآتنا الحديثة ومنتجاتنا الصديقة للبيئة تضمن حصول سيارتك على العناية التي تستحقها.",
+      "paragraph2": "انضم إلينا في مهمتنا للحفاظ على مظهر سيارتك الأفضل مع الحفاظ على البيئة.",
+      "paragraph3": "اختبر الفرق مع غسيل سيارات برو!"
+    },
+    "servicesSection": {
+      "title": "خدماتنا",
+      "suv": {
+        "title": "سيارات الدفع الرباعي",
+        "description": "تنظيف وتفصيل محترف لسيارات الدفع الرباعي",
+        "image": "https://i.ibb.co/CpYbC5YY/5d05aa0ec604de046ac8f600c67062d3.jpg",
+        "alt": "غسيل سيارات الدفع الرباعي"
+      },
+      "motorcycle": {
+        "title": "الدراجات النارية",
+        "description": "تنظيف متخصص للدراجات النارية",
+        "image": "https://i.ibb.co/MDq9KPbT/Instagram.jpg",
+        "alt": "تنظيف الدراجات النارية"
+      },
+      "exotic": {
+        "title": "السيارات الفاخرة",
+        "description": "خدمة مميزة للسيارات الفاخرة والنادرة",
+        "image": "https://i.ibb.co/V0K4Y9Xs/Alfa-Romeo-Giulia-restyling-in-arrivo-nel-2021-ecco-come-sar.jpg",
+        "alt": "تفصيل السيارات الفاخرة"
+      }
+    }
+  },
+   "booking": {
+    "title": "احجز غسيل سيارتك",
+    "serviceTitle": "حجز خدمة",
+    "branch": "الفرع",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "notes": "ملاحظات",
+    "specialRequests": "أي طلبات خاصة أو ملاحظات..."
+  },
+    "dashboard": {
+    "title": "لوحة التحكم",
+    "bookings": "حجوزاتك",
+    "packages": "باقاتك",
+    "recentBookings": "الحجوزات الأخيرة",
+    "recentPackages": "الباقات الأخيرة",
+    "branchNumber": "رقم الفرع",
+    "status": "الحالة",
+    "rightNow": "الآن",
+     "noWashesLeft": "لا توجد غسلات متبقية"
+  },
+   "packages": {
+    "availablePackages": "الباقات المتاحة",
+    "reserveNow": "احجز الآن",
+    "washes": "{{count}} غسلة"
+  },
+    "profile": {
+    "title": "ملفي الشخصي",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "address": "العنوان",
+    "editButton": "تعديل الملف",
+    "saveChanges": "حفظ التغييرات",
+    "familyMembers": "أفراد العائلة",
+    "addFamilyMember": "إضافة فرد",
+    "relationship": "العلاقة",
+    "notProvided": "غير متوفر"
+  }
+}

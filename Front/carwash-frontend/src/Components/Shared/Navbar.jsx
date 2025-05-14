@@ -2,7 +2,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useAuth } from "../../context/AuthContext";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslation } from 'react-i18next';
 export default function Navbar() {
+    const { t } = useTranslation();
   const { user, logout } = useAuth();
   const [open, setOpen] = useState(false);
   const mobileNavRef = useRef(null);
@@ -51,7 +54,7 @@ export default function Navbar() {
             )}
           </i>
           <Link to="/" className="text-xl font-bold">
-            Car wash Pro
+         veloce Car Wash
           </Link>
 
           <div className="flex items-center space-x-4 max-md:hidden">
@@ -72,7 +75,7 @@ export default function Navbar() {
                       to="/profile"
                       className="cursor-pointer text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
                     >
-                      Profile
+                      {t('navigation.profile')}
                     </Link>
                     <Link
                       to="/customer/dashboard"
@@ -80,7 +83,7 @@ export default function Navbar() {
                     >
                       <div className="relative overflow-hidden">
                         <p className="group-hover:-translate-y-7 duration-[1.125s] ease-[cubic-bezier(0.19,1,0.22,1)]">
-                          Dashboard
+                          {t('navigation.dashboard')}
                         </p>
                         <p className="absolute top-7 left-0 group-hover:top-0 duration-[1.125s] ease-[cubic-bezier(0.19,1,0.22,1)]">
                           <img
@@ -96,13 +99,13 @@ export default function Navbar() {
                       to="/services"
                       className="cursor-pointer text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
                     >
-                      Services
+                     {t('navigation.services')}
                     </Link>
                     <Link
                       to="/packages"
                       className="cursor-pointer text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
                     >
-                      Packages
+                      {t('navigation.packages')}
                     </Link>
                   </div>
                 )}
@@ -117,7 +120,7 @@ export default function Navbar() {
                     </svg>
                   </div>
                   <div className="absolute right-5 transform translate-x-full opacity-0 text-white text-lg font-semibold transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-                    Logout
+                    {t('auth.logout')}
                   </div>
                 </button>
               </>
@@ -127,7 +130,7 @@ export default function Navbar() {
                   to="/login"
                   className="group/button relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gray-800/30 backdrop-blur-lg px-3 py-2 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-gray-600/50 border border-white/20"
                 >
-                  <h1 className="text-lg">Login Now</h1>
+                  <h1 className="text-lg">{t('auth.login')}</h1>
                   <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-13deg)_translateX(-100%)] group-hover/button:duration-1000 group-hover/button:[transform:skew(-13deg)_translateX(100%)]">
                     <div className="relative h-full w-10 bg-white/20" />
                   </div>
@@ -136,13 +139,13 @@ export default function Navbar() {
                   <div className="relative flex items-center justify-center gap-2">
                     <span className="relative inline-block overflow-hidden">
                       <span className="block transition-transform duration-300 group-hover:-translate-y-full">
-                        Go Register
+                        {t('auth.register')}
                       </span>
                       <Link
                         to="/register"
                         className="absolute inset-0 transition-transform duration-300 translate-y-full group-hover:translate-y-0"
                       >
-                        Right Now
+                        {t('auth.registerNow')}
                       </Link>
                     </span>
                     <svg
@@ -164,13 +167,15 @@ export default function Navbar() {
                   to="/admin/login"
                   className="group/button relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gray-800/30 backdrop-blur-lg px-3 py-2 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-gray-600/50 border border-white/20"
                 >
-                  <h1 className="text-lg">Admin Login</h1>
+                  <h1 className="text-lg">{t('auth.adminLogin')}</h1>
                   <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-13deg)_translateX(-100%)] group-hover/button:duration-1000 group-hover/button:[transform:skew(-13deg)_translateX(100%)]">
                     <div className="relative h-full w-10 bg-white/20" />
                   </div>
                 </Link>
               </>
             )}
+                       <LanguageSwitcher className="hidden md:block" />
+
           </div>
         </div>
       </nav>
@@ -220,7 +225,7 @@ export default function Navbar() {
                         to="/customer/dashboard"
                         className="w-[150px] text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
                       >
-                        My Dashboard
+                       {t('navigation.dashboard')}
                       </Link>
                       <Link
                         to="/services"
@@ -302,6 +307,7 @@ export default function Navbar() {
                   </button>
                 </>
               )}
+             <LanguageSwitcher className="w-full mb-4" />
             </div>
           </div>
         </nav>

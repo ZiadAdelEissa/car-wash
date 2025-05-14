@@ -20,7 +20,7 @@ import Profile from "./Components/Customer/Profile";
 import ServicesBooking from "./Components/Customer/ServicesBooking";
 import Footer from "./Components/Shared/Footer"
 import { AuthProvider } from "./context/AuthContext";
-
+import './i18n';
 export default function App() {
   return (
     <AuthProvider>

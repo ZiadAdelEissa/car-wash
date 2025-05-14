@@ -8,8 +8,26 @@ body{
   box-sizing: border-box;
   height: 100%;
 }
-@theme{
- --color-primary: #4CAF50; /* Green */
+
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+[dir="rtl"] .text-left {
+  text-align: right;
 }
 
+[dir="rtl"] .ml-2 {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+[dir="rtl"] .mr-2 {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+[dir="rtl"] .flex-row {
+  flex-direction: row-reverse;
+}
 /* GSAP will handle most animations */

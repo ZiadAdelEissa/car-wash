@@ -3,10 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Car Wash pro</title>
+    <title>veloce Car Wash</title>
   </head>
   <body>
     <div id="root"></div>
+       <div id="google_translate_element"></div>
+
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+          pageLanguage: 'en', // The original language of your page
+          includedLanguages: 'en,it,ar', // Include English, Italian, and Arabic
+          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+      }
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

@@ -39,6 +39,8 @@ export const getBookingDetails = (id) => API.get(`/bookings/${id}`);
 export const getAllBookings = () => API.get("/admin/bookings");
 // Admin User Packages
 export const getAllUserPackages = () => API.get("/admin/user-packages");
+export const deleteUserPackage = (id) =>
+  API.delete(`/admin/user-packages/${id}`);
 export const updateBranchBooking = (id) =>
   API.patch(`/branch-admin//branches/:id/bookings/:bookingId`, id);
 export const updateBookingStatus = (id, status) =>

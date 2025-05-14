@@ -283,3 +283,26 @@ export const getAllUserPackages = async (req, res) => {
     });
   }
 };
+export const deleteUserPackage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const deletedPackage = await UserPackage.findByIdAndDelete({
+      _id: id,
+    });
+    
+    if (!deletedPackage) {
+      return res.status(404).json({ message: "User package not found" });
+    }
+
+    res.json({ 
+      message: "User package deleted successfully",
+      package: deletedPackage
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error deleting user package",
+      error: error.message
+    });
+  }
+};

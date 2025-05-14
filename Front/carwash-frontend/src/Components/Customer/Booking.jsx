@@ -24,7 +24,7 @@ export default function Booking() {
   const [submitting, setSubmitting] = useState(false);
   const [branches, setBranches] = useState([]);
   const [userPackages, setUserPackages] = useState([]);
-  
+   const [formDisabled, setFormDisabled] = useState(false);
   const formRef = useRef();
   const titleRef = useRef();
   
