@@ -3,11 +3,12 @@ import { getServices } from "../services/api.js";
 import { Link } from "react-router-dom";
 import Loader from "../loaders/Loader.jsx";
 import { gsap } from "gsap";
-
+import { useTranslation } from "react-i18next";
 export default function Services() {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const titleRef = useRef(null);
+  const { t } = useTranslation();
   useLayoutEffect(() => {
     // Only animate the title if it exists
     if (titleRef.current) {
@@ -41,7 +42,7 @@ export default function Services() {
         className="flex flex-col items-center justify-center text-center mb-6 mt-[80px]"
       >
         <h1 className="text-6xl bg-gradient-to-r from-orange-400 to-pink-600  inline-block text-transparent bg-clip-text m-5">
-          Our Services
+         {t("services.title")}
         </h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl px-4 ">
@@ -82,7 +83,7 @@ export default function Services() {
                 to={`/serviceBooking`}
                 className="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
               >
-                Book Now
+                {t("services.bookNow")}
               </Link>
             </div>
           ))}

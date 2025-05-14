@@ -123,6 +123,15 @@
     "useyourcurrentpackage":"يرجى استخدام باقتك الحالية أولاً",
     "noPackagesFound": "لا توجد باقات متاحة"
   },
+  "services": {
+    "title": "الخدمات",
+    "availableServices": "الخدمات المتاحة",
+    "serviceDetails": "تفاصيل الخدمة",
+    "description": "الوصف",
+    "price": "السعر",
+    "duration": "المدة",
+    "bookNow": "احجز الآن"
+  },
     "profile": {
     "title": "ملفي الشخصي",
     "name": "الاسم",

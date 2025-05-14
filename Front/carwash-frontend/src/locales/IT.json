@@ -123,6 +123,15 @@
     "useyourcurrentpackage":"Si prega di utilizzare prima il pacchetto attuale",
     "noPackagesFound": "Nessun pacchetto trovato"
   },
+  "services": {
+     "title": "Servizi",
+    "availableServices": "Servizi Disponibili",
+    "serviceDetails": "Dettagli Servizio",
+    "description": "Descrizione",
+    "price": "Prezzo",
+    "duration": "Durata",
+    "bookNow": "Prenota Ora"
+  },
   "profile": {
     "title": "Il Mio Profilo",
     "name": "Nome",

@@ -126,6 +126,16 @@
     "noPackagesFound": "No packages found",
     "checkConnection": "Check your connection and try again"
   },
+  "services": {
+    "title": "our Services",
+    "availableServices": "Available Services",
+    "reserveNow": "Reserve Now",
+    "serviceDetails": "Service Details",
+    "description": "Description",
+    "price": "Price",
+    "duration": "Duration",
+    "bookNow": "Book Now"
+  },
   "profile": {
     "title": "My Profile",
     "name": "Name",
