@@ -10,7 +10,7 @@ import {
   deleteUserPackage
 } from "../services/api.js";
 import Loader from "../loaders/Loader.jsx";
-
+import { useTranslation } from "react-i18next";
 export default function BookingsManagement() {
   const [bookings, setBookings] = useState([]);
   const [filteredBookings, setFilteredBookings] = useState([]);
@@ -22,6 +22,7 @@ export default function BookingsManagement() {
   const [statusFilter, setStatusFilter] = useState("all");
   const tableRef = useRef();
   const tableRowsRef = useRef([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -238,7 +239,7 @@ const handleDeleteUserPackage = async (id) => {
   return (
     <div className="p-6 mt-[80px] min-h-screen">
       <h1 className="text-4xl m-5 text-center bg-gradient-to-r from-orange-400 to-pink-600 text-transparent bg-clip-text">
-        Manage {activeTab === "bookings" ? "Bookings" : "User Packages"}
+        {t("adminbookings.manageBooking")} {activeTab === (t("admin.bookings")) ? (t("admin.bookings")) : (t("admin.userPackages"))}
       </h1>
 
       <div className="flex justify-center mb-6">
@@ -250,7 +251,7 @@ const handleDeleteUserPackage = async (id) => {
               : "bg-gray-200"
           }`}
         >
-          Bookings
+             {t("adminbookings.bookings")}
         </button>
         <button
           onClick={() => setActiveTab("packages")}
@@ -260,7 +261,7 @@ const handleDeleteUserPackage = async (id) => {
               : "bg-gray-200"
           }`}
         >
-          User Packages
+          {t("adminbookings.userPackages")}
         </button>
       </div>
 
@@ -268,7 +269,7 @@ const handleDeleteUserPackage = async (id) => {
         <div className="flex flex-wrap gap-4 mb-6 justify-center">
           <div className="flex items-center">
             <label htmlFor="branch-filter" className="mr-2 text-white">
-              Branch:
+                {t("adminbookings.branch")} 
             </label>
             <select
               id="branch-filter"
@@ -276,7 +277,7 @@ const handleDeleteUserPackage = async (id) => {
               onChange={(e) => setSelectedBranch(e.target.value)}
               className="px-3 py-2 rounded bg-gray-700 text-white"
             >
-              <option value="all">All Branches</option>
+              <option value="all">{t("adminbookings.allBranches")}</option>
               {branches.map((branch) => (
                 <option key={branch._id} value={branch._id}>
                   {branch.name}
@@ -286,8 +287,8 @@ const handleDeleteUserPackage = async (id) => {
           </div>
 
           <div className="flex items-center">
-            <label htmlFor="status-filter" className="mr-2 text-white">
-              Status:
+            <label htmlFor="status-filter" className="mr-2 text-white ">
+              {t("adminbookings.status")}
             </label>
             <select
               id="status-filter"
@@ -295,11 +296,11 @@ const handleDeleteUserPackage = async (id) => {
               onChange={(e) => setStatusFilter(e.target.value)}
               className="px-3 py-2 rounded bg-gray-700 text-white"
             >
-              <option value="all">All Statuses</option>
-              <option value="pending">Pending</option>
-              <option value="confirmed">Confirmed</option>
-              <option value="completed">Completed</option>
-              <option value="cancelled">Cancelled</option>
+              <option value="all">{t("adminbookings.allStatuses")} </option>
+              <option value="pending"> {t("status.pending")}</option>
+              <option value="confirmed"> {t("status.confirmed")}</option>
+              <option value="completed"> {t("status.completed")}</option>
+              <option value="cancelled"> {t("status.cancelled")}</option>
             </select>
           </div>
         </div>
@@ -310,17 +311,17 @@ const handleDeleteUserPackage = async (id) => {
           <table className="min-w-full bg-[#454545] backdrop-blur-lg rounded-lg overflow-hidden">
             <thead className="bg-[#f8f8f8]">
               <tr>
-                <th className="py-3 px-4 text-left">Customer</th>
-                <th className="py-3 px-4 text-left">Service</th>
-                <th className="py-3 px-4 text-left">Price</th>
-                <th className="py-3 px-4 text-left">Branch</th>
-                <th className="py-3 px-4 text-left">Branch Id</th>
-                <th className="py-3 px-4 text-left">Remaining Washes</th>
-                <th className="py-3 px-4 text-left">Package Expire</th>
-                <th className="py-3 px-4 text-left">Date</th>
-                <th className="py-3 px-4 text-left">Time</th>
-                <th className="py-3 px-4 text-left">Status</th>
-                <th className="py-3 px-4 text-left">Actions</th>
+                <th className="py-3 px-4 text-left">{t("adminbookings.customer")}</th>
+                <th className="py-3 px-4 text-left">{t("adminbookings.service")}</th>
+                <th className="py-3 px-4 text-left">{t("services.price")}</th>
+                <th className="py-3 px-4 text-left">{t("admin.branches")}</th>
+                <th className="py-3 px-4 text-left">{t("admin.branches")} Id</th>
+                <th className="py-3 px-4 text-left"> {t("common.remainingWashes")}</th>
+                <th className="py-3 px-4 text-left"> {t("common.expireDate")}</th>
+                <th className="py-3 px-4 text-left">{t("booking.date")}</th>
+                <th className="py-3 px-4 text-left">{t("booking.time")}</th>
+                <th className="py-3 px-4 text-left">{t("adminbookings.status")}</th>
+                <th className="py-3 px-4 text-left">{t("common.actions")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
@@ -377,10 +378,10 @@ const handleDeleteUserPackage = async (id) => {
                           : "bg-red-500/20 text-red-400 border border-red-500/30"
                       }`}
                     >
-                      <option value="pending">Pending</option>
-                      <option value="confirmed">Confirmed</option>
-                      <option value="completed">Completed</option>
-                      <option value="cancelled">Cancelled</option>
+                      <option value="pending"> {t("status.pending")}</option>
+                      <option value="confirmed">{t("status.confirmed")}</option>
+                      <option value="completed">{t("status.completed")}</option>
+                      <option value="cancelled">{t("status.cancelled")}</option>
                     </select>
                   </td>
                   <td className="py-3 px-4">
@@ -388,7 +389,7 @@ const handleDeleteUserPackage = async (id) => {
                       onClick={() => handleDelete(booking._id)}
                       className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition-colors text-sm"
                     >
-                      Delete
+                     {t("common.delete")}
                     </button>
                   </td>
                 </tr>
@@ -399,14 +400,14 @@ const handleDeleteUserPackage = async (id) => {
           <table className="min-w-full bg-[#454545] backdrop-blur-lg rounded-lg overflow-hidden">
             <thead className="bg-[#f8f8f8]">
               <tr>
-                <th className="py-3 px-4 text-left">User</th>
-                <th className="py-3 px-4 text-left">Package</th>
-                <th className="py-3 px-4 text-left">Price</th>
-                <th className="py-3 px-4 text-left">Total Washes</th>
-                <th className="py-3 px-4 text-left">Remaining Washes</th>
-                <th className="py-3 px-4 text-left">Expiry Date</th>
-                <th className="py-3 px-4 text-left">Payment Status</th>
-                <th className="py-3 px-4 text-left">Actions</th>
+                <th className="py-3 px-4 text-left">{t("adminbookings.customer")}</th>
+                <th className="py-3 px-4 text-left">{t("packages.packages")}</th>
+                <th className="py-3 px-4 text-left">{t("services.price")}</th>
+                <th className="py-3 px-4 text-left">{t("admin.totalWashes")}</th>
+                <th className="py-3 px-4 text-left">{t("packages.remainingWashes")}</th>
+                <th className="py-3 px-4 text-left">{t("packages.expireDate")}</th>
+                <th className="py-3 px-4 text-left">{t("admin.paymentstatus")}</th>
+                <th className="py-3 px-4 text-left">{t("packages.actions")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
@@ -456,8 +457,8 @@ const handleDeleteUserPackage = async (id) => {
                           : "bg-red-500/20 text-red-400 border border-red-500/30"
                       }`}
                     >
-                      <option value="paid">Paid</option>
-                      <option value="unpaid">Unpaid</option>
+                      <option value="paid">{t("admin.paid")}</option>
+                      <option value="unpaid">{t("admin.unpaid")}</option>
                     </select>
                   </td>
                   <td className="py-3 px-4 flex justify-between items-center gap-3">
@@ -497,14 +498,14 @@ Car Wash Team
                         }}
                         className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition-colors text-sm"
                       >
-                        Send Details
+                       {t("common.senddetails")}
                       </button>
                     )}
                     <button
                       onClick={() => handleDeleteUserPackage(userPackage._id)}
                       className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition-colors text-sm"
                     >
-                      Delete
+                      {t("common.delete")}
                     </button>
                   </td>
                   {/* <td className="py-3 px-4">

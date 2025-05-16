@@ -52,7 +52,7 @@ export const addFamilyMember = async (req, res) => {
 
 export const getUserPackages = async (req, res) => {
   try {
-    const packages = await UserPackage.find({ userId: req.session.user._id })
+    const packages = await UserPackage.find({ userId: req.session.user._id , isActive:true,remainingWashes:{$gt:0}})  
       .populate("packageId")
       .populate("sharedWith", "name email");
     res.json(packages);

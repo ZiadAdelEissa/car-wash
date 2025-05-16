@@ -84,7 +84,7 @@ export default function Booking() {
     setSubmitting(true);
     try {
       await createBooking(formData);
-      toast.success("Booking created successfully!", {
+      toast.success("🎉 Booking created successfully ", {
         position: "top-center",
         autoClose: 3000,
       });

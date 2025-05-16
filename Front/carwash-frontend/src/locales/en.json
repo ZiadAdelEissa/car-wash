@@ -21,7 +21,10 @@
     "expireDate": "Expire Date",
     "actions": "Actions",
     "discardChanges": "Discard Changes",
-    "price": "Price"
+    "price": "Price",
+      "delete": "Delete",
+    "customer": "Customer",
+    "senddetails": "Send Details"
   },
   "auth": {
     "login": "Login",
@@ -120,6 +123,47 @@
     "status": "Status",
      "noWashesLeft": "No washes left",
      "rightNow": " Now"
+
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "totalBookings": "Total Bookings",
+    "completedBookings": "Completed Bookings",
+    "activeUsers": "Active Users",
+    "branches": "Branches",
+    "quickActions": "Quick Actions",
+    "manageBookings": "Manage Bookings",
+    "manageServices": "Manage Services",
+    "managePackages": "Manage Packages",
+    "manageBranches": "Manage Branches",
+    "viewBookings": "View Bookings",
+    "loading": "Loading dashboard...",
+    "totalWashes": "Total Washes",
+    "paymentstatus": "Payment Status",
+    "paid": "Paid",
+    "unpaid": "Unpaid",
+    "bookings": "Bookings",
+    "userPackages": "User Packages"
+
+  },
+  "adminbookings": {
+     "manageBooking": "Manage",
+    "bookings": "Bookings",
+    "userPackages": "User Packages",
+    "branch": "Branch:",
+    "allBranches": "All Branches",
+    "status": "Status:",
+    "allStatuses": "All Statuses",
+    "customer": "Customer",
+    "service": "Service",
+    "deleteConfirmation": "Are you sure you want to delete this booking?",
+    "enterPassword": "Please enter the deletion password:",
+    "incorrectPassword": "Incorrect deletion password!",
+    "confirmed": "Confirmed",
+    "pending": "Pending",
+    "cancelled": "Cancelled",
+    "completed": "Completed"
+
 
   },
   "packages": {

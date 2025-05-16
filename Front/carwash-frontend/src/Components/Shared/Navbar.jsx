@@ -63,7 +63,7 @@ export default function Navbar() {
                 {user.role === "super-admin" || user.role === "branch-admin" ? (
                   <button className="group/button relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gray-800/30 backdrop-blur-lg px-3 py-2 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-gray-600/50 border border-white/20">
                     <Link to="/AdminDashboard" className="text-lg">
-                      Admin Dashboard
+                      {t('navigation.adminDashboard')}
                     </Link>
                     <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-13deg)_translateX(-100%)] group-hover/button:duration-1000 group-hover/button:[transform:skew(-13deg)_translateX(100%)]">
                       <div className="relative h-full w-10 bg-white/20" />
@@ -211,7 +211,7 @@ export default function Navbar() {
                       to="/AdminDashboard"
                       className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
                     >
-                      Admin Dashboard
+                      {t('navigation.adminDashboard')}
                     </Link>
                   ) : (
                     <div className="flex flex-col justify-around items-start space-x-4 gap-3 text-center w-full ">
@@ -219,7 +219,7 @@ export default function Navbar() {
                         to="/profile"
                         className="w-[150px]  text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
                       >
-                        Profile
+                        {t('navigation.profile')}
                       </Link>
                       <Link
                         to="/customer/dashboard"
@@ -231,13 +231,13 @@ export default function Navbar() {
                         to="/services"
                         className="w-[150px] text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
                       >
-                        Services
+                        {t('navigation.services')}
                       </Link>
                       <Link
                         to="/packages"
                         className="  w-[150px] text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
                       >
-                        Packages
+                        {t('navigation.packages')}
                       </Link>
                     </div>
                   )}
@@ -255,7 +255,7 @@ export default function Navbar() {
                       </svg>
                     </div>
                     <div className="absolute right-5 transform translate-x-full opacity-0 text-white text-lg font-semibold transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-                      Logout
+                      {t('auth.logout')}
                     </div>
                   </button>
                 </>
@@ -263,7 +263,7 @@ export default function Navbar() {
                 <>
                   <button className="group/button relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gray-800/30 backdrop-blur-lg px-3 py-2 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-gray-600/50 border border-white/20">
                     <Link to="/login" className="text-lg">
-                      Login Now
+                      {t('auth.login')}
                     </Link>
                     <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-13deg)_translateX(-100%)] group-hover/button:duration-1000 group-hover/button:[transform:skew(-13deg)_translateX(100%)]">
                       <div className="relative h-full w-10 bg-white/20" />
@@ -276,10 +276,10 @@ export default function Navbar() {
                     <div className="relative flex items-center justify-center gap-2">
                       <span className="relative inline-block overflow-hidden">
                         <span className="block transition-transform duration-300 group-hover:-translate-y-full">
-                          Go Register
+                          {t('auth.register')}
                         </span>
                         <span className="absolute inset-0 transition-transform duration-300 translate-y-full group-hover:translate-y-0">
-                          Right Now
+                          {t('auth.registerNow')}
                         </span>
                       </span>
                       <svg
@@ -299,7 +299,7 @@ export default function Navbar() {
                   </Link>
                   <button className="group/button relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gray-800/30 backdrop-blur-lg px-3 py-2 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-gray-600/50 border border-white/20">
                     <Link to="/admin/login" className="text-lg">
-                      Admin Login
+                      {t('auth.adminLogin')}
                     </Link>
                     <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-13deg)_translateX(-100%)] group-hover/button:duration-1000 group-hover/button:[transform:skew(-13deg)_translateX(100%)]">
                       <div className="relative h-full w-10 bg-white/20" />
