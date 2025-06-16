@@ -76,7 +76,7 @@ export default function LoginForm({ isAdmin = false }) {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full text-black p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           required
         />
       </div>
@@ -90,7 +90,7 @@ export default function LoginForm({ isAdmin = false }) {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full text-black p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           required
         />
       </div>
