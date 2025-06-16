@@ -25,12 +25,33 @@
     "customer": "Cliente",
     "senddetails": "Invia Dettagli"
   },
+  "login": {
+    "title": "Accesso",
+    "adminTitle": "Accesso Amministratore",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Accedi",
+    "loading": "Accesso in corso...",
+    "error": "Credenziali non valide",
+    "customerLink": "Accesso cliente? Clicca qui"
+  },
+
   "auth": {
     "login": "Accedi",
     "logout": "Esci",
     "register": "Registrati",
     "adminLogin": "Accesso Amministratore",
     "registerNow": " ora"
+  },
+  "register": {
+    "title": "Registrazione",
+    "name": "Nome completo",
+    "phone": "Numero di telefono",
+    "submit": "Registrati",
+    "loading": "Registrazione in corso...",
+    "error": "Registrazione fallita",
+    "role": "Scegli il ruolo",
+    "branch": "Seleziona Filiale"
   },
   "navigation": {
     "dashboard": "Cruscotto",

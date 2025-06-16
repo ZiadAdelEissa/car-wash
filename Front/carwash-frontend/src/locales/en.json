@@ -26,6 +26,26 @@
     "customer": "Customer",
     "senddetails": "Send Details"
   },
+    "login": {
+            "title": "Login",
+           " adminTitle": "Admin Login",
+           " email": "Email",
+            "password": "Password",
+            "submit": "Login",
+            "loading": "Logging in...",
+            "error": "Invalid credentials",
+            "customerLink": "Customer login? Click here"
+          },
+           "register": {
+           "title": "Register",
+            "name": "Full Name",
+            "phone": "Phone Number",
+            "submit": "Register",
+            "loading": "Registering...",
+            "error": "Registration failed",
+            "role": "Choose role",
+            "branch": "Select Branch"
+          },
   "auth": {
     "login": "Login",
     "logout": "Logout",
