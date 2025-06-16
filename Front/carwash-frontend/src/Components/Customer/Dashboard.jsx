@@ -251,7 +251,7 @@ export default function Dashboard() {
                 <th className="py-3 px-4 text-left">{t('navigation.services')}</th>
                 <th className="py-3 px-4 text-left">{t('booking.date')}</th>
                 <th className="py-3 px-4 text-left">{t('booking.time')}</th>
-                <th className="py-3 px-4 text-left">{t('status.status')}</th>
+                <th className="py-3 px-4 text-left">{t('dashboard.status')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
