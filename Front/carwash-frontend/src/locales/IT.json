@@ -45,6 +45,7 @@
   },
   "register": {
     "title": "Registrazione",
+    "Registration": "Registrazione Cliente",
     "name": "Nome completo",
     "phone": "Numero di telefono",
     "submit": "Registrati",

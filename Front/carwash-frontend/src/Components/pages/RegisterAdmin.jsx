@@ -3,12 +3,13 @@ import {registerAdmin,getAllBranches} from "../services/api.js";
 import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import { useEffect, useRef } from "react";
-
+import { useTranslation } from 'react-i18next';
 export default function RegisterAdmin() {
   const [branches, setBranches] = useState([]);
   const formRef = useRef();
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+   const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: "",
     email:"",

@@ -1,33 +1,32 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Loader from "../loaders/Loader";
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useAuth } from "../../context/AuthContext";
+import { useTranslation } from "react-i18next";
+
 export default function LoginForm({ isAdmin = false }) {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { login, loading } = useAuth();
-  const [loadings, setLoading] = useState(true);
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
+  
+  const fadeup = useRef(null);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await login({ email, password }, isAdmin);
-      isAdmin ? Navigate("/AdminDashboard") : Navigate("/profile  ");
+      isAdmin ? navigate("/AdminDashboard") : navigate("/profile");
     } catch (err) {
-      setError("Invalid credentials");
+      setError(t("login.error"));
     }
   };
-  const fadeup = useRef(null);
+
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
-      // 1. ONE-TIME ENTRANCE ANIMATION (comp)
-
-      // 2. SCROLL-REVERSIBLE ANIMATIONS
-      // Fade-up section
       gsap.fromTo(
         fadeup.current,
         {
@@ -48,59 +47,60 @@ export default function LoginForm({ isAdmin = false }) {
           },
         }
       );
-
-      // Left slide-in
     });
 
     return () => ctx.revert();
   }, []);
 
-  // if (loadings) return <Loader/>
-
   return (
     <form
       ref={fadeup}
       onSubmit={handleSubmit}
-      className="w-[300px] min-h-[60vh] max-w-md mx-auto p-6 bg-[#a9a8a8] text-[#1d1d1d]  hover:scale-[1] rounded-lg shadow-lg  animate-fade-in"
+      className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md shadow-fuchsia-900 hover:shadow-gray-900 animate-fade-in mt-[90px]"
     >
-      <h2 className="text-2xl font-bold mb-6 text-center">
-        {isAdmin ? "Admin Login" : "Customer Login"}
+      <h2 className="text-2xl text-black font-bold mb-6 text-center">
+        {isAdmin ? t("login.adminTitle") : t("login.title")}
       </h2>
+      
       {error && (
-        <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">{error}</div>
+        <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">
+          {error}
+        </div>
       )}
       <div className="mb-4">
-        <label className="block  mb-2" htmlFor="email">
-          Email
+        <label className="block text-black mb-2" htmlFor="email">
+          {t("login.email")}
         </label>
         <input
           id="email"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           required
         />
       </div>
+      
       <div className="mb-6">
-        <label className="block  mb-2" htmlFor="password">
-          Password
+        <label className="block text-black mb-2" htmlFor="password">
+          {t("login.password")}
         </label>
         <input
           id="password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           required
         />
       </div>
+      
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-[#234c58] text-white p-2 rounded cursor-pointer disabled:bg-blue-300"
+        className="w-full text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow-lg transition-all duration-300"
       >
-        {loading ? "Logging in..." : "Login"}
+        {loading ? t("login.loading") : t("login.submit")}
       </button>
     </form>
   );

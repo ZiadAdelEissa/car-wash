@@ -28,8 +28,8 @@
   },
     "login": {
             "title": "Login",
-           " adminTitle": "Admin Login",
-           " email": "Email",
+           "adminTitle": "Admin Login",
+           "email": "Email",
             "password": "Password",
             "submit": "Login",
             "loading": "Logging in...",
@@ -38,6 +38,7 @@
           },
            "register": {
            "title": "Register",
+           "Registration": "Customer Registration",
             "name": "Full Name",
             "phone": "Phone Number",
             "submit": "Register",

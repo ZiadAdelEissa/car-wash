@@ -36,6 +36,7 @@
   },
    "register": {
             "title": "تسجيل",
+            "Registration": "تسجيل العميل",
             "name": "الاسم الكامل",
             "phone": "رقم الهاتف",
             "submit": "تسجيل",

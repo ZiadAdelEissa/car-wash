@@ -2,8 +2,9 @@ import { useState } from 'react'
 import { registerCustomer } from '../services/api.js'
 import { useAnimation } from '../hooks/useAnimation.js'
 import { useNavigate } from 'react-router-dom'
-
+import { useTranslation } from 'react-i18next'
 export default function RegisterForm() {
+  const { t } = useTranslation()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -30,11 +31,10 @@ export default function RegisterForm() {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 bg-[#fff]  rounded-lg shadow-md shadow-fuchsia-900 hover:shadow-gray-900  animate-fade-in mt-[90px]">
-      <h2 className="text-2xl font-bold mb-6 text-center">Customer Registration</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center">{t("register.Registration")}</h2>
       {error && <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">{error}</div>}
-      
       <div className="mb-4">
-        <label className="block text-gray-700 mb-2" htmlFor="name">Full Name</label>
+        <label className="block text-black mb-2" htmlFor="name">{t("register.name")}</label>
         <input
           id="name"
           type="text"
@@ -46,7 +46,7 @@ export default function RegisterForm() {
       </div>
       
       <div className="mb-4">
-        <label className="block text-gray-700 mb-2" htmlFor="email">Email</label>
+        <label className="block text-black mb-2" htmlFor="email">{t("login.email")}</label>
         <input
           id="email"
           type="email"
@@ -58,7 +58,7 @@ export default function RegisterForm() {
       </div>
       
       <div className="mb-4">
-        <label className="block text-gray-700 mb-2" htmlFor="password">Password</label>
+        <label className="block text-black mb-2" htmlFor="password">{t("login.password")}</label>
         <input
           id="password"
           type="password"
@@ -70,7 +70,7 @@ export default function RegisterForm() {
       </div>
       
       <div className="mb-6">
-        <label className="block text-gray-700 mb-2" htmlFor="phone">Phone Number</label>
+        <label className="block text-black mb-2" htmlFor="phone">{t("register.phone")}</label>
         <input
           id="phone"
           type="tel"
@@ -86,7 +86,7 @@ export default function RegisterForm() {
         disabled={loading}
         className="w-full text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
       >
-        {loading ? 'Registering...' : 'Register'}
+        {loading ? t('register.loading') : t('register.submit')}
       </button>
     </form>
   )
