@@ -104,7 +104,14 @@ export default function Home() {
                 {t(`home.services.${key}.title`)}
               </h3>
               <p>{t(`home.services.${key}.description`)}</p>
+              <Link
+                to="/register"
+                className="mt-4 inline-block bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 shadow-lg hover:shadow-indigo-500/50 text-white px-4 py-2 rounded-lg hover:scale-105 transition-transform"
+              >
+                {t("home.welcome.log")}
+              </Link>
             </div>
+
           ))}
         </div>
       </div>

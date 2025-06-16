@@ -56,9 +56,9 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-md">
+      <div className="bg-white  p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-4">{t("admin.quickActions")}</h2>
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap max-sm:flex-col items-center gap-4">
           <a
             href="/ServicesCrud"
             className="bg-blue-100 text-blue-700 px-4 py-2 rounded hover:bg-blue-200"

@@ -70,8 +70,9 @@
   },
   "home": {
     "welcome": {
-      "title": "Benvenuti in Lavaggio Auto Pro",
-      "subtitle": "Scopri i nostri servizi premium e pacchetti per un'esperienza di lavaggio eccezionale"
+      "title": "Benvenuti in VELOCE Lavaggio Auto Pro",
+      "subtitle": "Scopri i nostri servizi premium e pacchetti per un'esperienza di lavaggio eccezionale",
+      "log": "Registrati "
     },
     "services": {
       "services": {

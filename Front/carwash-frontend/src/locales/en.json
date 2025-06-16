@@ -69,13 +69,14 @@
   },
   "home": {
     "welcome": {
-      "title": "Welcome to Car Wash Pro",
-      "subtitle": "Discover our premium services and packages for your ultimate wash experience"
+      "title": "Welcome to VELOCE Car Wash Pro",
+      "subtitle": "Discover our premium services and packages for your ultimate wash experience",
+      "log": "Register "
     },
     "services": {
       "services": {
         "title": "Services",
-        "description": "Explore our wide range of spa services tailored for your needs"
+        "description": "Explore our wide range of Washing services tailored for your needs"
       },
       "packages": {
         "title": "Packages",
