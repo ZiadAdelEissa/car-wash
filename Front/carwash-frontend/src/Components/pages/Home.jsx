@@ -84,7 +84,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-[100vh] bg-[#171717] text-[#b4b4b4] flex flex-col items-center justify-center text-center p-6 ">
+    <div className="min-h-[100vh] bg-[#171717] text-[#fff] flex flex-col items-center justify-center text-center p-6 ">
+      <img src="https://i.ibb.co/mFSmqjCg/pexels-tima-miroshnichenko-6873123.jpg" alt="Car Wash" className=" fixed top-0 left-0 w-full h-full object-cover  z-0" />
       <div
         ref={comp}
         className=" flex flex-col justify-center items-center max-sm:mt-[80px] mt-24 gap-3"
@@ -98,7 +99,7 @@ export default function Home() {
 
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 ">
           {['services', 'packages', 'bookings'].map((key) => (
-            <div key={key} className="bg-[#a9a8a8] text-[#1d1d1d] p-6 rounded-lg shadow-lg hover:shadow-[#4d3577] transition-shadow scale-[0.9]">
+            <div key={key} className="bg-[#fff] text-[#1d1d1d] p-6 rounded-lg shadow-lg hover:shadow-[#4d3577] transition-shadow scale-[0.9]">
               <h3 className="text-xl font-bold mb-3">
                 {t(`home.services.${key}.title`)}
               </h3>
@@ -111,17 +112,17 @@ export default function Home() {
       {/* About section */}
       <div
         ref={aboutSectionRef}
-        className="mt-16 text-center flex flex-col items-center"
+        className="mt-24 text-center flex flex-col items-center"
       >
         <h1 className="text-4xl bg-gradient-to-r from-orange-400 to-pink-600 h-16 inline-block text-transparent bg-clip-text">
           {t('home.about.title')}
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
-          <div ref={leftElementRef} className="left w-full ">
+          <div ref={leftElementRef} className="left w-full h-full ">
             <img
               src="https://i.ibb.co/mFSmqjCg/pexels-tima-miroshnichenko-6873123.jpg"
               alt={t('home.about.imageAlt')}
-              className="object-cover object-center  lg:mx-6 w-full h-96 rounded-lg lg:h-[30rem]"
+              className="object-cover object-center   w-full h-full max-sm:w-full max-sm:h-full  rounded-lg "
             />
           </div>
           <div className="right flex flex-col items-center justify-centre mt-20 ">
@@ -162,7 +163,7 @@ export default function Home() {
               </div>
               <div className="p-6 pt-0">
                 <Link
-                  to="/services"
+                  to="/login"
                   className="flex justify-center gap-2 items-center mx-auto shadow-xl text-lg bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full hover:bg-emerald-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group"
                 >
                   {t('common.explore')}

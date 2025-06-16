@@ -4,314 +4,258 @@ import gsap from "gsap";
 import { useAuth } from "../../context/AuthContext";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslation } from 'react-i18next';
+
 export default function Navbar() {
     const { t } = useTranslation();
-  const { user, logout } = useAuth();
-  const [open, setOpen] = useState(false);
-  const mobileNavRef = useRef(null);
-  const mobileMenuItemsRef = useRef([]);
-  const navigate = useNavigate();
+    const { user, logout } = useAuth();
+    const [open, setOpen] = useState(false);
+    const mobileNavRef = useRef(null);
+    const mobileMenuItemsRef = useRef([]);
+    const navigate = useNavigate();
 
-  const handleLogout = async () => {
-    await logout();
-    navigate("/");
-  };
-  const comp = useRef(null);
-  useLayoutEffect(() => {
-    const t1 = gsap.timeline();
-    t1.fromTo(
-      comp.current,
-      { opacity: 0, xPercent: "-100" },
-      { opacity: 1, xPercent: "0", duration: 1 }
+    const handleLogout = async () => {
+        await logout();
+        navigate("/");
+    };
+    const comp = useRef(null);
+    useLayoutEffect(() => {
+        const t1 = gsap.timeline();
+        t1.fromTo(
+            comp.current,
+            { opacity: 0, xPercent: "-100" },
+            { opacity: 1, xPercent: "0", duration: 1 }
+        );
+    }, []);
+
+    // Common button style
+    const navButtonClass = "flex items-center justify-center gap-2 text-white bg-gray-800/70 hover:bg-gray-700/80 focus:outline-none focus:ring-2 focus:ring-white/50 font-medium rounded-full text-sm px-4 py-2.5 transition-all duration-200 border border-white/20";
+
+    return (
+        <>
+            <nav
+                ref={comp}
+                className="bg-[#5c55553a] text-white p-4 shadow-md hover:shadow-indigo-900 transition-shadow backdrop-blur-sm fixed top-0 w-full z-10"
+            >
+                <div className="container mx-auto flex justify-between items-center">
+                    <i
+                        onClick={() => setOpen((open) => !open)}
+                        className="icon md:hidden cursor-pointer"
+                    >
+                        {open ? (
+                            <img
+                                width="30"
+                                height="30"
+                                src="https://img.icons8.com/ios-glyphs/30/top-menu.png"
+                                alt="top-menu"
+                            />
+                        ) : (
+                            <img
+                                width="30"
+                                height="30"
+                                src="https://img.icons8.com/ios-glyphs/30/top-menu.png"
+                                alt="top-menu"
+                            />
+                        )}
+                    </i>
+                    <Link to="/" className="text-xl font-bold">
+                        veloce Car Wash
+                    </Link>
+
+                    <div className="flex items-center space-x-2 max-md:hidden">
+                        {user ? (
+                            <>
+                                {user.role === "super-admin" || user.role === "branch-admin" ? (
+                                    <Link to="/AdminDashboard" className={navButtonClass}>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                        </svg>
+                                        {t('navigation.adminDashboard')}
+                                    </Link>
+                                ) : (
+                                    <div className="flex items-center space-x-2">
+                                        <Link to="/profile" className={navButtonClass}>
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                <circle cx="12" cy="7" r="4"></circle>
+                                            </svg>
+                                            {t('navigation.profile')}
+                                        </Link>
+                                        <Link to="/customer/dashboard" className={navButtonClass}>
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                <rect x="3" y="3" width="7" height="7"></rect>
+                                                <rect x="14" y="3" width="7" height="7"></rect>
+                                                <rect x="14" y="14" width="7" height="7"></rect>
+                                                <rect x="3" y="14" width="7" height="7"></rect>
+                                            </svg>
+                                            {t('navigation.dashboard')}
+                                        </Link>
+                                        <Link to="/services" className={navButtonClass}>
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                <circle cx="12" cy="12" r="10"></circle>
+                                                <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                                                <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                                                <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                                            </svg>
+                                            {t('navigation.services')}
+                                        </Link>
+                                        <Link to="/packages" className={navButtonClass}>
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                                            </svg>
+                                            {t('navigation.packages')}
+                                        </Link>
+                                    </div>
+                                )}
+
+                                <button
+                                    onClick={handleLogout}
+                                    className={`${navButtonClass} bg-red-600/80 hover:bg-red-700/80`}
+                                >
+                                    <svg width="16" height="16" viewBox="0 0 512 512" fill="currentColor">
+                                        <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
+                                    </svg>
+                                    {t('auth.logout')}
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <Link to="/login" className={navButtonClass}>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                                        <polyline points="10 17 15 12 10 7"></polyline>
+                                        <line x1="15" y1="12" x2="3" y2="12"></line>
+                                    </svg>
+                                    {t('auth.login')}
+                                </Link>
+                                <Link to="/register" className={`${navButtonClass} bg-emerald-500/80 hover:bg-emerald-600/80 text-white`}>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                                    </svg>
+                                    {t('auth.register')}
+                                </Link>
+                                <Link to="/admin/login" className={navButtonClass}>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    {t('auth.adminLogin')}
+                                </Link>
+                            </>
+                        )}
+                        <LanguageSwitcher className="hidden md:block" />
+                    </div>
+                </div>
+            </nav>
+            {open && (
+                <nav
+                    ref={comp}
+                    className="bg-[#5c55553a] text-white p-4 shadow-md hover:shadow-indigo-900 transition-shadow backdrop-blur-xs md:hidden fixed top-0 z-10"
+                >
+                    <div className="menuNav flex flex-col h-screen justify-between mt-[40%] w-[200px] items-start text-center">
+                        <div className="flex flex-col justify-centre items-center gap-3 text-center">
+                            <i
+                                onClick={() => setOpen(!open)}
+                                className="text-xl font-bold cursor-pointer flex justify-between items-center w-full gap-12 p-4"
+                            >
+                                <img
+                                    width="48"
+                                    height="48"
+                                    src="https://img.icons8.com/badges/48/automatic-car-wash.png"
+                                    alt="automatic-car-wash"
+                                />
+                                <img
+                                    width="30"
+                                    height="30"
+                                    src="https://img.icons8.com/ios-filled/50/delete-sign--v1.png"
+                                    alt="delete-sign--v1"
+                                />
+                            </i>
+                            {user ? (
+                                <>
+                                    {user.role === "super-admin" || user.role === "branch-admin" ? (
+                                        <Link to="/AdminDashboard" className={navButtonClass}>
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                            </svg>
+                                            {t('navigation.adminDashboard')}
+                                        </Link>
+                                    ) : (
+                                        <div className="flex flex-col justify-around items-start space-x-4 gap-3 text-center w-full">
+                                            <Link to="/profile" className={navButtonClass}>
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                    <circle cx="12" cy="7" r="4"></circle>
+                                                </svg>
+                                                {t('navigation.profile')}
+                                            </Link>
+                                            <Link to="/customer/dashboard" className={navButtonClass}>
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                    <rect x="3" y="3" width="7" height="7"></rect>
+                                                    <rect x="14" y="3" width="7" height="7"></rect>
+                                                    <rect x="14" y="14" width="7" height="7"></rect>
+                                                    <rect x="3" y="14" width="7" height="7"></rect>
+                                                </svg>
+                                                {t('navigation.dashboard')}
+                                            </Link>
+                                            <Link to="/services" className={navButtonClass}>
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                    <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                                                    <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                                                    <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                                                </svg>
+                                                {t('navigation.services')}
+                                            </Link>
+                                            <Link to="/packages" className={navButtonClass}>
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                                                </svg>
+                                                {t('navigation.packages')}
+                                            </Link>
+                                        </div>
+                                    )}
+                                    <button
+                                        onClick={handleLogout}
+                                        className={`${navButtonClass} bg-red-600/80 hover:bg-red-700/80`}
+                                    >
+                                        <svg width="16" height="16" viewBox="0 0 512 512" fill="currentColor">
+                                            <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
+                                        </svg>
+                                        {t('auth.logout')}
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <Link to="/login" className={navButtonClass}>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                                            <polyline points="10 17 15 12 10 7"></polyline>
+                                            <line x1="15" y1="12" x2="3" y2="12"></line>
+                                        </svg>
+                                        {t('auth.login')}
+                                    </Link>
+                                    <Link to="/register" className={`${navButtonClass} bg-emerald-500/80 hover:bg-emerald-600/80 text-white`}>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                                        </svg>
+                                        {t('auth.register')}
+                                    </Link>
+                                    <Link to="/admin/login" className={navButtonClass}>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="12" cy="7" r="4"></circle>
+                                        </svg>
+                                        {t('auth.adminLogin')}
+                                    </Link>
+                                </>
+                            )}
+                            <LanguageSwitcher className="w-full mb-4" />
+                        </div>
+                    </div>
+                </nav>
+            )}
+        </>
     );
-  }, []);
-
-  return (
-    <>
-      <nav
-        ref={comp}
-        className="bg-[#5c55553a] text-white p-4 shadow-md hover:shadow-indigo-900 transition-shadow backdrop-blur-sm fixed top-0 w-full z-10"
-      >
-        <div className="container mx-auto flex justify-between items-center">
-          <i
-            onClick={() => setOpen((open) => !open)}
-            className="icon md:hidden cursor-pointer"
-          >
-            {open ? (
-              <img
-                width="30"
-                height="30"
-                src="https://img.icons8.com/ios-glyphs/30/top-menu.png"
-                alt="top-menu"
-              />
-            ) : (
-              <img
-                width="30"
-                height="30"
-                src="https://img.icons8.com/ios-glyphs/30/top-menu.png"
-                alt="top-menu"
-              />
-            )}
-          </i>
-          <Link to="/" className="text-xl font-bold">
-         veloce Car Wash
-          </Link>
-
-          <div className="flex items-center space-x-4 max-md:hidden">
-            {user ? (
-              <>
-                {user.role === "super-admin" || user.role === "branch-admin" ? (
-                  <button className="group/button relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gray-800/30 backdrop-blur-lg px-3 py-2 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-gray-600/50 border border-white/20">
-                    <Link to="/AdminDashboard" className="text-lg">
-                      {t('navigation.adminDashboard')}
-                    </Link>
-                    <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-13deg)_translateX(-100%)] group-hover/button:duration-1000 group-hover/button:[transform:skew(-13deg)_translateX(100%)]">
-                      <div className="relative h-full w-10 bg-white/20" />
-                    </div>
-                  </button>
-                ) : (
-                  <div className="flex items-center space-x-4">
-                    <Link
-                      to="/profile"
-                      className="cursor-pointer text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                    >
-                      {t('navigation.profile')}
-                    </Link>
-                    <Link
-                      to="/customer/dashboard"
-                      className=" cursor-pointer text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                    >
-                      <div className="relative overflow-hidden">
-                        <p className="group-hover:-translate-y-7 duration-[1.125s] ease-[cubic-bezier(0.19,1,0.22,1)]">
-                          {t('navigation.dashboard')}
-                        </p>
-                        <p className="absolute top-7 left-0 group-hover:top-0 duration-[1.125s] ease-[cubic-bezier(0.19,1,0.22,1)]">
-                          <img
-                            width="24"
-                            height="24"
-                            src="https://img.icons8.com/material-rounded/24/arrow.png"
-                            alt="arrow"
-                          />
-                        </p>
-                      </div>
-                    </Link>
-                    <Link
-                      to="/services"
-                      className="cursor-pointer text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                    >
-                     {t('navigation.services')}
-                    </Link>
-                    <Link
-                      to="/packages"
-                      className="cursor-pointer text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                    >
-                      {t('navigation.packages')}
-                    </Link>
-                  </div>
-                )}
-
-                <button
-                  onClick={handleLogout}
-                  className=" group flex items-center justify-start w-11 h-11 bg-red-600 rounded-full cursor-pointer relative overflow-hidden transition-all duration-200 shadow-lg hover:w-32 hover:rounded-lg active:translate-x-1 active:translate-y-1"
-                >
-                  <div className="flex items-center justify-center w-full transition-all duration-300 group-hover:justify-start group-hover:px-3">
-                    <svg className="w-4 h-4" viewBox="0 0 512 512" fill="white">
-                      <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
-                    </svg>
-                  </div>
-                  <div className="absolute right-5 transform translate-x-full opacity-0 text-white text-lg font-semibold transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-                    {t('auth.logout')}
-                  </div>
-                </button>
-              </>
-            ) : (
-              <>
-                <Link
-                  to="/login"
-                  className="group/button relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gray-800/30 backdrop-blur-lg px-3 py-2 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-gray-600/50 border border-white/20"
-                >
-                  <h1 className="text-lg">{t('auth.login')}</h1>
-                  <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-13deg)_translateX(-100%)] group-hover/button:duration-1000 group-hover/button:[transform:skew(-13deg)_translateX(100%)]">
-                    <div className="relative h-full w-10 bg-white/20" />
-                  </div>
-                </Link>
-                <button className="cursor-pointer group relative bg-[#a9a8a8] hover:bg-emerald-500 text-black font-semibold text-sm px-6 py-3 rounded-full transition-all duration-200 ease-in-out shadow hover:shadow-lg w-40 h-12">
-                  <div className="relative flex items-center justify-center gap-2">
-                    <span className="relative inline-block overflow-hidden">
-                      <span className="block transition-transform duration-300 group-hover:-translate-y-full">
-                        {t('auth.register')}
-                      </span>
-                      <Link
-                        to="/register"
-                        className="absolute inset-0 transition-transform duration-300 translate-y-full group-hover:translate-y-0"
-                      >
-                        {t('auth.registerNow')}
-                      </Link>
-                    </span>
-                    <svg
-                      className="w-4 h-4 transition-transform duration-200 group-hover:rotate-45"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle fill="currentColor" r={11} cy={12} cx={12} />
-                      <path
-                        strokeLinejoin="round"
-                        strokeLinecap="round"
-                        strokeWidth={2}
-                        stroke="white"
-                        d="M7.5 16.5L16.5 7.5M16.5 7.5H10.5M16.5 7.5V13.5"
-                      />
-                    </svg>
-                  </div>
-                </button>
-                <Link
-                  to="/admin/login"
-                  className="group/button relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gray-800/30 backdrop-blur-lg px-3 py-2 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-gray-600/50 border border-white/20"
-                >
-                  <h1 className="text-lg">{t('auth.adminLogin')}</h1>
-                  <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-13deg)_translateX(-100%)] group-hover/button:duration-1000 group-hover/button:[transform:skew(-13deg)_translateX(100%)]">
-                    <div className="relative h-full w-10 bg-white/20" />
-                  </div>
-                </Link>
-              </>
-            )}
-                       <LanguageSwitcher className="hidden md:block" />
-
-          </div>
-        </div>
-      </nav>
-      {open && (
-        <nav
-          ref={comp}
-          className="bg-[#5c55553a] text-white p-4 shadow-md hover:shadow-indigo-900 transition-shadow backdrop-blur-xs md:hidden fixed top-0  z-10"
-        >
-          <div className="menuNav flex flex-col h-screen justify-between mt-[40%] w-[200px] items-start text-center">
-            <div className="flex flex-col justify-centre items-center  gap-3 text-center ">
-              <i
-                onClick={() => setOpen(!open)}
-                className="text-xl font-bold cursor-pointer flex justify-between items-center w-full gap-12 p-4"
-              >
-                <img
-                  width="48"
-                  height="48"
-                  src="https://img.icons8.com/badges/48/automatic-car-wash.png"
-                  alt="automatic-car-wash"
-                />
-                <img
-                  width="30"
-                  height="30"
-                  src="https://img.icons8.com/ios-filled/50/delete-sign--v1.png"
-                  alt="delete-sign--v1"
-                />{" "}
-              </i>
-              {user ? (
-                <>
-                  {user.role === "super-admin" ||
-                  user.role === "branch-admin" ? (
-                    <Link
-                      to="/AdminDashboard"
-                      className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                    >
-                      {t('navigation.adminDashboard')}
-                    </Link>
-                  ) : (
-                    <div className="flex flex-col justify-around items-start space-x-4 gap-3 text-center w-full ">
-                      <Link
-                        to="/profile"
-                        className="w-[150px]  text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                      >
-                        {t('navigation.profile')}
-                      </Link>
-                      <Link
-                        to="/customer/dashboard"
-                        className="w-[150px] text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                      >
-                       {t('navigation.dashboard')}
-                      </Link>
-                      <Link
-                        to="/services"
-                        className="w-[150px] text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                      >
-                        {t('navigation.services')}
-                      </Link>
-                      <Link
-                        to="/packages"
-                        className="  w-[150px] text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                      >
-                        {t('navigation.packages')}
-                      </Link>
-                    </div>
-                  )}
-                  <button
-                    onClick={handleLogout}
-                    className=" group flex items-center justify-start w-11 h-11 bg-red-600 rounded-full cursor-pointer relative overflow-hidden transition-all duration-200 shadow-lg hover:w-32 hover:rounded-lg active:translate-x-1 active:translate-y-1"
-                  >
-                    <div className="flex items-center justify-center w-full transition-all duration-300 group-hover:justify-start group-hover:px-3">
-                      <svg
-                        className="w-4 h-4"
-                        viewBox="0 0 512 512"
-                        fill="white"
-                      >
-                        <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
-                      </svg>
-                    </div>
-                    <div className="absolute right-5 transform translate-x-full opacity-0 text-white text-lg font-semibold transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-                      {t('auth.logout')}
-                    </div>
-                  </button>
-                </>
-              ) : (
-                <>
-                  <button className="group/button relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gray-800/30 backdrop-blur-lg px-3 py-2 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-gray-600/50 border border-white/20">
-                    <Link to="/login" className="text-lg">
-                      {t('auth.login')}
-                    </Link>
-                    <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-13deg)_translateX(-100%)] group-hover/button:duration-1000 group-hover/button:[transform:skew(-13deg)_translateX(100%)]">
-                      <div className="relative h-full w-10 bg-white/20" />
-                    </div>
-                  </button>
-                  <Link
-                    to="/register"
-                    className="cursor-pointer group relative bg-[#a9a8a8] hover:bg-emerald-500 text-black font-semibold text-sm px-6 py-3 rounded-full transition-all duration-200 ease-in-out shadow hover:shadow-lg w-40 h-12"
-                  >
-                    <div className="relative flex items-center justify-center gap-2">
-                      <span className="relative inline-block overflow-hidden">
-                        <span className="block transition-transform duration-300 group-hover:-translate-y-full">
-                          {t('auth.register')}
-                        </span>
-                        <span className="absolute inset-0 transition-transform duration-300 translate-y-full group-hover:translate-y-0">
-                          {t('auth.registerNow')}
-                        </span>
-                      </span>
-                      <svg
-                        className="w-4 h-4 transition-transform duration-200 group-hover:rotate-45"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle fill="currentColor" r={11} cy={12} cx={12} />
-                        <path
-                          strokeLinejoin="round"
-                          strokeLinecap="round"
-                          strokeWidth={2}
-                          stroke="white"
-                          d="M7.5 16.5L16.5 7.5M16.5 7.5H10.5M16.5 7.5V13.5"
-                        />
-                      </svg>
-                    </div>
-                  </Link>
-                  <button className="group/button relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gray-800/30 backdrop-blur-lg px-3 py-2 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-gray-600/50 border border-white/20">
-                    <Link to="/admin/login" className="text-lg">
-                      {t('auth.adminLogin')}
-                    </Link>
-                    <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-13deg)_translateX(-100%)] group-hover/button:duration-1000 group-hover/button:[transform:skew(-13deg)_translateX(100%)]">
-                      <div className="relative h-full w-10 bg-white/20" />
-                    </div>
-                  </button>
-                </>
-              )}
-             <LanguageSwitcher className="w-full mb-4" />
-            </div>
-          </div>
-        </nav>
-      )}
-    </>
-  );
 }
