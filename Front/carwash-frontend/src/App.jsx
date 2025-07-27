@@ -24,7 +24,7 @@ import './i18n';
 export default function App() {
   return (
     <AuthProvider>
-      <div className="bg-[#171717] min-h-screen flex flex-col">
+      <div className=" min-h-screen flex flex-col">
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -48,7 +48,7 @@ export default function App() {
             element={<BookingsManagement />}
           />
         </Routes>
-        <Footer/>
+      
       </div>
     </AuthProvider>
   );

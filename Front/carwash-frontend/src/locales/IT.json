@@ -70,7 +70,9 @@
   },
   "home": {
     "welcome": {
-      "title": "Benvenuti in VELOCE Lavaggio Auto Pro",
+      "mobileTitle":"Quick. It",
+      "mobileWelcome":"Benvenuti in",
+      "title": "Benvenuti in Quick. It Lavaggio Auto Pro",
       "subtitle": "Scopri i nostri servizi premium e pacchetti per un'esperienza di lavaggio eccezionale",
       "log": "Registrati "
     },

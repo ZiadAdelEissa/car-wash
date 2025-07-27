@@ -38,7 +38,7 @@ export default function Navbar() {
         <>
             <nav
                 ref={comp}
-                className="bg-gray-900/80 text-white p-4 fixed top-0 w-full z-50 backdrop-blur-md border-b border-gray-700/50"
+                className="bg-gray-900/80 text-white p-4 fixed top-0 w-full z-30 backdrop-blur-md border-b border-gray-700/50"
             >
                 <div className="container mx-auto flex justify-between items-center">
                     {/* Mobile menu button */}
@@ -63,7 +63,8 @@ export default function Navbar() {
 
                     {/* Logo */}
                     <Link to="/" className="text-2xl font-bold  bg-gradient-to-r from-orange-400 to-pink-600 bg-clip-text text-transparent">
-                        VELOCE <span className="text-white">CarWash</span>
+                        {/* VELOCE <span className="text-white">CarWash</span> */}
+                        <img src="https://i.ibb.co/5gxBgtVR/quiq-it-logo.jpg"  className="w-[75px] h-[75px] rounded-3xl " alt="logo"/>
                     </Link>
 
                     {/* Desktop Navigation */}
@@ -169,7 +170,9 @@ export default function Navbar() {
                                     className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent"
                                     onClick={() => setOpen(false)}
                                 >
-                                    Veloce<span className="text-white">CarWash</span>
+                                    {/* Veloce<span className="text-white">CarWash</span> */}
+                                                            <img src="https://i.ibb.co/5gxBgtVR/quiq-it-logo.jpg"  className="w-[75px] h-[75px] rounded-full" alt="logo"/>
+
                                 </Link>
                                 <button 
                                     onClick={() => setOpen(false)}

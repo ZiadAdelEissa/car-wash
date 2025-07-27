@@ -69,7 +69,9 @@
   },
   "home": {
     "welcome": {
-      "title": "Welcome to VELOCE Car Wash Pro",
+      "mobileTitle":"Quick. It",
+      "mobileWelcome":"Welcome to",
+      "title": "Welcome to Quick. It Car Wash Pro",
       "subtitle": "Discover our premium services and packages for your ultimate wash experience",
       "log": "Register "
     },

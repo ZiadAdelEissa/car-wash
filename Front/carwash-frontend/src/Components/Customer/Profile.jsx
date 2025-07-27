@@ -91,7 +91,7 @@ export default function Profile() {
         theme="dark"
       />
       
-      <div className="max-w-6xl mx-auto mt-16 md:mt-24">
+      <div className="max-w-6xl mx-auto mt-30 md:mt-24">
         {/* Profile Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <h1 className="text-2xl md:text-3xl font-bold text-white">{t("profile.title")}</h1>

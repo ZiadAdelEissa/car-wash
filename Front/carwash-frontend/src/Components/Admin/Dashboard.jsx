@@ -29,7 +29,7 @@ export default function AdminDashboard() {
     return <div className="p-6 text-center">Loading dashboard...</div>;
 
   return (
-    <div className="Dashboard p-6 minh-[100vh] flex flex-col items-center justify-center text-center mt-[50px]">
+    <div className="Dashboard p-6 minh-[100vh] flex flex-col items-center justify-center text-center mt-[70px]">
       {/* <img src="https://i.ibb.co/mFSmqjCg/pexels-tima-miroshnichenko-6873123.jpg" alt="Logo" className=" mb-6 bg-cover bg-center absolute -z-10" /> */}
 
       <h1 className="text-4xl m-5 text-center bg-gradient-to-r from-orange-400 to-pink-600 text-transparent bg-clip-text">{t("admin.title")}</h1>

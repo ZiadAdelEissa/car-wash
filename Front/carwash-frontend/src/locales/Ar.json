@@ -68,7 +68,9 @@
   },
   "home": {
     "welcome": {
-      "title": "مرحبا بكم في VELOCE غسيل سيارات برو",
+      "mobileTitle":"Quick. It",
+      "mobileWelcome":"مرحبا بكم في",
+      "title": "مرحبا بكم في Quick. It غسيل سيارات برو",
       "subtitle": "اكتشف خدماتنا المميزة والباقات لتجربة غسيل استثنائية",
       "log": "سجل "
     },
