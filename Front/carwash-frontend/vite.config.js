@@ -10,11 +10,11 @@ export default defineConfig({
       strict: false,
     },
     // Proxy only for development
-    proxy: process.env.NODE_ENV === 'development' ? {
+    proxy: process.env.NODE_ENV === 'production' ? {
       '/api': {
         target: 'https://bookingbackend-jufl.onrender.com',
         changeOrigin: true,
-        secure: false
+        secure: process.env.NODE_ENV === "production"
       }
     } : undefined
   },

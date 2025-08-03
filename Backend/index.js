@@ -72,7 +72,11 @@ app.use(
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    origin: [
+      process.env.FRONTEND_URL || "http://localhost:5173",
+      "https://car-wash-6v82.onrender.com", // Your deployed frontend
+      "http://localhost:5173" // Local development
+    ],
     methods: ["GET", "POST", "PUT", "DELETE","PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -88,27 +92,16 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false, // Allows HTTP (localhost)
+      secure: process.env.NODE_ENV === "production", // HTTPS required in production
       httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
-      sameSite: "lax", // Same-origin requests
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Cross-origin cookies for production
+      path: '/', // Available for all paths
     },
     store: MongoStore.create({
       mongoUrl: process.env.MONGODB_URI || "mongodb+srv://ziadadel6060:Honda999@cluster0.ysigfwu.mongodb.net/italy?retryWrites=true&w=majority",
       collectionName: "sessions",
     }),
-    
-    /* DEPLOYMENT SESSION CONFIG: Uncomment below for production deployment on Render:
-    
-    cookie: {
-      secure: process.env.NODE_ENV === "production", // HTTPS required in production
-      httpOnly: true, // Secure cookies in production
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Cross-origin cookies
-      path: '/', // Available for all paths
-    },
-    
-    */
   })
 );
 
