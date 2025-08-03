@@ -12,7 +12,7 @@ export default defineConfig({
     // Proxy only for development
     proxy: process.env.NODE_ENV === 'development' ? {
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'https://bookingbackend-jufl.onrender.com',
         changeOrigin: true,
         secure: false
       }
