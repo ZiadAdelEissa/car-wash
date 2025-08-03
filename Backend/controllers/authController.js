@@ -4,16 +4,22 @@ import Branch from '../models/Branch.js';
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log('🔑 Login attempt:', { email, password: password ? '***' : 'empty' });
+    
     const user = await User.findOne({ email, password });
+    console.log('👤 User found:', user ? { id: user._id, email: user.email, role: user.role } : 'null');
     
     if (!user) {
+      console.log('❌ Login failed - invalid credentials');
       return res.status(401).json({ message: 'Invalid credentials' });
     }
     
     // Store user in session
     req.session.user = user;
+    console.log('✅ Login successful, session created');
     res.json({ message: 'Logged in successfully', user });
   } catch (error) {
+    console.log('💥 Login error:', error.message);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };

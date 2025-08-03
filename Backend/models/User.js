@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: ["customer", "branch-admin", "super-admin"],
-    // default: 'customer'
+    default: 'customer'
   },
   branch: { type: mongoose.Schema.Types.ObjectId, ref: "Branch" }, // Only for branch admins
   createdAt: { type: Date, default: Date.now },

@@ -111,7 +111,7 @@ export default function BranchesCRUD() {
   if (loading && branches.length === 0) return <div className="p-6 text-center text-gray-500">Loading branches...</div>
 
   return (
-    <div className="p-6 mt-[80px] min-h-screen">
+    <div className="p-6 mt-[80px] min-h-screen bg-[#171717]">
       <div className='flex flex-col items-center justify-center'>
 
       <h1 className="text-4xl m-5 text-center bg-gradient-to-r from-orange-400 to-pink-600 text-transparent bg-clip-text">

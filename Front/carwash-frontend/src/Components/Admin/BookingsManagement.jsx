@@ -237,7 +237,7 @@ const handleDeleteUserPackage = async (id) => {
   }
 
   return (
-    <div className="p-6 mt-[80px] min-h-screen">
+    <div className="p-6 mt-[80px] min-h-screen bg-[#141414]">
       <h1 className="text-4xl m-5 text-center bg-gradient-to-r from-orange-400 to-pink-600 text-transparent bg-clip-text">
         {t("adminbookings.manageBooking")} {activeTab === (t("admin.bookings")) ? (t("admin.bookings")) : (t("admin.userPackages"))}
       </h1>

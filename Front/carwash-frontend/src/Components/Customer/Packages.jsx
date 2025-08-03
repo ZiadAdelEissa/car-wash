@@ -110,7 +110,7 @@ export default function Packages() {
   if (loading) return <Loader />;
 
   return (
-    <div className="min-h-screen p-6 text-gray-100">
+    <div className="min-h-screen p-6 text-gray-100 bg-[#171717]">
       <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -124,12 +124,12 @@ export default function Packages() {
         theme="dark"
       />
 
-      <div ref={titleRef} className="flex flex-col items-center justify-center text-center mb-6 pt-20">
+      <div ref={titleRef} className="packages flex flex-col w-full h-full items-center justify-center text-center mb-6 pt-20 bg-[#171717]">
         <h1 className="text-4xl md:text-6xl bg-gradient-to-r from-orange-400 to-pink-600 inline-block text-transparent bg-clip-text my-5">
          {t("packages.availablePackages")}
         </h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full h-full px-4">
           {packages.map((pkg) => (
             <div
               key={pkg._id}

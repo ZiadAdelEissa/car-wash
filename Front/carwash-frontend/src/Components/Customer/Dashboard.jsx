@@ -202,7 +202,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div ref={comp} className="p-4 md:p-6 flex flex-col justify-around items-center gap-6 mt-[99px] w-full">
+    <div ref={comp} className="bg-[#171717] p-4 md:p-6 flex flex-col justify-around items-center gap-6 mt-[99px] w-full">
       <h1 className="text-4xl md:text-6xl bg-gradient-to-r from-orange-400 to-pink-600 inline-block text-transparent bg-clip-text font-bold tracking-tight">
         {t('dashboard.title')}
       </h1>

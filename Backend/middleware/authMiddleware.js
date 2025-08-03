@@ -2,12 +2,17 @@ import User from "../models/User.js";
 import Booking from "../models/Booking.js";
 import UserPackage from "../models/UserPackage.js";
 export const isAuthenticated = (req, res, next) => {
+  console.log('🔐 Auth check - Session exists:', !!req.session.user);
+  console.log('🔐 Session user:', req.session.user ? { id: req.session.user._id, email: req.session.user.email, role: req.session.user.role } : 'null');
+  
   if (!req.session.user) {
+    console.log('❌ No session found - user not authenticated');
     return res.status(401).json({
       success: false,
       message: "Unauthorized - Please login first",
     });
   }
+  console.log('✅ User authenticated, proceeding...');
   next();
 };
 // 1. Core Authentication Middleware
@@ -23,18 +28,40 @@ export const verifySession = (req, res, next) => {
   next();
 };
 
-// 2. Role Verification Factory
+// 2. Role Verification Factory with Hierarchy
 const createRoleVerifier = (role) => async (req, res, next) => {
   try {
+    console.log('🔍 Role verification - Required role:', role);
+    console.log('🔍 Session user ID:', req.session.user?._id);
+    
     const user = await User.findById(req.session.user._id).select("role");
+    console.log('🔍 Found user:', user ? { id: user._id, role: user.role } : 'null');
 
-    if (user.role == "customer") {
+    if (!user) {
+      console.log('❌ User not found in database');
+      return res.status(403).json({
+        system: "carwash-booking",
+        code: "ACCESS_DENIED",
+        message: "User not found",
+        requiredRole: role,
+        currentRole: "none",
+      });
+    }
+
+    // Role hierarchy: super-admin > branch-admin > customer
+    const hasAccess = (
+      user.role === role || // Exact role match
+      (user.role === "super-admin") || // Super admin has access to everything
+      (user.role === "branch-admin" && role === "customer") // Branch admin has customer access
+    );
+
+    if (!hasAccess) {
       return res.status(403).json({
         system: "carwash-booking",
         code: "ACCESS_DENIED",
         message: `Requires ${role} privileges`,
         requiredRole: role,
-        currentRole: user?.role || "none",
+        currentRole: user.role,
       });
     }
 

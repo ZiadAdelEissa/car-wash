@@ -27,7 +27,12 @@ export default function Profile() {
         setTempProfile(response.data);
         toast.success("Profile loaded successfully");
       } catch (error) {
-        toast.error("Failed to load profile");
+        console.error("Profile fetch error:", error);
+        if (error.response?.status === 401) {
+          toast.error("Please login again to access your profile");
+        } else {
+          toast.error("Failed to load profile");
+        }
       } finally {
         setLoading(false);
       }
@@ -38,6 +43,10 @@ export default function Profile() {
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
     try {
+      if (!tempProfile) {
+        toast.error("Profile data is null");
+        return;
+      }
       const response = await updateUserProfile(tempProfile);
       setProfile(response.data);
       setEditMode(false);
@@ -191,16 +200,16 @@ export default function Profile() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-1">
                 <h3 className="text-sm font-medium text-[#b4b4b4]">{t("profile.name")}</h3>
-                <p className="text-lg text-white">{profile.name}</p>
+                <p className="text-lg text-white">{profile?.name || 'N/A'}</p>
               </div>
               <div className="space-y-1">
                 <h3 className="text-sm font-medium text-[#b4b4b4]">{t("profile.email")}</h3>
-                <p className="text-lg text-white">{profile.email}</p>
+                <p className="text-lg text-white">{profile?.email || 'N/A'}</p>
               </div>
               <div className="space-y-1">
                 <h3 className="text-sm font-medium text-[#b4b4b4]">{t("profile.phone")}</h3>
                 <p className="text-lg text-white">
-                  {profile.phone || <span className="text-[#7d7d7d]">{t("profile.notProvided")}</span>}
+                  {profile?.phone || <span className="text-[#7d7d7d]">{t("profile.notProvided")}</span>}
                 </p>
               </div>
               {/* <div className="space-y-1">
@@ -279,9 +288,9 @@ export default function Profile() {
           </form>
 
           {/* Family Members List */}
-          {profile.familyMembers?.length > 0 ? (
+          {profile?.familyMembers?.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {profile.familyMembers.map((member, index) => (
+              {profile.familyMembers?.map((member, index) => (
                 <div
                   key={index}
                   className="bg-[#2d2d2d] p-4 rounded-lg border border-[#3d3d3d] hover:border-[#009b49] transition-all duration-300 group"
@@ -306,7 +315,7 @@ export default function Profile() {
                         {member.email || member.name}
                       </h3>
                       <p className="text-sm text-[#b4b4b4]">
-                        Connected to: {profile.email}
+                        Connected to: {profile?.email || 'N/A'}
                       </p>
                     </div>
                   </div>

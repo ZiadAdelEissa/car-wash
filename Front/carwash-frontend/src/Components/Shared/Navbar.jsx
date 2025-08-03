@@ -305,6 +305,7 @@ export default function Navbar() {
                                 <div className="mt-4">
                                     <LanguageSwitcher className="w-full" />
                                 </div>
+                                
                             </nav>
                         </div>
                     </div>

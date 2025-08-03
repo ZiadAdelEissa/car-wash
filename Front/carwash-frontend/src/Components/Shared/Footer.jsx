@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
     return (
-        <footer className="  py-4 ">
+        <footer className=" bg-[#141414]  py-4 ">
         <div className=" mx-auto text-center">
             {/* <p>Follow us on social media:</p> */}
             <div className="flex justify-center space-x-4 mt-8">

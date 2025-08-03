@@ -112,7 +112,7 @@ export default function PackagesCRUD() {
     return <div className="p-6 text-center">Loading packages...</div>;
 
   return (
-    <div className="p-6 flex flex-col items-center justify-center   min-h-screen">
+    <div className="p-6 flex flex-col items-center justify-center bg-[#171717]   min-h-screen">
       <div className="mt-[80px]">
 
       <h1 className="text-4xl m-5 text-center bg-gradient-to-r from-orange-400 to-pink-600   text-transparent bg-clip-text">Manage Packages</h1>

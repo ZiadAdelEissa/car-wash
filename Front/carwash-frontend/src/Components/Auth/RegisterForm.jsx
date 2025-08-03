@@ -30,7 +30,9 @@ export default function RegisterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 bg-[#fff]  rounded-lg shadow-md shadow-fuchsia-900 hover:shadow-gray-900  animate-fade-in mt-[90px]">
+    <div className='form w-full h-full bg-[#171717]'>
+
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 bg-[#fff]  mb-5 rounded-lg shadow-md shadow-fuchsia-900 hover:shadow-gray-900  animate-fade-in mt-[130px]">
       <h2 className="text-2xl font-bold mb-6 text-center">{t("register.Registration")}</h2>
       {error && <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">{error}</div>}
       <div className="mb-4">
@@ -42,7 +44,7 @@ export default function RegisterForm() {
           onChange={(e) => setFormData({...formData, name: e.target.value})}
           className="w-full p-2 border rounded"
           required
-        />
+          />
       </div>
       
       <div className="mb-4">
@@ -54,7 +56,7 @@ export default function RegisterForm() {
           onChange={(e) => setFormData({...formData, email: e.target.value})}
           className="w-full p-2 border rounded"
           required
-        />
+          />
       </div>
       
       <div className="mb-4">
@@ -66,7 +68,7 @@ export default function RegisterForm() {
           onChange={(e) => setFormData({...formData, password: e.target.value})}
           className="w-full p-2 border rounded"
           required
-        />
+          />
       </div>
       
       <div className="mb-6">
@@ -78,16 +80,17 @@ export default function RegisterForm() {
           onChange={(e) => setFormData({...formData, phone: e.target.value})}
           className="w-full p-2 border rounded"
           required
-        />
+          />
       </div>
       
       <button
         type="submit"
         disabled={loading}
         className="w-full text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-      >
+        >
         {loading ? t('register.loading') : t('register.submit')}
       </button>
     </form>
+        </div>
   )
 }

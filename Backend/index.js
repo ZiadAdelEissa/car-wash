@@ -1,3 +1,32 @@
+/*
+=============================================================================
+                        DEPLOYMENT INSTRUCTIONS
+=============================================================================
+
+FOR RENDER DEPLOYMENT:
+1. Push code to GitHub repository
+2. Create new Web Service on Render
+3. Connect GitHub repo, set Root Directory to "Backend"
+4. Set Build Command: "npm install"
+5. Set Start Command: "npm start"
+6. Add Environment Variables in Render Dashboard:
+   - NODE_ENV=production
+   - SESSION_SECRET=asyote666
+   - MONGODB_URI=mongodb+srv://ziadadel6060:Honda999@cluster0.ysigfwu.mongodb.net/italy?retryWrites=true&w=majority
+   - FRONTEND_URL=https://your-deployed-frontend-url.com
+   - PORT=5000
+
+7. BEFORE DEPLOYMENT: Switch session cookie config below to production mode:
+   - Uncomment the environment-based secure and sameSite settings
+   - Comment out the current localhost settings
+
+FOR LOCALHOST DEVELOPMENT:
+- Use NODE_ENV=development in .env file
+- Keep current session cookie settings (secure: false, sameSite: "lax")
+
+=============================================================================
+*/
+
 import express from "express";
 import mongoose from "mongoose";
 import session from "express-session";
@@ -43,7 +72,12 @@ app.use(
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:5174", 
+      "http://localhost:3000",
+      process.env.FRONTEND_URL
+    ].filter(Boolean), // Remove any undefined values
     methods: ["GET", "POST", "PUT", "DELETE","PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -58,14 +92,36 @@ app.use(
     secret: process.env.SESSION_SECRET || "your-secret-key",
     resave: false,
     saveUninitialized: false,
+    name: 'carwash.sid', // Custom session name
     cookie: {
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 24 * 60 * 60 * 1000,
+      // DEPLOYMENT CONFIG: For production deployment, use environment-based settings:
+      // secure: process.env.NODE_ENV === "production", // HTTPS required in production
+      // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Cross-origin cookies in production
+      
+      // LOCALHOST CONFIG: Current settings for local development:
+      secure: false, // Allows HTTP (localhost)
+      httpOnly: false, // Allow client-side access for debugging (change to true for production)
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      sameSite: "lax", // Same-origin requests
+      path: '/', // Ensure cookie is available for all paths
     },
     store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_URI || "mongodb://localhost:27017/italy",
+      mongoUrl: process.env.MONGODB_URI || "mongodb+srv://ziadadel6060:Honda999@cluster0.ysigfwu.mongodb.net/italy?retryWrites=true&w=majority",
       collectionName: "sessions",
+      touchAfter: 24 * 3600 // lazy session update
     }),
+    
+    /* DEPLOYMENT SESSION CONFIG: Uncomment below for production deployment on Render:
+    
+    cookie: {
+      secure: process.env.NODE_ENV === "production", // HTTPS required in production
+      httpOnly: true, // Secure cookies in production
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Cross-origin cookies
+      path: '/', // Available for all paths
+    },
+    
+    */
   })
 );
 
@@ -75,7 +131,7 @@ app.use(
 const connectDB = async () => {
   try {
     await mongoose.connect(
-      process.env.MONGODB_URI || "mongodb://localhost:27017/italy"
+      process.env.MONGODB_URI || "mongodb+srv://ziadadel6060:Honda999@cluster0.ysigfwu.mongodb.net/italy?retryWrites=true&w=majority"
     );
     console.log("MongoDB connected successfully");
   } catch (err) {
@@ -100,6 +156,21 @@ app.use("/api/bookings", isAuthenticated, bookingRoutes);
 // Admin routes
 app.use("/api/admin", isAuthenticated,isSuperAdmin,  adminRoutes);
 app.use("/api/branch-admin", isAuthenticated, isSuperAdmin, branchAdminRoutes);
+
+// Root route for deployment testing
+app.get("/", (req, res) => {
+  res.status(200).json({ 
+    message: "Car Wash Backend API", 
+    status: "running",
+    environment: process.env.NODE_ENV || "development",
+    endpoints: {
+      health: "/api/health",
+      auth: "/api/auth",
+      admin: "/api/admin",
+      user: "/api/user"
+    }
+  });
+});
 
 // Health check
 app.get("/api/health", (req, res) => {
