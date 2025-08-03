@@ -14,7 +14,7 @@ export default defineConfig({
       '/api': {
         target: 'https://bookingbackend-jufl.onrender.com',
         changeOrigin: true,
-        secure: process.env.NODE_ENV === "production"
+        secure: false
       }
     } : undefined
   },
