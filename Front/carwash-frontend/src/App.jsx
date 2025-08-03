@@ -28,24 +28,24 @@ export default function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/Services" element={<Servicess />} />
-          <Route path="/packages" element={<Packages />} />
-          <Route path="/booking" element={<Booking />} />
-          <Route path="/serviceBooking" element={<ServicesBooking />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<CustomerLogin />} />
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/customer/dashboard" element={<Dashboard />} />
-          {/* <Route path="/Registers" element={<Register />} /> */}
-          <Route path="/Registeradmin" element={<RegisterAdmin />} />
-          <Route path="/AdminDashboard" element={<AdminDashboard />} />
-          <Route path="/BranchCrud" element={<BranchesCRUD />} />
-          <Route path="/ServicesCrud" element={<ServicesCRUD />} />
-          <Route path="/PackagesCRUD" element={<PackagesCRUD />} />
+          <Route path="/profile" element={<><Profile /><Footer/></>} />
+          <Route path="/Services" element={<><Servicess /><Footer/></>} />
+          <Route path="/packages" element={<><Packages /><Footer/></>} />
+          <Route path="/booking" element={<><Booking /><Footer/></>} />
+          <Route path="/serviceBooking" element={<><ServicesBooking /><Footer/></>} />
+          <Route path="/register" element={<><Register /><Footer/></>} />
+          <Route path="/login" element={<><CustomerLogin /><Footer/></>} />
+          <Route path="/admin/login" element={<><AdminLogin /><Footer/></>} />
+          <Route path="/customer/dashboard" element={<><Dashboard /><Footer/></>} />
+          {/* <Route path="/Registers" element={<><Register />} /> */}
+          <Route path="/Registeradmin" element={<><RegisterAdmin /><Footer/></>} />
+          <Route path="/AdminDashboard" element={<><AdminDashboard /><Footer/></>} />
+          <Route path="/BranchCrud" element={<><BranchesCRUD /><Footer/></>} />
+          <Route path="/ServicesCrud" element={<><ServicesCRUD /><Footer/></>} />
+          <Route path="/PackagesCRUD" element={<><PackagesCRUD /><Footer/></>} />
           <Route
             path="/AdminDashboard/Bookings"
-            element={<BookingsManagement />}
+            element={<><BookingsManagement /><Footer/></>}
           />
         </Routes>
       

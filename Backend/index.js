@@ -72,12 +72,7 @@ app.use(
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:5174", 
-      "http://localhost:3000",
-      process.env.FRONTEND_URL
-    ].filter(Boolean), // Remove any undefined values
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "DELETE","PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -92,23 +87,15 @@ app.use(
     secret: process.env.SESSION_SECRET || "your-secret-key",
     resave: false,
     saveUninitialized: false,
-    name: 'carwash.sid', // Custom session name
     cookie: {
-      // DEPLOYMENT CONFIG: For production deployment, use environment-based settings:
-      // secure: process.env.NODE_ENV === "production", // HTTPS required in production
-      // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Cross-origin cookies in production
-      
-      // LOCALHOST CONFIG: Current settings for local development:
       secure: false, // Allows HTTP (localhost)
-      httpOnly: false, // Allow client-side access for debugging (change to true for production)
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
       sameSite: "lax", // Same-origin requests
-      path: '/', // Ensure cookie is available for all paths
     },
     store: MongoStore.create({
       mongoUrl: process.env.MONGODB_URI || "mongodb+srv://ziadadel6060:Honda999@cluster0.ysigfwu.mongodb.net/italy?retryWrites=true&w=majority",
       collectionName: "sessions",
-      touchAfter: 24 * 3600 // lazy session update
     }),
     
     /* DEPLOYMENT SESSION CONFIG: Uncomment below for production deployment on Render:

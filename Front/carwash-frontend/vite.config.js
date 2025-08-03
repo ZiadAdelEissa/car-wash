@@ -1,20 +1,37 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+
 // https://vite.dev/config/
 export default defineConfig({
   server: {
-    host:"0.0.0.0",
-    fs:{
-      strict:false,
+    host: "0.0.0.0",
+    fs: {
+      strict: false,
     },
-    proxy: {
+    // Proxy only for development
+    proxy: process.env.NODE_ENV === 'development' ? {
       '/api': {
         target: 'http://localhost:5000',
         changeOrigin: true,
         secure: false
       }
-    }
+    } : undefined
   },
-  plugins: [react(),  tailwindcss()],
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          router: ['react-router-dom'],
+          ui: ['framer-motion', 'gsap']
+        }
+      }
+    },
+    // Copy _redirects file for SPA routing
+    copyPublicDir: true
+  },
+  plugins: [react(), tailwindcss()],
 })
