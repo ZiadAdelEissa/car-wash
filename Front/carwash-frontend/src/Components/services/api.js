@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://http://46.101.71.136:5000/api",
+  baseURL: import.meta.env.VITE_API_URL || "http://46.101.71.136:5000/api",
   withCredentials: true, // This ensures cookies are sent with requests
   headers: {
     "Content-Type": "application/json",
