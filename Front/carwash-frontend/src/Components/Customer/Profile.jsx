@@ -86,7 +86,7 @@ export default function Profile() {
   }
 
   return (
-    <div className="min-h-screen bg-[#171717] text-[#b4b4b4] p-4 md:p-8">
+    <div className="min-h-screen  text-[#b4b4b4] p-4 md:p-8">
       <ToastContainer 
         position="top-center"
         autoClose={5000}
@@ -100,8 +100,10 @@ export default function Profile() {
         theme="dark"
       />
       
-      <div className="max-w-6xl mx-auto mt-30 md:mt-24">
+      <div className=" max-sm:flex max-sm:flex-col max-sm:items-center max-w-6xl mx-auto mt-30 md:mt-24">
         {/* Profile Header */}
+              <img src="https://i.ibb.co/mFSmqjCg/pexels-tima-miroshnichenko-6873123.jpg" alt="Car Wash" className=" fixed top-0 left-0 w-full h-full object-cover  -z-10" />
+
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <h1 className="text-2xl md:text-3xl font-bold text-white">{t("profile.title")}</h1>
           {!editMode && (
@@ -127,7 +129,7 @@ export default function Profile() {
         {editMode ? (
           <form
             onSubmit={handleProfileUpdate}
-            className="bg-[#2d2d2d] p-6 rounded-xl shadow-lg mb-8 transition-all duration-300 hover:shadow-xl hover:shadow-[#009b49]/10"
+            className="bg-gray-900/80 drop-shadow-2xl  backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 transition-all duration-300 hover:shadow-xl hover:shadow-[#009b49]/10"
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div className="space-y-2">
@@ -138,7 +140,7 @@ export default function Profile() {
                   onChange={(e) =>
                     setTempProfile({ ...tempProfile, name: e.target.value })
                   }
-                  className="w-full p-3 bg-[#1d1d1d] border border-[#3d3d3d] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#009b49]"
+                  className="w-full p-3 bg-[#0000009a] border border-[#3d3d3d] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#009b49]"
                   required
                 />
               </div>
@@ -147,7 +149,7 @@ export default function Profile() {
                 <input
                   type="email"
                   value={tempProfile.email}
-                  className="w-full p-3 bg-[#1d1d1d] border border-[#3d3d3d] rounded-lg text-[#7d7d7d] cursor-not-allowed"
+                  className="w-full p-3 bg-[#0000009a] border border-[#3d3d3d] rounded-lg text-[#7d7d7d] cursor-not-allowed"
                   disabled
                 />
               </div>
@@ -159,7 +161,7 @@ export default function Profile() {
                   onChange={(e) =>
                     setTempProfile({ ...tempProfile, phone: e.target.value })
                   }
-                  className="w-full p-3 bg-[#1d1d1d] border border-[#3d3d3d] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#009b49]"
+                  className="w-full p-3 bg-[#0000009a] border border-[#3d3d3d] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#009b49]"
                 />
               </div>
               {/* <div className="space-y-2">
@@ -178,7 +180,7 @@ export default function Profile() {
             <div className="flex gap-4">
               <button
                 type="submit"
-                className="px-6 py-3 bg-[#009b49] hover:bg-[#007a3a] text-white font-medium rounded-full transition-all duration-300"
+                className=" bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 shadow-lg hover:shadow-indigo-500/50 text-white px-4 py-2 rounded-lg hover:scale-105 transition-transform text-white font-medium rounded-full transition-all duration-300"
               >
                 {t("profile.saveChanges")}
               </button>
@@ -189,14 +191,14 @@ export default function Profile() {
                   setTempProfile(profile);
                   toast.warning("Changes discarded");
                 }}
-                className="px-6 py-3 bg-[#3d3d3d] hover:bg-[#4d4d4d] text-white font-medium rounded-full transition-all duration-300"
+                className="px-6 py-3 bg-[#ff0404]  text-white font-medium rounded-full transition-all duration-300"
               >
                {t("profile.cancel")}
               </button>
             </div>
           </form>
         ) : (
-          <div className="bg-[#2d2d2d] p-6 rounded-xl shadow-lg mb-8 transition-all duration-300 hover:shadow-xl hover:shadow-[#009b49]/10">
+          <div className="bg-gray-900/80 drop-shadow-2xl  backdrop-blur-md p-6 rounded-xl shadow-lg mb-8 transition-all duration-300 hover:shadow-xl hover:shadow-[#009b49]/10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-1">
                 <h3 className="text-sm font-medium text-[#b4b4b4]">{t("profile.name")}</h3>
@@ -223,11 +225,11 @@ export default function Profile() {
         )}
 
         {/* Family Members Section */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-white mb-6">Family Members</h2>
+        {/* <div className="mb-8">
+          <h2 className="text-2xl font-bold text-white mb-6">Family Members</h2> */}
           
           {/* Add Family Member Form */}
-          <form
+          {/* <form
             onSubmit={handleAddFamilyMember}
             className="bg-[#2d2d2d] p-6 rounded-xl shadow-lg mb-8 transition-all duration-300 hover:shadow-xl hover:shadow-[#009b49]/10"
           >
@@ -285,10 +287,10 @@ export default function Profile() {
               </svg>
               Add Family Member
             </button>
-          </form>
+          </form> */}
 
           {/* Family Members List */}
-          {profile?.familyMembers?.length > 0 ? (
+          {/* {profile?.familyMembers?.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {profile.familyMembers?.map((member, index) => (
                 <div
@@ -329,9 +331,9 @@ export default function Profile() {
             <div className="bg-[#2d2d2d] p-6 rounded-xl text-center">
               <p className="text-[#b4b4b4]">No family members added yet.</p>
             </div>
-          )}
+          )} */}
         </div>
       </div>
-    </div>
+    // </div>
   );
 }
