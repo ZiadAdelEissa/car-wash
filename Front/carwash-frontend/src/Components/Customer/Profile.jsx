@@ -180,7 +180,7 @@ export default function Profile() {
             <div className="flex gap-4">
               <button
                 type="submit"
-                className=" bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 shadow-lg hover:shadow-indigo-500/50 text-white px-4 py-2 rounded-lg hover:scale-105 transition-transform text-white font-medium rounded-full transition-all duration-300"
+                className=" bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 shadow-lg hover:shadow-indigo-500/50 text-white px-4 py-2 rounded-lg hover:scale-105 transition-transform  font-medium  duration-300"
               >
                 {t("profile.saveChanges")}
               </button>
